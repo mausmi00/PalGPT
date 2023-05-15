@@ -10,7 +10,7 @@ type Variant = "LOGIN" | "REGISTER";
 
 const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>("LOGIN");
-  const [isLoading, setIsLoding] = useState(false); // to disable buttons and inputs once the form is submitted
+  const [isLoading, setIsLoading] = useState(false); // to disable buttons and inputs once the form is submitted
 
   const toggleVariant = useCallback(() => {
     if (variant == "LOGIN") {
@@ -34,7 +34,7 @@ const AuthForm = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setIsLoding(true);
+    setIsLoading(true);
     if (variant == "REGISTER") {
       // Axios Register
     }
@@ -45,7 +45,7 @@ const AuthForm = () => {
   };
 
   const socialAction = (action: string) => {
-    setIsLoding(true);
+    setIsLoading(true);
     // NextAuth Social SignIn
   };
 
@@ -80,7 +80,7 @@ const AuthForm = () => {
                 errors={errors}
                 disabled={isLoading}
                 />
-                
+
                 )}
                 <Input
                 id="email" 
@@ -117,7 +117,8 @@ const AuthForm = () => {
                         <div className="
                         w-full
                         border-t
-                        border-gray-300"/>
+                        border-gray-300"
+                        />
                     </div>
                     <div className="relative
                      flex
