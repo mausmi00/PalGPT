@@ -40,7 +40,7 @@ const Input: React.FC<InputProps> = ({
         <input
         id={id}
         type={type}
-        autocomplete={id}
+        autoComplete={id}
         disabled={disabled} 
         {...register(id, {required})} /*register handles actions like onChange, onFocus and a bunch of other functions */
         /* clsx: allows us to dynamically use classes */
