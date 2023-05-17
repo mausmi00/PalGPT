@@ -26,7 +26,8 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       type={type}
       disabled={disabled}
-      className={clsx(`
+      className={clsx(
+        `
         flex
         justify-center
         rounded-md
@@ -36,12 +37,16 @@ const Button: React.FC<ButtonProps> = ({
         font-semibold
         focus-visible:outline
         focus-visible:outline-2
-        focus-visible:outline-offset-2`,  /*dynamic classes after ` */
+        focus-visible:outline-offset-2` /*dynamic classes after ` */,
         disabled && "opacity-50 cursor-default",
         fullWidth && "w-full",
-        secondary ? 'text-gray-900' : 'text-white', 
-        danger && "bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600", 
-        !secondary && !danger && "bg-sky-500 hover:bg-sky-600 focus-visible:outline-key-600`")}
+        secondary ? "text-gray-900" : "text-white",
+        danger &&
+          "bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600",
+        !secondary &&
+          !danger &&
+          "bg-sky-500 hover:bg-sky-600 focus-visible:outline-key-600`"
+      )}
     >
       {children}
     </button>

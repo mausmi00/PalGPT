@@ -38,13 +38,16 @@ const Input: React.FC<InputProps> = ({
       </label>
       <div className="mt-2">
         <input
-        id={id}
-        type={type}
-        autoComplete={id}
-        disabled={disabled} 
-        {...register(id, {required})} /*register handles actions like onChange, onFocus and a bunch of other functions */
-        /* clsx: allows us to dynamically use classes */
-        className={clsx(`
+          id={id}
+          type={type}
+          autoComplete={id}
+          disabled={disabled}
+          {...register(id, {
+            required,
+          })} /*register handles actions like onChange, onFocus and a bunch of other functions */
+          /* clsx: allows us to dynamically use classes */
+          className={clsx(
+            `
         form-input
         block
         w-full
@@ -62,10 +65,11 @@ const Input: React.FC<InputProps> = ({
         focus:ring-sky-600
         sm:text-sm
         sm:leading-6`,
-        errors[id] && "focus:ring-rose-500", /* if errors has an id then it will be displayed in red */
-        disabled && "opactity-50 cursor-default")}
+            errors[id] &&
+              "focus:ring-rose-500" /* if errors has an id then it will be displayed in red */,
+            disabled && "opactity-50 cursor-default"
+          )}
         />
-
       </div>
     </div>
   );
