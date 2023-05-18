@@ -1,7 +1,15 @@
-'use client';
+"use client";
+
+import useRoutes from "@/app/hooks/useRoutes";
+import { useState } from "react";
+import DesktopItem from "./DesktopItem";
 
 const DesktopSidebar = () => {
-    return (  <div className="
+    const routes = useRoutes();
+    const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div
+      className="
     hidden
     lg:fixed
     lg:inset-y-0
@@ -15,24 +23,37 @@ const DesktopSidebar = () => {
     lg:pb-4
     lg:flex
     lg:flex-col
-    justify-between">
-        <nav className="
+    justify-between"
+    >
+      <nav
+        className="
         mt-4
         flex
         flex-col
-        justify-between">
-            <ul role="list"
-            className="flex
+        justify-between"
+      >
+        <ul
+          role="list"
+          className="flex
             flex-col
             items-center
             space-y-1
-            ">
-                
-            </ul>
+            "
+        >
+            {routes.map((item) => (
+                <DesktopItem
+                key={item.label}
+                href={item.href}
+                label={item.label}
+                icon={item.icon}
+                active={item.active}
+                onClick={item.onClick} />
+            ))}
 
-        </nav>
-        DesktopSidebar!
-    </div>);
-}
- 
+        </ul>
+      </nav>
+    </div>
+  );
+};
+
 export default DesktopSidebar;
