@@ -49,7 +49,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
           bg-gray-100
           test-gray-600
           cursor-pointer
-          hover:opactiy-75
+          hover:opactiy-75 
           transition"
           >
             <MdOutlineGroupAdd size={20} />
