@@ -12,7 +12,7 @@ const Home = () => {
     >
       <EmptyState />
     </div>
-  );
+  )
 };
 
 export default Home;

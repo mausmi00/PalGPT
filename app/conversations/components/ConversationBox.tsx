@@ -6,7 +6,7 @@ import { FullConversationType } from "@/app/types";
 import clsx from "clsx";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 
 interface ConversationBoxProps {
@@ -24,10 +24,11 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
 
   const handleClick = useCallback(() => {
     router.push(`/conversations/${data.id}`);
-  }, [data.id, router]);
+  }, [data, router]);
 
   const lastMessage = useMemo(() => {
     const messages = data.messages || [];
+
     const lastMessage = messages[messages.length - 1];
 
     return lastMessage;
@@ -42,11 +43,12 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
       return false;
     }
 
+    const seenArray = lastMessage.seen || [];
+
     if (!userEmail) {
       return false;
     }
 
-    const seenArray = lastMessage.seen || [];
     return seenArray.filter((user) => user.email === userEmail).length !== 0;
   }, [userEmail, lastMessage]);
 
@@ -56,7 +58,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
     }
 
     if (lastMessage?.body) {
-      return lastMessage.body;
+      return lastMessage?.body;
     }
 
     return "Started a conversation";
@@ -72,7 +74,8 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
     flex
     items-center
     space-x-3
-    hover:bg-netural-100
+    p-3
+    hover:bg-neutral-100
     rounded-lg
     transition
     cursor-pointer
@@ -104,16 +107,28 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
                 className="
               text-xs
               text-gray-400
-              font-light"
+              font-light
+              "
               >
                 {format(new Date(lastMessage.createdAt), "p")}
               </p>
             )}
           </div>
+          <p
+            className={clsx(
+              `
+          truncate
+          text-sm
+          `,
+              hasSeen ? "text-gray-500" : "text-black font-medium"
+            )}
+          >
+            {lastMessageText}
+          </p>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default ConversationBox;
