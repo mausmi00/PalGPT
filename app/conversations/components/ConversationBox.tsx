@@ -129,6 +129,6 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
       </div>
     </div>
   );
-}
+};
 
 export default ConversationBox;
