@@ -17,10 +17,14 @@ export async function POST(request: Request) {
         }
 
         const newMessage = await prisma.message.create({
+            include: {
+                seen: true,
+                sender: true
+            },
             data: {
                 body: message,
                 image: image,
-                convesation: {
+                conversation: {
                     connect: {
                         id: conversationId
                     }
@@ -35,10 +39,6 @@ export async function POST(request: Request) {
                         id: currentUser.id
                     }
                 }
-            },
-            include: {
-                seen: true,
-                sender: true
             }
         });
 
@@ -64,6 +64,7 @@ export async function POST(request: Request) {
             }
         })
 
+        console.log("new :", newMessage);
         return NextResponse.json(newMessage);
         
     } catch (error: any) {

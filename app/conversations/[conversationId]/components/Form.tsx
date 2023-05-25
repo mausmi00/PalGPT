@@ -14,24 +14,22 @@ import { HiPaperAirplane } from "react-icons/hi2";
 
 const Form = () => {
   const { conversationId } = useConversation();
-
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors }
   } = useForm<FieldValues>({
     defaultValues: {
-      message: "",
-    },
+      message: ''
+    }
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setValue("message", "", { shouldValidate: true });
-
-    axios.post("/api/message", {
+    setValue('message', '', { shouldValidate: true });
+    axios.post('/api/messages' , {
       ...data,
-      conversationId,
+      conversationId: conversationId  
     });
   };
 
