@@ -8,6 +8,7 @@ export default withAuth({
 
 export const config = { /* the users page or any other page of the format /users/* requires authentication */
     matcher: [
-        "/users/:path*"
+        "/users/:path*",
+        "/conversations/:path*"
     ]
 };
