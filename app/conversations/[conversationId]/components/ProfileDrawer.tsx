@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { Fragment, useMemo, useState } from "react";
 import { IoClose, IoTrash } from "react-icons/io5";
 import ConfirmModel from "./ConfirmModel";
+import AvatarGroup from "@/app/components/AvatarGroup";
 
 interface ProfileDrawerProps {
   isOpen: boolean;
@@ -43,7 +44,10 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
 
   return (
     <>
-      <ConfirmModel isOpen={isdeleteOpen} onClose={() => setIsDeleteOpen(false)} />
+      <ConfirmModel
+        isOpen={isdeleteOpen}
+        onClose={() => setIsDeleteOpen(false)}
+      />
 
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -158,7 +162,11 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                       flex flex-col items-center"
                         >
                           <div className="mb-2">
-                            <Avatar user={otherUser} />
+                            {data.isGroup ? (
+                              <AvatarGroup users={data.users} />
+                            ) : (
+                              <Avatar user={otherUser} />
+                            )}
                           </div>
                           <div>{title}</div>
                           <div
