@@ -17,10 +17,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, src }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="w-80 h-80">
-        <Image alt="Image" 
-        className="object-cover"
-         fill 
-         src={src} />
+        <Image alt="Image" className="object-cover" fill src={src} />
       </div>
     </Modal>
   );
