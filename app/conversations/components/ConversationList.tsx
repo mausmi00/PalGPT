@@ -49,7 +49,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
           if (currentConversation.id === newConversation.id) {
             return {
               ...currentConversation,
-              messages: newConversation.messages
+              messages: newConversation.messages,
             };
           }
           return currentConversation;
@@ -57,7 +57,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
       );
     };
 
-     const newHandler = (newConversation: FullConversationType) => {
+    const newHandler = (newConversation: FullConversationType) => {
       setItems((currentConversation) => {
         if (find(currentConversation, { id: newConversation.id })) {
           return currentConversation;
@@ -66,14 +66,29 @@ const ConversationList: React.FC<ConversationListProps> = ({
       });
     };
 
+    // to remove the conversation from the list once deleted
+    const removeHandler = (conversation: FullConversationType) => {
+      setItems((current) => {
+        return [...current.filter((convo) => convo.id !== conversation.id)];
+      });
+
+      // to redirect the user to conversations page once the current conversation is deleted
+      if (conversation.id === conversationId) {
+        router.push("/conversations");
+      }
+    };
+
     pusherClient.bind("conversation:update", updateHandler);
     pusherClient.bind("conversation:new", newHandler);
+    pusherClient.bind("conversation:remove", removeHandler);
 
     return () => {
       pusherClient.unbind("conversation:update", updateHandler);
+      pusherClient.unbind("conversation:new", newHandler);
+      pusherClient.unbind("conversation:remove", removeHandler);
       pusherClient.unsubscribe(pusherKey);
     };
-  }, [pusherKey]);
+  }, [pusherKey, conversationId, router]);
 
   return (
     <>
