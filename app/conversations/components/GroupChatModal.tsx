@@ -9,6 +9,7 @@ import Modal from "@/app/components/Modal";
 import Input from "@/app/components/inputs/Input";
 import Select from "@/app/components/inputs/Select";
 import Button from "@/app/components/Buttons";
+import { User } from "@prisma/client";
 
 interface GroupChatModalProps {
   isOpen?: boolean;
