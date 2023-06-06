@@ -14,7 +14,7 @@ export async function POST(
     try {
         const { conversationId } = params;
         const currentUser = await getCurrentUser();
-
+        
         if (!currentUser?.id || !currentUser?.email) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
@@ -40,7 +40,6 @@ export async function POST(
 
         // Find last message
         const lastMessage = conversation.messages[conversation.messages.length - 1];
-
         if (!lastMessage) {
             return NextResponse.json(conversation);
         }
@@ -63,6 +62,7 @@ export async function POST(
             }
         });
 
+        //updates the sidebar message (later)
         await pusherServer.trigger(currentUser.email, "conversation:update", {
             id: conversationId,
             messages: [updatedMessage]
