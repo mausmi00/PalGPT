@@ -27,11 +27,11 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
       return `${conversation.users.length} members`;
     }
 
-    if(isActive != null) {
+    if(isActive) {
       return "Active";
     }
     return "Offline";
-    
+
   }, [conversation, isActive]);
 
   return (
