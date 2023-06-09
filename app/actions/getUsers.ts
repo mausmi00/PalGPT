@@ -14,13 +14,25 @@ export default async function getUsers() {
                 createdAt: 'desc'
             },
             where: {
-                NOT: {
-                    email: session?.user?.email,
+                isAi: false,
+                AND: {
+                    NOT: {
+                        email: session?.user?.email,
+                    },
                 }
             }
         });
 
-        return users;
+        const ai_users = await prisma.user.findMany({
+            orderBy: {
+                name: 'asc'
+            },
+            where: {
+                isAi: true
+            }
+        });
+
+        return [users, ai_users];
     } catch (errors: any) {
         return [];
     }

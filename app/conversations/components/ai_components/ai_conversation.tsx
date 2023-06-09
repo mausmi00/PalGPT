@@ -10,17 +10,17 @@ export default async function ai_conversation() {
     openAIApiKey: process.env.OPEN_API_KEY,
   });
 
-  const messages = [
-    {
-      role: "system",
-      content:
-        "You are Elon Musk. You are willing to talk about interesting topics but are rude when someone asks you unecessary questions",
-    },
-    {
-      role: "user",
-      content: "Hello elon, wazzupppppp",
-    },
-  ];
+  // const messages = [
+  //   {
+  //     role: "system",
+  //     content:
+  //       "You are Elon Musk. You are willing to talk about interesting topics but are rude when someone asks you unecessary questions",
+  //   },
+  //   {
+  //     role: "user",
+  //     content: "Hello elon, wazzupppppp",
+  //   },
+  // ];
 
   const response = await model.call([
       new SystemChatMessage(

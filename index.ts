@@ -2,17 +2,27 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 async function main() {
-    const user = await prisma.user.createMany({
-        data: [
-            {
-                name: 'Elon Musk',
-                email: "elon_musk@ai.com",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                image: "/images/elon_musk.jpg"
+    // const user = await prisma.user.createMany({
+    //     data: [
+    //         {
+    //             name: 'Elon Musk',
+    //             email: "elon_musk@ai.com",
+    //             createdAt: new Date(),
+    //             updatedAt: new Date(),
+    //             image: "/images/elon_musk.jpg",
+    //             isAi: true,
 
-            }
-        ]
+    //         }
+    //     ]
+    // })
+
+    const updatedUser = await prisma.user.update({
+        where: {
+            email: "test5@com",
+        },
+        data: {
+            isAi: false
+        }
     })
 
 }

@@ -4,10 +4,11 @@ import { User } from "@prisma/client";
 import UserBox from "./UserBox";
 
 interface UserListProps {
-  items: User[]
-};
+  users: User[];
+  ai_users: User[];
+}
 
-const UserList: React.FC<UserListProps> = ({ items }) => {
+const UserList: React.FC<UserListProps> = ({ users, ai_users }) => {
   return (
     <aside
       className="fixed
@@ -24,22 +25,25 @@ const UserList: React.FC<UserListProps> = ({ items }) => {
         w-full
         left-0"
     >
-        <div className="px-5">
-            <div className="flex-col">
-                <div className="
+      <div className="px-5">
+        <div className="flex-col">
+          <div
+            className="
                 text-2xl
                 font-bold
                 text-neutral-800
-                py-4">
-                    People
-                </div>
-            </div>
-            {items.map((item) => (
-                <UserBox 
-                key={item.id}
-                user={item}/>
-            ))}
+                py-4"
+          >
+            People
+          </div>
         </div>
+        {users.map((user) => (
+          <UserBox key={user.id} user={user} />
+        ))}
+        {ai_users.map((user) => (
+          <UserBox key={user.id} user={user} />
+        ))}
+      </div>
     </aside>
   );
 };
