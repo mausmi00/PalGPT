@@ -2,6 +2,9 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { pusherServer } from "@/app/libs/pusher";
+import getIsAiConversation from "@/app/actions/getIsAiConversation";
+import getAiResponse from "@/app/actions/getAiResponse";
+import axios from "axios";
 
 interface IParams {
     conversationId: string
@@ -14,7 +17,7 @@ export async function POST(
     try {
         const { conversationId } = params;
         const currentUser = await getCurrentUser();
-        
+
         if (!currentUser?.id || !currentUser?.email) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
@@ -44,6 +47,7 @@ export async function POST(
             return NextResponse.json(conversation);
         }
 
+
         // Update seen of last message
         const updatedMessage = await prisma.message.update({
             where: {
@@ -63,6 +67,11 @@ export async function POST(
         });
 
         //updates the sidebar message (later)
+        await pusherServer.trigger(currentUser.email, "conversation:update", {
+            id: conversationId,
+            messages: [updatedMessage]
+        });
+
         await pusherServer.trigger(currentUser.email, "conversation:update", {
             id: conversationId,
             messages: [updatedMessage]

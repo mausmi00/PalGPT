@@ -1,9 +1,20 @@
+
 import getConversationById from "@/app/actions/getConversationById";
 import getMessages from "@/app/actions/getMessages";
 import EmptyState from "@/app/components/EmptyState";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import Form from "./components/Form";
+import getIsAiConversation from "@/app/actions/getIsAiConversation";
+import AiForm from "./components/AiForm";
+import useConversation from "@/app/hooks/useConversation";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import axios from "axios";
+import getAiResponse from "@/app/actions/getAiResponse";
+import { HiPaperAirplane } from "react-icons/hi2";
+import MessageInput from "./components/MessageInput";
+
 
 interface IParams {
   conversationId: string;
@@ -12,7 +23,7 @@ interface IParams {
 const conversationId = async ({ params }: { params: IParams }) => {
   const conversation = await getConversationById(params.conversationId);
   const messages = await getMessages(params.conversationId);
-
+  const isAiConvo = await getIsAiConversation(params.conversationId);
   if (!conversation) {
     return (
       <div className="lg:pl-80 h-full">
@@ -22,15 +33,29 @@ const conversationId = async ({ params }: { params: IParams }) => {
       </div>
     );
   }
-  return (
-    <div className="lg:pl-80 h-full">
-      <div className="h-full flex flex-col">
-        <Header conversation={conversation} />
-        <Body initialMessages={messages} /> 
-        <Form />
+
+  if(isAiConvo) { 
+    return (
+      <div className="lg:pl-80 h-full">
+        <div className="h-full flex flex-col">
+          <Header conversation={conversation} />
+          <Body initialMessages={messages} /> 
+          <AiForm/>
+          
+        </div>
+        </div>
+    );
+  } else {
+    return (
+      <div className="lg:pl-80 h-full">
+        <div className="h-full flex flex-col">
+          <Header conversation={conversation} />
+          <Body initialMessages={messages} /> 
+          <Form />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 //opopo
 

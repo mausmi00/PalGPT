@@ -50,7 +50,7 @@ model Account {
   @@unique([provider, providerAccountId]) // combination has to be unique
 }
 
-model Conversation{
+model Conversation {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   lastMessageAt DateTime @default(now())
@@ -62,6 +62,7 @@ model Conversation{
 
   userIds String[]  @db.ObjectId
   users User[] @relation(fields: [userIds], references: [id])
+  isAiConvo Boolean? @default(false)
 }
 
 model Message {
@@ -78,4 +79,5 @@ model Message {
 
   senderId String @db.ObjectId
   sender User @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  responderShouldBeAi Boolean? @default(false)
 }

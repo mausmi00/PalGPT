@@ -11,8 +11,9 @@ import getAiResponse from "@/app/actions/getAiResponse";
 import getIsAiConversation from "@/app/actions/getIsAiConversation";
 import { useState } from "react";
 
-const Form = () => {
+const AiForm = async () => {
   const { conversationId } = useConversation();
+  const [input, setInput] = useState("");
   const {
     register,
     handleSubmit,
@@ -30,6 +31,17 @@ const Form = () => {
       ...data,
       conversationId: conversationId,
     });
+    // setInput(data.message);
+    // //console.log("data message is: ", data.message);
+    // const isAiConvo = await getIsAiConversation(conversationId);
+    // if (isAiConvo) {
+    //   const response = await getAiResponse(data.message);
+    //   setValue("message", "", { shouldValidate: true });
+    //   axios.post("/api/messages", {
+    //     response,
+    //     conversationId: conversationId,
+    //   });
+    // }
   };
 
   // const isAiConvo = await getIsAiConversation(conversationId);
@@ -63,13 +75,6 @@ const Form = () => {
   w-full
   "
       >
-        <CldUploadButton
-          options={{ maxFiles: 1 }}
-          onUpload={handleUpload}
-          uploadPreset="zf6ormgu"
-        >
-          <HiPhoto size={30} className="text-sky-500" />
-        </CldUploadButton>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex items-center gap-2 lg:gap-4 w-full"
@@ -99,4 +104,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default AiForm;

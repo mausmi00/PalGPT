@@ -12,6 +12,7 @@ import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { pusherClient } from "@/app/libs/pusher";
 import { find } from "lodash";
+import getIsAiConversation from "@/app/actions/getIsAiConversation";
 
 interface ConversationListProps {
   initialItems: FullConversationType[];

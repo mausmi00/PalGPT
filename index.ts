@@ -16,12 +16,12 @@ async function main() {
     //     ]
     // })
 
-    const updatedUser = await prisma.user.update({
+    const updatedUser = await prisma.message.update({
         where: {
-            email: "test5@com",
+            id: "6484f97b510b60d037e7d194",
         },
         data: {
-            isAi: false
+            responderShouldBeAi: true
         }
     })
 

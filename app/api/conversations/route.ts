@@ -2,8 +2,12 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { pusherServer } from "@/app/libs/pusher";
+import getIsAiConversation from "@/app/actions/getIsAiConversation";
+import isAiUser from "@/app/actions/isAiUser";
+import { Conversation, User } from "@prisma/client";
 
 export async function POST(request: Request) {
+    
     try {
         const currentUser = await getCurrentUser();
         const body = await request.json();
@@ -13,6 +17,8 @@ export async function POST(request: Request) {
             members,
             name
         } = body;
+
+        const isAiConvo = await isAiUser(userId);
 
         if (!currentUser?.id || !currentUser?.email) {
             return new NextResponse('Unauthorized', { status: 401 });
@@ -75,24 +81,48 @@ export async function POST(request: Request) {
             return NextResponse.json(singleConversation);
         }
 
-        const newConversation = await prisma.conversation.create({
-            data: {
-                users: {
-                    connect: [
-                        {
-                            id: currentUser.id
-                        },
-                        {
-                            id: userId
-                        }
-                    ]
+        let newConversation: (Conversation & { users: User[]; }) | null = null;
+        if (isAiConvo) {
+            newConversation = await prisma.conversation.create({
+                data: {
+                    users: {
+                        connect: [
+                            {
+                                id: currentUser.id
+                            },
+                            {
+                                id: userId
+                            }
+                        ]
 
+                    },
+                    isAiConvo: true,
+                },
+                include: {
+                    users: true
                 }
-            },
-            include: {
-                users: true
-            }
-        });
+            });
+        } else {
+            newConversation = await prisma.conversation.create({
+                data: {
+                    users: {
+                        connect: [
+                            {
+                                id: currentUser.id
+                            },
+                            {
+                                id: userId
+                            }
+                        ]
+
+                    },
+                    isAiConvo: false,
+                },
+                include: {
+                    users: true
+                }
+            });
+        }
 
         newConversation.users.map((user) => {
             if (user.email) {
