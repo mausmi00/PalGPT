@@ -69,11 +69,6 @@ export async function POST(
             messages: [updatedMessage]
         });
 
-        await pusherServer.trigger(currentUser.email, "conversation:update", {
-            id: conversationId,
-            messages: [updatedMessage]
-        });
-
         // if the current user has seen the message
         if (lastMessage.seenIds.indexOf(currentUser.id) !== -1) {
             return NextResponse.json(conversation);
