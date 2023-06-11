@@ -7,14 +7,6 @@ import Body from "./components/Body";
 import Form from "./components/Form";
 import getIsAiConversation from "@/app/actions/getIsAiConversation";
 import AiForm from "./components/AiForm";
-import useConversation from "@/app/hooks/useConversation";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
-import axios from "axios";
-import getAiResponse from "@/app/actions/getAiResponse";
-import { HiPaperAirplane } from "react-icons/hi2";
-import MessageInput from "./components/MessageInput";
-
 
 interface IParams {
   conversationId: string;
@@ -57,6 +49,5 @@ const conversationId = async ({ params }: { params: IParams }) => {
     );
   }
 };
-//opopo
 
 export default conversationId;

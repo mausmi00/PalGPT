@@ -7,9 +7,6 @@ import { HiPhoto } from "react-icons/hi2";
 import MessageInput from "./MessageInput";
 import { HiPaperAirplane } from "react-icons/hi2";
 import { CldUploadButton } from "next-cloudinary";
-import getAiResponse from "@/app/actions/getAiResponse";
-import getIsAiConversation from "@/app/actions/getIsAiConversation";
-import { useState } from "react";
 
 const Form = () => {
   const { conversationId } = useConversation();
@@ -31,15 +28,6 @@ const Form = () => {
       conversationId: conversationId,
     });
   };
-
-  // const isAiConvo = await getIsAiConversation(conversationId);
-  // const onAiSubmit = () => {
-  //   setValue("message", "", { shouldValidate: true });
-  //   axios.post("/api/messages", {
-  //     input,
-  //     conversationId: conversationId,
-  //   });
-  // };
 
   const handleUpload = (result: any) => {
     axios.post("/api/messages", {

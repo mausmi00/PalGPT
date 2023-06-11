@@ -2,7 +2,6 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { pusherServer } from "@/app/libs/pusher";
-import getIsAiConversation from "@/app/actions/getIsAiConversation";
 import isAiUser from "@/app/actions/isAiUser";
 import { Conversation, User } from "@prisma/client";
 

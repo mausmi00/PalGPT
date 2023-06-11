@@ -20,15 +20,17 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
   const otherUsers = useOtherUsers(conversation);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { members } = useActiveList();
-  const isActive = members.indexOf(otherUsers?.email!) !== -1;
+  let isActive = members.indexOf(otherUsers?.email!) !== -1;
+
+  if (otherUsers?.isAi == true) {
+    isActive = true;
+  }
 
   const statusText = useMemo(() => {
     if (conversation.isGroup) {
       return `${conversation.users.length} members`;
     }
-
-    return isActive ? 'Active' : 'Offline'
-
+    return isActive ? "Active" : "Offline";
   }, [conversation, isActive]);
 
   return (

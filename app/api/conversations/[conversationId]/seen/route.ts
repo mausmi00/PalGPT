@@ -1,10 +1,7 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { pusherServer } from "@/app/libs/pusher";
-import getIsAiConversation from "@/app/actions/getIsAiConversation";
-import getAiResponse from "@/app/actions/getAiResponse";
-import axios from "axios";
 
 interface IParams {
     conversationId: string

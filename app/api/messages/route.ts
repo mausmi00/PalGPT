@@ -69,13 +69,21 @@ export async function POST(request: Request) {
             }
         });
 
+        const getAllConvoUsers = await prisma.conversation.findUnique({
+            where: {
+                id: conversationId
+            },
+            include: {
+                users: true
+            }
+        });
 
         await pusherServer.trigger(conversationId, 'messages:new', newMessage);
 
         const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1];
         let shouldTheResponderBeAnAi = false;
+
         if (isAiConvo) {
-            console.log("isAi: ", isAiConvo)
             await prisma.message.update({
                 where: {
                     id: lastMessage.id
@@ -95,11 +103,14 @@ export async function POST(request: Request) {
             })
         });
 
-      //  const shouldTheResponderBeAnAi = lastMessage.responderShouldBeAi;
         if (isAiConvo && shouldTheResponderBeAnAi) {
-            console.log("we are insideeee")
-            //  console.log("here");
-            if (lastMessage.body != null) {
+            let aiUser = null;
+            getAllConvoUsers?.users.map((user) => {
+                if (user.id != currentUser.id) {
+                    aiUser = user.id;
+                }
+            })
+            if (lastMessage.body != null && aiUser != null) {
                 const response = await getAiResponse(lastMessage?.body);
                 console.log("new Ai MEssageee!", response);
                 const newAiMessage = await prisma.message.create({
@@ -117,26 +128,18 @@ export async function POST(request: Request) {
                         },
                         sender: {
                             connect: {
-                                id: currentUser.id
+                                id: aiUser
                             }
                         },
                         seen: {
                             connect: {
-                                id: currentUser.id
+                                id: aiUser
                             }
                         }
                     }
                 });
+                await pusherServer.trigger(conversationId, 'messages:new', newAiMessage);
                 return NextResponse.json(newAiMessage);
-
-
-
-                //   axios.post("/api/messages", {
-                //       response,
-                //       conversationId: conversationId,
-                //       //   });
-                //   }
-                //   )
 
             }
         }

@@ -1,12 +1,11 @@
 import { useParams } from 'next/navigation';
-import { useMemo }  from 'react';
-import getIsAiConversation from '../actions/getIsAiConversation';
+import { useMemo } from 'react';
 
-const useConversation =  () => {
+const useConversation = () => {
     const params = useParams();
 
     const conversationId = useMemo(() => {
-        if(!params?.conversationId) {
+        if (!params?.conversationId) {
             return '';
         }
 
@@ -15,12 +14,9 @@ const useConversation =  () => {
 
 
     const isOpen = useMemo(() => !!conversationId, [conversationId]);
-    // const isAiConvo: boolean = JSON.parse(params?.isAiConvo)
-    // const isAiConvo = await getIsAiConversation(userId);
-   // console.log("is active convo: ", isAiConvo);
     return useMemo(() => ({
         isOpen,
-        conversationId        
+        conversationId
     }), [isOpen, conversationId]);
 };
 
