@@ -29,6 +29,11 @@ const setAiMemoryChain = async () => {
     llm: chat,
   });
 
+  async function processInput(input: string) {
+    const res = await chain.call({ input });
+    console.log(res);
+  }
+
   return chain;
 //   const responseH = await chain.call({
 //     input: input,

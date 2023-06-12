@@ -24,6 +24,8 @@ const getAiResponse = async (chain: ConversationChain , input: string) => {
   const response = await chain.call({
     input: input,
   });
+
+  console.log("input: ", input);
   
   console.log(response);
 

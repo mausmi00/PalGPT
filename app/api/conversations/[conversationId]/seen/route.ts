@@ -2,6 +2,7 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { pusherServer } from "@/app/libs/pusher";
+import { Message, User } from "@prisma/client";
 
 interface IParams {
     conversationId: string
@@ -40,6 +41,10 @@ export async function POST(
 
         // Find last message
         const lastMessage = conversation.messages[conversation.messages.length - 1];
+        let secondLastMessage: (Message & { seen: User[]; }) | null = null;
+        if(conversation.messages.length >= 2) {
+            secondLastMessage = conversation.messages[conversation.messages.length - 2];
+        }
         if (!lastMessage) {
             return NextResponse.json(conversation);
         }
@@ -62,6 +67,33 @@ export async function POST(
                 }
             }
         });
+
+        // returns an array of seen ids of messages for a user
+        const getSeenMessages = await prisma.user.findUnique({
+            where: {
+                id: currentUser.id
+            },
+            include: {
+                seenMessages: true
+            }
+        });
+
+        // removes the previous last message of the conversation from the seenMessages list of the user
+        // add the new last message to the seen message list of the user
+        if(secondLastMessage != null) {
+            const updatedSeenMessages = getSeenMessages?.seenMessageIds.filter((messageId) => messageId != secondLastMessage?.id)
+            const updatedUserSeenMessages = await prisma.user.update({
+                where: {
+                    id: currentUser.id
+                },
+                include: {
+                    seenMessages: true,
+                },
+                data: {
+                    seenMessageIds: updatedSeenMessages
+                }
+            });
+        }
 
         //updates the sidebar message (later)
         await pusherServer.trigger(currentUser.email, "conversation:update", {

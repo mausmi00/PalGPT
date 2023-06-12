@@ -102,7 +102,7 @@ export async function POST(request: Request) {
                     users: true
                 }
             });
-            const chain = setAiMemoryChain();
+            // const chain = setAiMemoryChain();
         } else {
             newConversation = await prisma.conversation.create({
                 data: {
