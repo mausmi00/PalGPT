@@ -8,6 +8,8 @@ import {
 } from "langchain/prompts";
 import { BufferMemory } from "langchain/memory";
 
+(global as any).chain;
+
 const setAiMemoryChain = async () => {
   const chat = new ChatOpenAI({
     temperature: 1,
@@ -22,24 +24,13 @@ const setAiMemoryChain = async () => {
     new MessagesPlaceholder("history"),
     HumanMessagePromptTemplate.fromTemplate("{input}"),
   ]);
-  
-  const chain = new ConversationChain({
+
+  (global as any).chain = new ConversationChain({
     memory: new BufferMemory({ returnMessages: true, memoryKey: "history" }),
     prompt: chatPrompt,
     llm: chat,
   });
 
-  async function processInput(input: string) {
-    const res = await chain.call({ input });
-    console.log(res);
-  }
-
-  return chain;
-//   const responseH = await chain.call({
-//     input: input,
-//   });
-  
-//   console.log(responseH);
 }
 
 export default setAiMemoryChain;
