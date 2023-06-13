@@ -13,17 +13,18 @@ import { useSession } from "next-auth/react";
 import { pusherClient } from "@/app/libs/pusher";
 import { find } from "lodash";
 import getIsAiConversation from "@/app/actions/getIsAiConversation";
+import AiChatModal from "./AiChatModal";
 
 interface ConversationListProps {
   initialItems: FullConversationType[];
   users: User[];
-  ai_users: User[]
+  ai_users: User[];
 }
 
 const ConversationList: React.FC<ConversationListProps> = ({
   initialItems,
   users,
-  ai_users
+  ai_users,
 }) => {
   const session = useSession();
   const [items, setItems] = useState(initialItems);
@@ -50,7 +51,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
       setItems((current) =>
         current.map((currentConversation) => {
           if (currentConversation.id === newConversation.id) {
-           // console.log("messagesss: ", newConversation.messages)
+            // console.log("messagesss: ", newConversation.messages)
             return {
               ...currentConversation,
               messages: newConversation.messages,
@@ -96,11 +97,11 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   return (
     <>
-      <GroupChatModal
+      <AiChatModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        users={users}
       />
+      
       <aside
         className={clsx(
           `

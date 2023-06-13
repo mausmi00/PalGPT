@@ -31,6 +31,7 @@ model User {
   messages Message[]
 
   chain String?
+  characteristics String?
 }
 
 model Account {

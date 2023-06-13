@@ -81,6 +81,10 @@ export async function POST(request: Request) {
 
         const lastMessage = getUpdatedConversationUsersAndMessages?.messages[getUpdatedConversationUsersAndMessages?.messages.length - 1];
         let shouldTheResponderBeAnAi = false;
+
+        let aiUserId = null;
+        let aiUserName = null;
+        let aiCharacteristics = null;
         if (isAiConvo) {
             await prisma.message.update({
                 where: {
@@ -92,16 +96,15 @@ export async function POST(request: Request) {
 
             });
             shouldTheResponderBeAnAi = true;
+            getUpdatedConversationUsersAndMessages?.users.map((user) => {
+                if (user.id != currentUser.id) {
+                    aiUserId = user.id;
+                    aiUserName = user.name;
+                    aiCharacteristics = user.characteristics
+                }
+            });
         }
-
-        let aiUserId = null;
-        let aiUserName = null;
-        getUpdatedConversationUsersAndMessages?.users.map((user) => {
-            if (user.id != currentUser.id) {
-                aiUserId = user.id;
-                aiUserName = user.name
-            }
-        });
+       
 
         getUpdatedConversationUsersAndMessages?.users.forEach((user) => {
             pusherServer.trigger(user.email!, "conversation:update", {
@@ -110,9 +113,9 @@ export async function POST(request: Request) {
             })
         });
         
-        if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null) {
+        if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
             // console.log("chain gets initialized");
-            await setAiMemoryChain(aiUserName);
+            await setAiMemoryChain(aiUserName, aiCharacteristics);
         }
         console.log("chain: ", (global as any).chain.prompt.promptMessages[0]);
 

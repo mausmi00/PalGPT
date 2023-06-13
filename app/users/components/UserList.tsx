@@ -2,13 +2,50 @@
 
 import { User } from "@prisma/client";
 import UserBox from "./UserBox";
+import { useEffect, useMemo, useState } from "react";
+import { useSession } from "next-auth/react";
+import { pusherClient } from "@/app/libs/pusher";
+import { find } from "lodash";
 
 interface UserListProps {
+  initialItems: User[]
   users: User[];
   ai_users: User[];
 }
 
-const UserList: React.FC<UserListProps> = ({ users, ai_users }) => {
+const UserList: React.FC<UserListProps> = ({ initialItems, users, ai_users }) => {
+  const session = useSession();
+  const [items, setItems] = useState(initialItems);
+
+const pusherKey = useMemo(() => {
+  return session.data?.user?.email;
+}, [session.data?.user?.email]);
+
+useEffect(() => {
+  // if the session has not loaded yet
+  if (!pusherKey) {
+    return;
+  }
+
+  pusherClient.subscribe(pusherKey);
+
+  const newHandler = (newPeople: User) => {
+    setItems((currentPeople) => {
+      if (find(currentPeople, { id: newPeople.id })) {
+        return currentPeople;
+      }
+      return [newPeople, ...currentPeople];
+    });
+  };
+
+  pusherClient.bind("user:new", newHandler);
+
+  return () => {
+    pusherClient.unsubscribe(pusherKey);
+    pusherClient.unbind("user:new", newHandler);
+
+  };
+}, [pusherKey]);
   return (
     <aside
       className="fixed

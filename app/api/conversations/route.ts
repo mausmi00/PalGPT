@@ -4,7 +4,6 @@ import prisma from "@/app/libs/prismadb";
 import { pusherServer } from "@/app/libs/pusher";
 import isAiUser from "@/app/actions/isAiUser";
 import { Conversation, User } from "@prisma/client";
-import setAiMemoryChain from "@/app/actions/setAiMemoryChain";
 
 export async function POST(request: Request) {
     
@@ -102,7 +101,7 @@ export async function POST(request: Request) {
                     users: true
                 }
             });
-            // const chain = setAiMemoryChain();
+            
         } else {
             newConversation = await prisma.conversation.create({
                 data: {
