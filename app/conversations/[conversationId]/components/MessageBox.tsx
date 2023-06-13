@@ -10,7 +10,7 @@ import ImageModal from "./ImageModal";
 interface MessageBoxProps {
   data: FullMessageType;
   isLast: boolean;
-}
+} 
 
 const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
   const session = useSession();
@@ -22,16 +22,16 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
     .map((user) => user.name)
     .join(",");
 
-  const container = clsx("flex gap-3 p-4", isOwn && "justify-end");
+  const container = clsx("flex gap-5 p-4", isOwn && "justify-end");
 
   const avatar = clsx(isOwn && "order-2");
 
-  const body = clsx("lex flex-col gap-2", isOwn && "items-end");
+  const body = clsx("flex flex-col gap-4", isOwn && "items-end");
 
   const messages = clsx(
     "text-sm w-fit overflow-hidden",
     isOwn ? "bg-sky-500 text-white" : "bg-gray-100",
-    data.image ? "rounded-md p-0" : "rounded-full py-2 px-3"
+    data.image ? "rounded-md p-0" : "rounded-full py-2 px-4"
   );
 
   return (

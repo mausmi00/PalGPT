@@ -5,6 +5,7 @@ import { pusherServer } from "@/app/libs/pusher";
 import getIsAiConversation from "@/app/actions/getIsAiConversation";
 import getAiResponse from "@/app/actions/getAiResponse";
 import setAiMemoryChain from "@/app/actions/setAiMemoryChain";
+import { User } from "@prisma/client";
 
 export async function POST(request: Request) {
     try {
@@ -80,7 +81,6 @@ export async function POST(request: Request) {
 
         const lastMessage = getUpdatedConversationUsersAndMessages?.messages[getUpdatedConversationUsersAndMessages?.messages.length - 1];
         let shouldTheResponderBeAnAi = false;
-
         if (isAiConvo) {
             await prisma.message.update({
                 where: {
@@ -94,28 +94,33 @@ export async function POST(request: Request) {
             shouldTheResponderBeAnAi = true;
         }
 
+        let aiUserId = null;
+        let aiUserName = null;
+        getUpdatedConversationUsersAndMessages?.users.map((user) => {
+            if (user.id != currentUser.id) {
+                aiUserId = user.id;
+                aiUserName = user.name
+            }
+        });
+
         getUpdatedConversationUsersAndMessages?.users.forEach((user) => {
             pusherServer.trigger(user.email!, "conversation:update", {
                 id: conversationId,
                 messages: [lastMessage]
             })
         });
-        if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1) {
+        
+        if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null) {
             // console.log("chain gets initialized");
-            await setAiMemoryChain();
+            await setAiMemoryChain(aiUserName);
         }
+        console.log("chain: ", (global as any).chain.prompt.promptMessages[0]);
 
         //  console.log("shouldTheResponderBeAnAi: ", shouldTheResponderBeAnAi);
-        if (isAiConvo && shouldTheResponderBeAnAi) {
-            let aiUser = null;
-            getUpdatedConversationUsersAndMessages?.users.map((user) => {
-                if (user.id != currentUser.id) {
-                    aiUser = user.id;
-                }
-            });
+        if (isAiConvo && shouldTheResponderBeAnAi && aiUserId !=  null) {
 
             shouldTheResponderBeAnAi = false;
-            if (lastMessage?.body != null && aiUser != null) {
+            if (lastMessage?.body != null) {
                 const response = await getAiResponse((global as any).chain, lastMessage?.body);
                 const newAiMessage = await prisma.message.create({
                     include: {
@@ -132,12 +137,12 @@ export async function POST(request: Request) {
                         },
                         sender: {
                             connect: {
-                                id: aiUser
+                                id: aiUserId
                             }
                         },
                         seen: {
                             connect: {
-                                id: aiUser
+                                id: aiUserId
                             }
                         }
                     }
