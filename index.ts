@@ -2,18 +2,14 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 async function main() {
-    const user = await prisma.user.createMany({
-        data: [
-            {
-                name: 'Jeon Jungkook',
-                email: "jeon_jungkook@ai.com",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                image: "/images/jungkookk.jpg",
-                isAi: true,
+    const user = await prisma.user.update({
+        where: {
+            id: "648343977f71596b4b97abef"
+        },
+        data: {
 
-            }
-        ]
+            characteristics: "mean"
+        }
     })
 
     // const updatedUser = await prisma.message.update({

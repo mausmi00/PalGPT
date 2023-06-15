@@ -4,6 +4,7 @@ import Avatar from "@/app/components/Avatar";
 import AvatarGroup from "@/app/components/AvatarGroup";
 import useOtherUsers from "@/app/hooks/useOtherUsers";
 import { FullConversationType } from "@/app/types";
+import axios from "axios";
 import clsx from "clsx";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
@@ -22,9 +23,12 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
   const otherUsers = useOtherUsers(data);
   const session = useSession();
   const router = useRouter();
-
   const handleClick = useCallback(() => {
-    router.push(`/conversations/${data.id}`);
+    axios.get(`/api/conversations/${data.id}`)
+      .then(() => {
+        router.push(`/conversations/${data.id}`);
+      });
+    console.log("called");
   }, [data, router]);
 
   const lastMessage = useMemo(() => {
@@ -60,18 +64,17 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
 
     if (lastMessage?.body) {
       return lastMessage?.body;
-    }
-    else {
+    } else {
       return "Started a conversation";
     }
-    
   }, [lastMessage]);
 
   return (
-    <div
-      onClick={handleClick}
-      className={clsx(
-        `
+    <>
+      <div
+        onClick={handleClick}
+        className={clsx(
+          `
     w-full
     relative
     flex
@@ -83,55 +86,60 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
     transition
     cursor-pointer
     `,
-        selected ? "bg-neutral-100" : "bg-white"
-      )}
-    >
-      {data.isGroup ? <AvatarGroup users={data.users}/> : <Avatar user={otherUsers} />}
+          selected ? "bg-neutral-100" : "bg-white"
+        )}
+      >
+        {data.isGroup ? (
+          <AvatarGroup users={data.users} />
+        ) : (
+          <Avatar user={otherUsers} />
+        )}
 
-      <div className="min-w-0 flex-1">
-        <div className="focus:outline-none">
-          <div
-            className="
+        <div className="min-w-0 flex-1">
+          <div className="focus:outline-none">
+            <div
+              className="
           flex
           justify-between
           items-center
           mb-1"
-          >
-            <p
-              className="
+            >
+              <p
+                className="
             text-md 
             font-medium
             text-gray-900
             "
-            >
-              {data.name || otherUsers.name}
-            </p>
-            {lastMessage?.createdAt && (
-              <p
-                className="
+              >
+                {data.name || otherUsers.name}
+              </p>
+              {lastMessage?.createdAt && (
+                <p
+                  className="
               text-xs
               text-gray-400
               font-light
               "
-              >
-                {format(new Date(lastMessage.createdAt), "p")}
-              </p>
-            )}
-          </div>
-          <p
-            className={clsx(
-              `
+                >
+                  {format(new Date(lastMessage.createdAt), "p")}
+                </p>
+              )}
+            </div>
+            <p
+              className={clsx(
+                `
           truncate
           text-sm
           `,
-              hasSeen ? "text-gray-500" : "text-black font-medium"
-            )}
-          >
-            {lastMessageText}
-          </p>
+                hasSeen ? "text-gray-500" : "text-black font-medium"
+              )}
+            >
+              {lastMessageText}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

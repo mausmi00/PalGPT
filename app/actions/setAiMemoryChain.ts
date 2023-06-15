@@ -5,7 +5,6 @@ import {
   HumanMessagePromptTemplate,
   SystemMessagePromptTemplate,
   MessagesPlaceholder,
-  AIMessagePromptTemplate
 } from "langchain/prompts";
 import { BufferMemory } from "langchain/memory";
 
@@ -15,9 +14,8 @@ const setAiMemoryChain = async (name: string, characteristics: string) => {
   const chat = new ChatOpenAI({
     temperature: 1,
     modelName: "gpt-3.5-turbo",
-    openAIApiKey: process.env.OPEN_API_KEY,
+    openAIApiKey: "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"
   });
-
   let chatPrompt;
   if (name == "Elon Musk") {
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
@@ -42,7 +40,7 @@ const setAiMemoryChain = async (name: string, characteristics: string) => {
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
         //`Act like ${characteristics} ${name} and don't refer to yourself as an machine learning model.`
-      `I'd like to have a conversation as if I'm chatting with the person ${name} who is ${characteristics}`
+        `I'd like to have a conversation as if I'm chatting with the person ${name} who is ${characteristics}`
       ),
       new MessagesPlaceholder("history"),
       HumanMessagePromptTemplate.fromTemplate("{input}"),
@@ -62,6 +60,10 @@ const setAiMemoryChain = async (name: string, characteristics: string) => {
     prompt: chatPrompt,
     llm: chat,
   });
+
+  // console.log("chain: ", (global as any).chain)
+  console.log("prompt: ", chatPrompt.promptMessages[0])
+  return (global as any).chain
 
 }
 
