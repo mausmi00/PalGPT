@@ -4,6 +4,8 @@ import prisma from "@/app/libs/prismadb";
 import { pusherServer } from "@/app/libs/pusher";
 import isAiUser from "@/app/actions/isAiUser";
 import setAiMemoryChain from "@/app/actions/setAiMemoryChain";
+import { Message } from "react-hook-form";
+import { Conversation } from "@prisma/client";
 
 interface IParams {
     conversationId: string
@@ -11,7 +13,7 @@ interface IParams {
 
 export async function DELETE(request: Request, { params }: { params: IParams }) {
     try {
-        console.log("conversation id");
+        // console.log("conversation id");
         const { conversationId } = params;
         const currentUser = await getCurrentUser();
 
@@ -24,7 +26,12 @@ export async function DELETE(request: Request, { params }: { params: IParams }) 
                 id: conversationId
             },
             include: {
-                users: true
+                users: {
+                    include: {
+                        conversations: true,
+                        seenMessages: true
+                    }
+                }
             }
         });
 
@@ -38,9 +45,40 @@ export async function DELETE(request: Request, { params }: { params: IParams }) 
                 userIds: {
                     hasSome: [currentUser.id]
                 },
-            },
+            }
         });
 
+
+
+        if (deleteConversation) {
+
+            existingConversation.users.forEach(async (user) => {
+                const conversationsAfterDeletion = user.conversations.filter(conversation => conversationId != conversation.id);
+                const conversationIdsAfterDeletion: string[] = [];
+                conversationsAfterDeletion.forEach((conversation) => conversationIdsAfterDeletion.push(conversation.id))
+                console.log("convos now: ", conversationIdsAfterDeletion.length)
+                const seenMessagesAfterDeletion = user.seenMessages.filter(message => message.conversationId != conversationId)
+                const seenMessageIdsAfterDeletion: Messages[] = [];
+                seenMessagesAfterDeletion.forEach((message) => seenMessageIdsAfterDeletion.push(message.id));
+                console.log("messages now: ", seenMessagesAfterDeletion.length)
+                console.log("user name: ", user.name)
+                const deleteCorrespondingConvoIdsFromUsers = await prisma.user.update({
+                    where: {
+                        id: user.id
+                    },
+                    data: {
+                        conversationIds:
+                        {
+                            set: conversationIdsAfterDeletion
+                        },
+                        seenMessageIds: {
+                            set: seenMessageIdsAfterDeletion
+                        }
+                    }
+
+                });
+            })
+        }
         existingConversation.users.forEach((user) => {
             if (user.email) {
                 pusherServer.trigger(user.email, 'conversation:remove', existingConversation);
@@ -80,8 +118,8 @@ export async function GET(request: Request, { params }: { params: IParams }) {
         if (potentialAiUser != null) {
             const isAiConvo = await isAiUser(potentialAiUser[0]?.id);
             if (isAiConvo && potentialAiUser[0].name && potentialAiUser[0].characteristics) {
-              //  console.log("should work")
-                 await setAiMemoryChain(potentialAiUser[0].name, potentialAiUser[0].characteristics);
+                //  console.log("should work")
+                await setAiMemoryChain(potentialAiUser[0].name, potentialAiUser[0].characteristics);
             }
         }
         return NextResponse.json(currentConvo);
