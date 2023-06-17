@@ -8,6 +8,7 @@ interface MobileItemProps {
   active?: boolean;
   icon: any;
   onClick?: () => void;
+  label:string
 }
 
 const MobileItem: React.FC<MobileItemProps> = ({
@@ -15,12 +16,22 @@ const MobileItem: React.FC<MobileItemProps> = ({
   active,
   icon: Icon,
   onClick,
+  label
 }) => {
   const handleClick = () => {
     if (onClick) {
       return onClick();
     }
   };
+  
+  function iconLabelDisplay() {
+    return (
+      <div className="bg-gray-200 hover:text-black py-2 px-8 text-sm">
+        {label}
+      </div>
+    )
+  }
+
   return (
     <Link
       onClick={onClick}
@@ -36,13 +47,14 @@ const MobileItem: React.FC<MobileItemProps> = ({
     w-full
     justify-center
     p-4
-    text-gray-500
-    hover:text-black
-    hover:bg-gray-100`,
+    text-gray-500`,
         active && "bg-gray-100 text-black"
       )}
     >
-      <Icon className="h-6 w-6" />
+      <Icon className="h-6 w-6 shrink-0" />
+      <div className="shrink-0 hidden text-gray-700 group-hover:block">
+       {iconLabelDisplay()}
+       </div>
     </Link>
   );
 };

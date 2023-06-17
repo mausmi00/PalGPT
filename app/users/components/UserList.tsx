@@ -8,44 +8,47 @@ import { pusherClient } from "@/app/libs/pusher";
 import { find } from "lodash";
 
 interface UserListProps {
-  initialItems: User[]
+  initialItems: User[];
   users: User[];
   ai_users: User[];
 }
 
-const UserList: React.FC<UserListProps> = ({ initialItems, users, ai_users }) => {
+const UserList: React.FC<UserListProps> = ({
+  initialItems,
+  users,
+  ai_users,
+}) => {
   const session = useSession();
   const [items, setItems] = useState(initialItems);
 
-const pusherKey = useMemo(() => {
-  return session.data?.user?.email;
-}, [session.data?.user?.email]);
+  const pusherKey = useMemo(() => {
+    return session.data?.user?.email;
+  }, [session.data?.user?.email]);
 
-useEffect(() => {
-  // if the session has not loaded yet
-  if (!pusherKey) {
-    return;
-  }
+  useEffect(() => {
+    // if the session has not loaded yet
+    if (!pusherKey) {
+      return;
+    }
 
-  pusherClient.subscribe(pusherKey);
+    pusherClient.subscribe(pusherKey);
 
-  const newHandler = (newPeople: User) => {
-    setItems((currentPeople) => {
-      if (find(currentPeople, { id: newPeople.id })) {
-        return currentPeople;
-      }
-      return [newPeople, ...currentPeople];
-    });
-  };
+    const newHandler = (newPeople: User) => {
+      setItems((currentPeople) => {
+        if (find(currentPeople, { id: newPeople.id })) {
+          return currentPeople;
+        }
+        return [newPeople, ...currentPeople];
+      });
+    };
 
-  pusherClient.bind("user:new", newHandler);
+    pusherClient.bind("user:new", newHandler);
 
-  return () => {
-    pusherClient.unsubscribe(pusherKey);
-    pusherClient.unbind("user:new", newHandler);
-
-  };
-}, [pusherKey]);
+    return () => {
+      pusherClient.unsubscribe(pusherKey);
+      pusherClient.unbind("user:new", newHandler);
+    };
+  }, [pusherKey]);
   return (
     <aside
       className="fixed
@@ -65,18 +68,29 @@ useEffect(() => {
       <div className="px-5">
         <div className="flex-col">
           <div
-            className="
-                text-2xl
-                font-bold
-                text-neutral-800
-                py-4"
+            className=" text-2xl
+          font-bold
+          text-neutral-800
+          py-4"
           >
-            People
+            Friends
+            <hr className="w-48 h-1 my-4 bg-gray-100 border-0 rounded md:my-4 dark:bg-gray-700"/>
+            
           </div>
         </div>
         {users.map((user) => (
           <UserBox key={user.id} user={user} />
         ))}
+        <div
+          className="
+                text-2xl
+                font-bold
+                text-neutral-800
+                py-4"
+        >
+          Agents
+          <hr className="w-48 h-1 my-4 bg-gray-100 border-0 rounded md:my-4 dark:bg-gray-700"/>
+        </div>
         {ai_users.map((user) => (
           <UserBox key={user.id} user={user} />
         ))}

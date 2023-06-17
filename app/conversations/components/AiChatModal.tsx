@@ -115,7 +115,7 @@ const AiChatModal: React.FC<AiChatModalProps> = ({ isOpen, onClose }) => {
                   uploadPreset="zf6ormgu"
                 >
                   <Button disabled={isLoading} secondary type="button">
-                    Set
+                    Set profile picture
                   </Button>
                 </CldUploadButton>
               </div>

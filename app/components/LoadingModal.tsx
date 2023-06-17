@@ -2,7 +2,7 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { ClipLoader } from "react-spinners";
+import { RingLoader } from "react-spinners";
 
 const LoadingModal = () => {
   return (
@@ -45,7 +45,7 @@ const LoadingModal = () => {
             "
           >
             <Dialog.Panel>
-              <ClipLoader size={40} color="#0284c7" />
+              <RingLoader size={40} color="#0284c7" />
             </Dialog.Panel>
           </div>
         </div>

@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { MdOutlineGroupAdd } from "react-icons/md";
+import { GrRobot } from "react-icons/gr";
 import ConversationBox from "./ConversationBox";
 import GroupChatModal from "./GroupChatModal";
 import { User } from "@prisma/client";
@@ -28,7 +29,8 @@ const ConversationList: React.FC<ConversationListProps> = ({
 }) => {
   const session = useSession();
   const [items, setItems] = useState(initialItems);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
 
   const router = useRouter();
 
@@ -98,10 +100,15 @@ const ConversationList: React.FC<ConversationListProps> = ({
   return (
     <>
       <AiChatModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isAiModalOpen}
+        onClose={() => setIsAiModalOpen(false)}
       />
-      
+      <GroupChatModal
+        isOpen={isGroupModalOpen}
+        onClose={() => setIsGroupModalOpen(false)}
+        users={users}
+      />
+
       <aside
         className={clsx(
           `
@@ -122,20 +129,48 @@ const ConversationList: React.FC<ConversationListProps> = ({
         <div className="px-5">
           <div className="flex justify-between mb-4 pt-4">
             <div className="text-2xl font-bold text-neutral-800">Messages</div>
+            {/* <div className=" flex flex-row"> */}
             <div
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setIsGroupModalOpen(true)}
               className="
+              group
           rounded-full
           p-2
           bg-gray-100
           test-gray-600
           cursor-pointer
           hover:opactiy-75 
-          transition"
+          transition
+          "
             >
-              <MdOutlineGroupAdd size={20} />
+              <MdOutlineGroupAdd className="group-hover:hidden" size={20} />
+              <div className="hidden text-gray-700 group-hover:inline text-xs">
+                Create group chat
+              </div>
             </div>
+            <div
+              onClick={() => setIsAiModalOpen(true)}
+              className="
+              group
+          rounded-full
+          p-2
+          bg-gray-100
+          test-gray-600
+          cursor-pointer
+          hover:opactiy-75 
+          transition
+          shrink-0
+          "
+            >
+              
+              <GrRobot className="group-hover:hidden" size={20} />
+              <div className=" hidden text-gray-700 group-hover:inline text-xs">
+                Create agent
+              </div>
+            </div>
+            {/* </div> */}
           </div>
+          <hr className="w-auto h-1 my-4 bg-gray-100 border-0 rounded md:my-4 dark:bg-gray-700" />
           {items.map((item) => (
             <ConversationBox
               key={item.id}

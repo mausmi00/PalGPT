@@ -34,6 +34,7 @@ const MobileFooter = () => {
           active={item.active}
           icon={item.icon}
           onClick={item.onClick}
+          label={item.label}
         />
       ))}
     </div>
