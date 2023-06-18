@@ -68,8 +68,7 @@ const AiChatModal: React.FC<AiChatModalProps> = ({ isOpen, onClose }) => {
               className="
             text-base
             font-semibold
-            leading-7
-            text-gray-900"
+            leading-7"
             >
               Create a new agent
             </h2>
@@ -114,7 +113,7 @@ const AiChatModal: React.FC<AiChatModalProps> = ({ isOpen, onClose }) => {
                   onUpload={handleUpload}
                   uploadPreset="zf6ormgu"
                 >
-                  <Button disabled={isLoading} secondary type="button">
+                  <Button disabled={isLoading} gradient type="button">
                     Set profile picture
                   </Button>
                 </CldUploadButton>
@@ -138,7 +137,7 @@ const AiChatModal: React.FC<AiChatModalProps> = ({ isOpen, onClose }) => {
           >
             Cancel
           </Button>
-          <Button disabled={isLoading} type="submit">
+          <Button disabled={isLoading} type="submit" secondary>
             Create
           </Button>
         </div>

@@ -2,6 +2,7 @@ import Avatar from "@/app/components/Avatar";
 import LoadingModal from "@/app/components/LoadingModal";
 import { User } from "@prisma/client";
 import axios from "axios";
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
@@ -37,13 +38,15 @@ const UserBox: React.FC<UserBoxProps> = ({ user }) => {
         flex
         items-center
         space-x-3
-        bg-white
         p-3
-        hover:bg-neutral-100
+        hover:bg-[#66FCF1]
+        hover:opacity-100
+        hover:text-[#1F2833]
         rounded-lg
         transition
         cursor-pointer
-        "
+        bg-[#1F2833]
+        text-white"
       >
         <Avatar user={user} />
         <div
@@ -60,8 +63,7 @@ const UserBox: React.FC<UserBoxProps> = ({ user }) => {
               <p
                 className="
                 text-sm
-                font-medium
-                text-gray-900"
+                font-medium"
               >
                 {user.name}
               </p>

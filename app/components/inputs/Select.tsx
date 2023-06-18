@@ -19,7 +19,8 @@ const Select: React.FC<SelectProps> = ({
   return (
     <div
       className="
-  z-[100]"
+  z-[100]
+  "
     >
       <label
         className="
@@ -27,11 +28,11 @@ const Select: React.FC<SelectProps> = ({
       text-sm
       font-medium
       leading-6
-      text-gray-900"
+      text-white"
       >
         {label}
       </label>
-      <div className="mt-2">
+      <div className="mt-2 text-[#1F2833]">
         <ReactSelect
           isDisabled={disabled}
           value={value}
@@ -43,11 +44,10 @@ const Select: React.FC<SelectProps> = ({
             menuPortal: (base) => ({
               ...base,
               zIndex: 9999,
+              color:"#1F2833",
             }),
           }}
-          classNames={{
-            control: () => "text-sm",
-          }}
+          className="bg-red text-[#1F2833]"
         />
       </div>
     </div>

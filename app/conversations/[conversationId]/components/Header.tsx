@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
       />
       <div
         className="
-    bg-white
+    bg-[#1F2833]
     w-full
     flex
     border-b-[1px]
@@ -60,8 +60,8 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
             className="
             lg:hidden
             block
-            text-sky-500
-            hover:text-sky-600
+            text-white
+            hover:text-[#66FCF1]
             transition
             cursor-pointer"
             href="/conversations"

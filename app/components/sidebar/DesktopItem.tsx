@@ -25,10 +25,10 @@ const DesktopItem: React.FC<DesktopItemProps> = ({
   };
   function iconLabelDisplay() {
     return (
-      <div className="bg-gray-200 hover:text-black py-2 px-8 text-sm">
+      <div className="bg-[#66FCF1] hover:text-[#1F2833] py-4 px-8 text-sm">
         {label}
       </div>
-    )
+    );
   }
 
   return (
@@ -44,15 +44,16 @@ const DesktopItem: React.FC<DesktopItemProps> = ({
             text-sm
             leading-6
             font-semibold
-            text-gray-500
+            bg-[#1F2833]
+            opacity-100
             `,
-          active && "bg-gray-100 text-black"
+           active && "bg-[#66FCF1] text-[#1F2833]"
         )}
       >
-        <Icon className="h-6 w-6 group-hover:hidden" />
-        <div className="shrink-0 hidden text-gray-700 group-hover:block">
-       {iconLabelDisplay()}
-       </div>
+        <Icon className="h-6 w-6 group-hover:hidden group-hover:opacity-0" />
+        <div className="hidden group-hover:block">
+          {iconLabelDisplay()}
+        </div>
         <span className="sr-only">{label}</span>
       </Link>{" "}
     </li>

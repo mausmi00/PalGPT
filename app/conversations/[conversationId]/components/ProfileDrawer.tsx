@@ -119,7 +119,8 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                   h-full
                   flex-col
                   overflow-y-scroll
-                  bg-white
+                  bg-[#1F2833]
+                  text-white
                   py-6
                   shadow-xl"
                     >
@@ -144,13 +145,13 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                               type="button"
                               className="
                           rounded-md
-                          bg-white
-                          text-gray-400
-                          hover:text-gray-500
+                          bg-[#66FCF1]
+                          hover:text-[#C5C6C7]
                           focus:outline-none
                           focus:ring-2
-                          focus:ring-sky-500
+                          focus:ring-[#C5C6C7]
                           focus:ring-offset-2
+                          text-[#1F2833]
                           "
                             >
                               <span className="sr-only"> Close panel</span>
@@ -179,7 +180,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                           <div>{title}</div>
                           <div
                             className="
-                        text-sm text-gray-500"
+                        text-sm text-white"
                           >
                             {statusText}
                           </div>
@@ -201,11 +202,12 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                 className="
                             w-10
                             h-10
-                            bg-neutral-100
+                            bg-[#66FCF1]
                             rounded-full
                             flex
                             items-center
-                            justify-center"
+                            justify-center
+                            text-[#1F2833]"
                               >
                                 <IoTrash size={20} />
                               </div>
@@ -213,7 +215,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                 className="
                             text-sm
                             font-light
-                            text-neutral-600"
+              "
                               >
                                 Delete
                               </div>
@@ -241,7 +243,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                     className="
                                   text-sm
                                   font-medium
-                                  text-gray-500
+                                  text-white
                                   sm:w-40
                                   sm:flex-shrink-0"
                                   >
@@ -266,7 +268,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                     className="
                                   text-sm
                                 font-medium
-                                text-gray-500
+                                text-white
                                 sm:w-40
                                 sm:flex-shrink-0
                                 "
@@ -277,7 +279,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                     className="
                                 mt-1
                                 text-sm
-                                text-gray-900
+                                text-white
                                 sm:col-span-2
                                 "
                                   >
@@ -287,13 +289,13 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                               )}
                               {!data.isGroup && (
                                 <>
-                                  <hr />
+                                 <hr className="w-full h-1 my-2 bg-[#66FCF1] border-0 rounded md:my-4"/>
                                   <div>
                                     <dt
                                       className="
                                 text-sm
                                 font-medium
-                                text-gray-500
+                                text-white
                                 sm:w-40
                                 sm:flex-shrink-0
                                 "
@@ -304,7 +306,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                       className="
                                   mt-1
                                   text-sm
-                                  text-gray-900
+                                  text-white
                                   sm:col-span-2"
                                     >
                                       <time dateTime={joinDate}>

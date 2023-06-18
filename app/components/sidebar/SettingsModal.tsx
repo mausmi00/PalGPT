@@ -60,12 +60,12 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="space-y-12">
+        <div className="space-y-12 text-white">
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
+            <h2 className="text-base font-semibold leading-7">
               Profile
             </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600 ">
+            <p className="mt-1 text-sm leading-6 ">
               Edit your public information.
             </p>
             <div className="mt-10 flex flex-col gap-y-8">
@@ -83,8 +83,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                 block
                 text-sm
                 font-medium
-                leading-6
-                text-gray-900"
+                leading-6"
                 >
                   Photo
                 </label>
@@ -110,7 +109,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                     onUpload={handleUpload}
                     uploadPreset="zf6ormgu"
                   >
-                    <Button disabled={isLoading} secondary type="button">
+                    <Button disabled={isLoading} gradient type="button">
                       Change
                     </Button>
                   </CldUploadButton>

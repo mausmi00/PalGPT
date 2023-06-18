@@ -33,7 +33,7 @@ const AiForm = async () => {
         className="
   py-4
   px-4
-  bg-white
+  bg-[#1F2833]
   border-t
   flex
   items-center
@@ -58,9 +58,9 @@ const AiForm = async () => {
             className="
         rounded-full
         p-2
-        bg-sky-500
+        bg-[#240090]
         cursor-pointer
-        hover:bg-sky-600
+        hover:bg-[#66FCF1]
         transition"
           >
             <HiPaperAirplane size={18} className="text-white" />

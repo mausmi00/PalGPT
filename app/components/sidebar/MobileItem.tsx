@@ -26,7 +26,7 @@ const MobileItem: React.FC<MobileItemProps> = ({
   
   function iconLabelDisplay() {
     return (
-      <div className="bg-gray-200 hover:text-black py-2 px-8 text-sm">
+      <div className="bg-[#66FCF1] hover:text-[#1F2833] w-full py-4 px-8 text-sm">
         {label}
       </div>
     )
@@ -46,14 +46,15 @@ const MobileItem: React.FC<MobileItemProps> = ({
     font-semibold
     w-full
     justify-center
-    p-4
-    text-gray-500`,
-        active && "bg-gray-100 text-black"
+    p-4`,
+        active && "bg-[#66FCF1] text-black hover:bg-[#1F2833]"
       )}
     >
-      <Icon className="h-6 w-6 shrink-0" />
-      <div className="shrink-0 hidden text-gray-700 group-hover:block">
+      <div>
+      <Icon className="h-6 w-6 group-hover:hidden" />
+      <div className="hidden group-hover:block">
        {iconLabelDisplay()}
+       </div>
        </div>
     </Link>
   );

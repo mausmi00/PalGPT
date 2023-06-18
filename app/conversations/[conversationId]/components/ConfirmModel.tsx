@@ -69,13 +69,13 @@ const ConfirmModel: React.FC<ConfirmModelProps> = ({ isOpen, onClose }) => {
           text-base
           font-semibold
           leading-6
-          text-gray-600
+          text-white
           "
           >
             Delete conversation
           </Dialog.Title>
           <div className="mt-2">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-white">
               Are you sure you want to delete this conversation? This action
               cannot be undone.
             </p>

@@ -101,7 +101,7 @@ const AuthForm = () => {
     >
       <div
         className="
-        bg-white
+        bg-[#1F2833]
         px-4
         py-8
         shadow
@@ -147,6 +147,7 @@ const AuthForm = () => {
               disabled={isLoading}
               fullWidth
               type="submit"
+              gradient
             >
               {variant == "LOGIN" ? "Sign In" : "Register"}
             </Button>
@@ -176,9 +177,9 @@ const AuthForm = () => {
                        text-sm"
             >
               <span
-                className="bg-white 
+                className="bg-[#1F2833]
                         px-2
-                         text-gray-500"
+                         text-white"
               >
                 Or continue with
               </span>

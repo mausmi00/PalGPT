@@ -70,29 +70,27 @@ const UserList: React.FC<UserListProps> = ({
           <div
             className=" text-2xl
           font-bold
-          text-neutral-800
           py-4"
           >
             Friends
-            <hr className="w-48 h-1 my-4 bg-gray-100 border-0 rounded md:my-4 dark:bg-gray-700"/>
+            <hr className="w-48 h-1 my-4 bg-[#66FCF1] border-0 rounded md:my-4"/>
             
           </div>
         </div>
         {users.map((user) => (
-          <UserBox key={user.id} user={user} />
+          <UserBox key={user.id} user={user}/>
         ))}
         <div
           className="
                 text-2xl
                 font-bold
-                text-neutral-800
                 py-4"
         >
           Agents
-          <hr className="w-48 h-1 my-4 bg-gray-100 border-0 rounded md:my-4 dark:bg-gray-700"/>
+          <hr className="w-48 h-1 my-4 bg-[#66FCF1] border-0 rounded md:my-4"/>
         </div>
         {ai_users.map((user) => (
-          <UserBox key={user.id} user={user} />
+          <UserBox key={user.id} user={user}/>
         ))}
       </div>
     </aside>
