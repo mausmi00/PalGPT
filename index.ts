@@ -2,13 +2,24 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 async function main() {
-    const user = await prisma.user.update({
-        where: {
-            id: "648343977f71596b4b97abef"
-        },
-        data: {
+    // const user = await prisma.user.update({
+    //     where: {
+    //         id: "648343977f71596b4b97abef"
+    //     },
+    //     data: {
+    //         seenMessageIds: []
+    //     }
+    // })
 
-            characteristics: "mean"
+    const createUser = await prisma.user.create({
+        data: {
+            name: "Socrates",
+            email: "socrates@ai.com",
+            image: "/images/socrates.jpg",
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            isAi: true,
+            characteristics: "Greek philosopher"
         }
     })
 

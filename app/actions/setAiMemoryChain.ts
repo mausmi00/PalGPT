@@ -20,7 +20,7 @@ const setAiMemoryChain = async (name: string, characteristics: string) => {
   if (name == "Elon Musk") {
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
-        "Act like a mean Elon Musk and don't refer to yourself as an machine learning model. "
+        "I'd like to have a conversation with with a human Elon Musk who is not in a good mood"
       ),
       new MessagesPlaceholder("history"),
       HumanMessagePromptTemplate.fromTemplate("{input}"),
@@ -30,7 +30,61 @@ const setAiMemoryChain = async (name: string, characteristics: string) => {
   else if (name == "Jeon Jungkook") {
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
-        "Act like a warm, positive, encouraging, hardworking, funny Jeon Jungkook and don't refer to yourself as an machine learning model. "
+        "I'd like to have a conversation with a warm, positive, encouraging, hardworking and funny human Jeon Jungkook from BTS who often uses emojis while sending texts"
+      ),
+      new MessagesPlaceholder("history"),
+      HumanMessagePromptTemplate.fromTemplate("{input}"),
+    ]);
+  }
+  else if (name == "Bill Gates") {
+    chatPrompt = ChatPromptTemplate.fromPromptMessages([
+      SystemMessagePromptTemplate.fromTemplate(
+        "I'd like to have a conversation with the other person being the co-founder of Microsoft, a technology visionary and a philanthropist, Bill Gates"
+      ),
+      new MessagesPlaceholder("history"),
+      HumanMessagePromptTemplate.fromTemplate("{input}"),
+    ]);
+  }
+  else if (name == "Tim Cook") {
+    chatPrompt = ChatPromptTemplate.fromPromptMessages([
+      SystemMessagePromptTemplate.fromTemplate(
+        "Act like Tim Cook. Keep your conversations short"
+      ),
+      new MessagesPlaceholder("history"),
+      HumanMessagePromptTemplate.fromTemplate("{input}"),
+    ]);
+  }
+  else if (name == "Mark Zuckerberg") {
+    chatPrompt = ChatPromptTemplate.fromPromptMessages([
+      SystemMessagePromptTemplate.fromTemplate(
+        "Act like you are Mark Zuckerberg. Keep your conversations short"
+      ),
+      new MessagesPlaceholder("history"),
+      HumanMessagePromptTemplate.fromTemplate("{input}"),
+    ]);
+  }
+  else if (name == "Shoyo Hinata") {
+    chatPrompt = ChatPromptTemplate.fromPromptMessages([
+      SystemMessagePromptTemplate.fromTemplate(
+        "Act like you are the main character of the anime Haikyuu!!, Shoyo Hinata. He is short , screams when excited, funny, dreams of becoming a top volleyball player, a relentless spirit, has unwavering optimism and inpires his teammates. Respond with anime style exclamations and keep the replies short."
+      ),
+      new MessagesPlaceholder("history"),
+      HumanMessagePromptTemplate.fromTemplate("{input}"),
+    ]);
+  }
+  else if (name == "Tobio Kageyama") {
+    chatPrompt = ChatPromptTemplate.fromPromptMessages([
+      SystemMessagePromptTemplate.fromTemplate(
+        "Act like you are a character of the anime Haikyuu!!, Tobio Kageyama. He is competative, exceptional setter, socially awkward, aggrogant, quick analytical skills which lead to the freak-quick duo with Hinata. Give anime-style responses and keep them short."
+      ),
+      new MessagesPlaceholder("history"),
+      HumanMessagePromptTemplate.fromTemplate("{input}"),
+    ]);
+  }
+  else if (name == "Socrates") {
+    chatPrompt = ChatPromptTemplate.fromPromptMessages([
+      SystemMessagePromptTemplate.fromTemplate(
+        "Act like you are the Greek philosopher Socrates known for his method of questioning which aimed to stimulate critical thinking and self-examination. I'd like to have a conversation with him and learn about what Socrate thinks"
       ),
       new MessagesPlaceholder("history"),
       HumanMessagePromptTemplate.fromTemplate("{input}"),

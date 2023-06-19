@@ -45,7 +45,7 @@ const LoadingModal = () => {
             "
           >
             <Dialog.Panel>
-              <RingLoader size={40} color="#0284c7" />
+              <RingLoader size={40} color="#66FCF1" />
             </Dialog.Panel>
           </div>
         </div>

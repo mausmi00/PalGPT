@@ -58,12 +58,12 @@ const AiForm = async () => {
             className="
         rounded-full
         p-2
-        bg-[#240090]
+        bg-[#66FCF1]
         cursor-pointer
-        hover:bg-[#66FCF1]
+        hover:bg-[#45A29E]
         transition"
           >
-            <HiPaperAirplane size={18} className="text-white" />
+            <HiPaperAirplane size={18} className="text-[#1F2833]" />
           </button>
         </form>
       </div>

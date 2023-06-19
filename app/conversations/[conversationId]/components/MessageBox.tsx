@@ -31,7 +31,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
   const messages = clsx(
     "text-sm w-fit overflow-hidden",
     isOwn ? "bg-[#66FCF1] text-[#1F2833]" : "bg-white text-[#1F2833]",
-    data.image ? "rounded-md p-0" : "rounded-full py-2 px-4"
+    data.image ? "rounded-md p-0" : "rounded-xl py-2 px-2"
   );
 
   return (
