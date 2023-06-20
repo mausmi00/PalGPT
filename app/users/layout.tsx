@@ -12,7 +12,7 @@ export default async function UserLayout({
     // @ts-expect-error Server Component
     <Sidebar>
       <div className="h-full">
-        <UserList users={users[0]} ai_users={users[1]} />
+        <UserList users={users[0]} ai_users={users[1]} initialItems={[]} />
         {children}
         </div>
     </Sidebar>
