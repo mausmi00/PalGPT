@@ -58,7 +58,7 @@ export async function DELETE(request: Request, { params }: { params: IParams }) 
                 conversationsAfterDeletion.forEach((conversation) => conversationIdsAfterDeletion.push(conversation.id))
                 console.log("convos now: ", conversationIdsAfterDeletion.length)
                 const seenMessagesAfterDeletion = user.seenMessages.filter(message => message.conversationId != conversationId)
-                const seenMessageIdsAfterDeletion: Messages[] = [];
+                const seenMessageIdsAfterDeletion: Message[] = [];
                 seenMessagesAfterDeletion.forEach((message) => seenMessageIdsAfterDeletion.push(message.id));
                 console.log("messages now: ", seenMessagesAfterDeletion.length)
                 console.log("user name: ", user.name)
