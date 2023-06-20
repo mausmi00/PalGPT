@@ -6,7 +6,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import MessageInput from "./MessageInput";
 import { HiPaperAirplane } from "react-icons/hi2";
 
-const AiForm = async () => {
+const AiForm = () => {
   const { conversationId } = useConversation();
   const {
     register,
