@@ -8,7 +8,7 @@ const useUsersCharacteristics = (conversation: FullConversationType) => {
     const usersCharacteristics = useMemo(() => {
         const currentUserEmail = session?.data?.user?.email;
         const otherUser = conversation.users.filter((user) => user.email !== currentUserEmail);
-        const otherUserCharacteristics = otherUser.characteristics;
+        const otherUserCharacteristics = otherUser[0].characteristics;
         return otherUserCharacteristics
     }, [session?.data?.user?.email, conversation.users]);
     return usersCharacteristics;
