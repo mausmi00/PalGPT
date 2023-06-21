@@ -19,7 +19,7 @@ const useRoutes = () => {
 
     const routes = useMemo(() => [
         {
-            label: 'Chat',
+            label: 'chats',
             href: '/conversations',
             icon: RiChatSmile3Fill,
             active: pathname === '/conversations' || !!conversationId

@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import Link from "next/link";
+import { useState } from "react";
 
 interface DesktopItemProps {
   label: string;
@@ -23,13 +24,6 @@ const DesktopItem: React.FC<DesktopItemProps> = ({
       return onClick();
     }
   };
-  function iconLabelDisplay() {
-    return (
-      <div className="bg-[#66FCF1] hover:text-[#1F2833] py-4 px-8 text-sm">
-        {label}
-      </div>
-    );
-  }
 
   return (
     <li onClick={handleClick}>
@@ -46,12 +40,14 @@ const DesktopItem: React.FC<DesktopItemProps> = ({
             font-semibold
             opacity-100
             `,
-           active && "bg-[#66FCF1] text-[#1F2833]"
+          active && "bg-[#66FCF1] text-[#1F2833]"
         )}
       >
-        <Icon className="h-6 w-6 group-hover:hidden group-hover:opacity-0" />
-        <div className="hidden group-hover:block">
-          {iconLabelDisplay()}
+        <Icon className="h-6 w-6 group-hover:hidden" />
+        <div className={clsx( `hidden bg-[#66FCF1] text-[#1F2833] group-hover:inline text-xs font-bold`,
+        active ? "py-1" : "py-3 px-2 rounded-md leading-6")}
+        >
+          {label}
         </div>
         <span className="sr-only">{label}</span>
       </Link>{" "}

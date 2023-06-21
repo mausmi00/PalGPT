@@ -56,7 +56,7 @@ const UserList: React.FC<UserListProps> = ({
         lg:left-20
         lg:w-80
         lg:block
-        overflow-y-auto
+        overflow-y-auto scrollbar-thin scrollbar-thumb-[#C5C6C7] scrollbar-track-[#1F2833] rounded-[12px]
         border-r
         border-gray-200
         block

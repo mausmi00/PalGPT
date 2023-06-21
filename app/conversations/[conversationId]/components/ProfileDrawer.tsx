@@ -118,7 +118,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                   flex
                   h-full
                   flex-col
-                  overflow-y-scroll
+                  overflow-y-scroll scrollbar-thin scrollbar-thumb-[#C5C6C7] scrollbar-track-[#1F2833] rounded-[12px]
                   bg-[#1F2833]
                   text-white
                   py-6

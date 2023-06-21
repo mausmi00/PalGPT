@@ -31,12 +31,13 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ currentUser }) => {
     lg:z-40
     lg:w-20
     lg:px-6
-    lg:overflow-y-auto
+    lg:overflow-y-auto scrollbar-thin scrollbar-thumb-[#C5C6C7] scrollbar-track-[#1F2833] rounded-[12px]
     lg:border-r-[1px]
     lg:pb-4
     lg:flex
     lg:flex-col
-    justify-between"
+    justify-between
+    overflow-hidden"
       >
         <nav
           className="

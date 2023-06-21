@@ -119,7 +119,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
     lg:left-20
     lg:w-80
     lg:block
-    overflow-y-auto
+    overflow-y-auto scrollbar-thin scrollbar-thumb-[#C5C6C7] scrollbar-track-[#1F2833]
     border-r
     border-gray-200
     `,
