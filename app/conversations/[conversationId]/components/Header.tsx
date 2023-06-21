@@ -9,6 +9,7 @@ import { HiChevronLeft, HiEllipsisHorizontal } from "react-icons/hi2";
 import ProfileDrawer from "./ProfileDrawer";
 import AvatarGroup from "@/app/components/AvatarGroup";
 import useActiveList from "@/app/hooks/useActiveList";
+import Button from "@/app/components/Buttons";
 
 interface HeaderProps {
   conversation: Conversation & {
@@ -18,6 +19,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ conversation }) => {
   const otherUsers = useOtherUsers(conversation);
+  const [isOpen, setIsOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { members } = useActiveList();
   let isActive = members.indexOf(otherUsers?.email!) !== -1;
@@ -25,6 +27,18 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
   if (otherUsers?.isAi == true) {
     isActive = true;
   }
+
+  const onClickCharacteristics = () => {
+    // console.log("clicked")
+    // return (
+    //   <div>
+    //     <p>{otherUsers?.characteristics}</p>
+    //   </div>
+    // );
+    if (otherUsers.isAi) {
+      setIsOpen(!isOpen);
+    }
+  };
 
   const statusText = useMemo(() => {
     if (conversation.isGroup) {
@@ -78,7 +92,19 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
             className="
         flex flex-col"
           >
-            <div>{conversation.name || otherUsers.name}</div>
+            <div className="bg-[#1F2833] text-white">
+              <Button
+                onClick={onClickCharacteristics}
+                description
+                type="button"
+              >
+                {conversation.name || otherUsers.name}
+              </Button>
+              {isOpen ? (
+                <p className="text-sm">{otherUsers?.characteristics}</p>
+              ) : null}
+            </div>
+            {/* <p className="text-sm">{otherUsers?.characteristics}</p> */}
             <div
               className="text-sm
           font-light

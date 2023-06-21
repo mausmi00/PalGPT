@@ -105,7 +105,7 @@ export async function POST(request: Request) {
                 }
             });
         }
-       
+
 
         getUpdatedConversationUsersAndMessages?.users.forEach((user) => {
             pusherServer.trigger(user.email!, "conversation:update", {
@@ -113,18 +113,21 @@ export async function POST(request: Request) {
                 messages: [lastMessage]
             })
         });
-        
-        // if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
-        //     // console.log("chain gets initialized");
-        //     await setAiMemoryChain(aiUserName, aiCharacteristics);
-        // }
-        // console.log("chain: ", (global as any).chain.prompt.promptMessages[0]);
+
+        if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
+            // console.log("chain gets initialized");
+            await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
+        }
+        console.log("chain: ", (global as any).chain.prompt.promptMessages[0]);
 
         //  console.log("shouldTheResponderBeAnAi: ", shouldTheResponderBeAnAi);
-        if (isAiConvo && shouldTheResponderBeAnAi && aiUserId !=  null) {
+        if (isAiConvo && shouldTheResponderBeAnAi && aiUserId != null) {
 
             shouldTheResponderBeAnAi = false;
             if (lastMessage?.body != null) {
+                if ((global as any).chain == null && aiUserName != null && aiCharacteristics != null) {
+                    await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
+                }
                 const response = await getAiResponse((global as any).chain, lastMessage?.body);
                 const newAiMessage = await prisma.message.create({
                     include: {

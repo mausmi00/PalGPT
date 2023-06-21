@@ -10,6 +10,7 @@ import Input from "@/app/components/inputs/Input";
 import Button from "@/app/components/Buttons";
 import { CldUploadButton } from "next-cloudinary";
 import Image from "next/image";
+import useConversation from "@/app/hooks/useConversation";
 
 interface AiChatModalProps {
   isOpen?: boolean;
@@ -19,6 +20,7 @@ interface AiChatModalProps {
 const AiChatModal: React.FC<AiChatModalProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { conversationId } = useConversation();
 
   const {
     register,
@@ -36,18 +38,24 @@ const AiChatModal: React.FC<AiChatModalProps> = ({ isOpen, onClose }) => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-
+console.log("conversaton id: ", conversationId)
     axios
       .post("/api/user", {
         ...data,
       })
       .then(() => {
-        router.refresh();
+        axios.post("/api/message", {
+          ...data,
+          cconversationId: conversationId,
+      })})
+      .then(() => {
+        router.push(`conversations/${conversationId}`);
         onClose();
       })
       .catch(() => toast.error("Something went wrong"))
       .finally(() => setIsLoading(false));
-  };
+    
+  }
 
   const handleUpload = (result: any) => {
     setValue("image", result?.info?.secure_url, {

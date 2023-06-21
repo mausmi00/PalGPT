@@ -18,10 +18,6 @@ export async function POST(request: Request) {
         image
     } = body;
 
-    console.log("name: ", name);
-    console.log("char: ", characteristics);
-    console.log("image: ", image)
-
     const user = await prisma?.user.create({
         data: {
             name,

@@ -24,13 +24,11 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
   const session = useSession();
   const router = useRouter();
   const handleClick = useCallback(() => {
-    axios.get(`/api/conversations/${data.id}`)
-      .then(() => {
-        router.push(`/conversations/${data.id}`);
-      });
+    axios.get(`/api/conversations/${data.id}`).then(() => {
+      router.push(`/conversations/${data.id}`);
+    });
     console.log("called");
   }, [data, router]);
-
   const lastMessage = useMemo(() => {
     const messages = data.messages || [];
 
@@ -115,6 +113,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
               >
                 {data.name || otherUsers?.name}
               </p>
+
               {lastMessage?.createdAt && (
                 <p
                   className="
@@ -132,7 +131,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
           truncate
           text-sm
           `,
-                 hasSeen ? "font-small" : " font-bold"
+                hasSeen ? "font-small" : " font-bold"
               )}
             >
               {lastMessageText}

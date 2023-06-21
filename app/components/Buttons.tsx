@@ -12,6 +12,7 @@ interface ButtonProps {
   disabled?: boolean;
   color?:string;
   gradient?: boolean;
+  description?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -23,7 +24,8 @@ const Button: React.FC<ButtonProps> = ({
   danger,
   disabled,
   color,
-  gradient
+  gradient,
+  description
 }) => {
   return (
     <button
@@ -48,11 +50,12 @@ const Button: React.FC<ButtonProps> = ({
         fullWidth && "w-full",
         secondary ? "bg-[#66FCF1] text-[#1F2833] hover:bg-[#C5C6C7]" : "text-[#1F2833]",
         danger &&
-          "bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600",
+          "bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600",       
         !secondary &&
           !danger &&
           "bg-[#66FCF1] hover:bg-[#C5C6C7] focus-visible:outline-key-600",
-          gradient && " bg-gradient-to-r from-[#66FCF1] to-white "
+          description && "bg-gradient-to-r from-[#1F2833] to-[#1F2833] text-white text-lg px-0",
+          gradient && " bg-gradient-to-r from-[#66FCF1] to-white "          
       )}
     >
       {children}

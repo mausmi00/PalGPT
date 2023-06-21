@@ -44,7 +44,6 @@ const DesktopItem: React.FC<DesktopItemProps> = ({
             text-sm
             leading-6
             font-semibold
-            bg-[#1F2833]
             opacity-100
             `,
            active && "bg-[#66FCF1] text-[#1F2833]"

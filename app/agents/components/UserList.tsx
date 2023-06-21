@@ -9,12 +9,12 @@ import { find } from "lodash";
 
 interface UserListProps {
   initialItems: User[];
-  users: User[];
+  ai_users: User[];
 }
 
 const UserList: React.FC<UserListProps> = ({
   initialItems,
-  users,
+  ai_users,
 }) => {
   const session = useSession();
   const [items, setItems] = useState(initialItems);
@@ -64,17 +64,16 @@ const UserList: React.FC<UserListProps> = ({
         left-0"
     >
       <div className="px-5">
-        <div className="flex-col">
-          <div
-            className=" text-2xl
-          font-bold
-          py-4"
-          >
-            Friends
-            <hr className="w-48 h-1 my-4 bg-[#66FCF1] border-0 rounded md:my-4" />
-          </div>
+        <div
+          className="
+                text-2xl
+                font-bold
+                py-4"
+        >
+          Agents
+          <hr className="w-48 h-1 my-4 bg-[#66FCF1] border-0 rounded md:my-4" />
         </div>
-        {users.map((user) => (
+        {ai_users.map((user) => (
           <UserBox key={user.id} user={user} />
         ))}
       </div>

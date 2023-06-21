@@ -66,14 +66,22 @@ export default async function Body({
   }, [conversationId]);
   return (
     <div className="flex-1 overflow-y-scroll scrollbar-thin scrollbar-thumb-[#C5C6C7] scrollbar-track-[#1F2833] rounded-[12px]">
-      {messages.map((message, i) => 
+      {messages.map((message, i) =>
         message.lastMessageOfTheContext == true ? (
-          console.log("called thissss"),
-          <fieldset className="border-t border-slate-300">
-            <legend className="mx-auto px-4 text-white text-sm italic">
-              context cleared
-            </legend>
-          </fieldset>
+          //  console.log("called thissss"),
+          <>
+            <MessageBox
+              isLast={i === messages.length - 1}
+              key={message.id}
+              data={message}
+            />
+
+            <fieldset className="border-t border-slate-300">
+              <legend className="mx-auto px-4 text-white text-sm italic">
+                context cleared
+              </legend>
+            </fieldset>
+          </>
         ) : (
           <MessageBox
             isLast={i === messages.length - 1}

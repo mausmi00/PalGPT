@@ -7,7 +7,7 @@ import {
   MessagesPlaceholder,
 } from "langchain/prompts";
 import { BufferMemory } from "langchain/memory";
-import { PrismaClient} from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 
 (global as any).chain;
 
@@ -30,15 +30,16 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
   // await pusherServer.trigger(conversationId, 'messages:new', newMessage);
 
   const lastMessage = getUpdatedConversationUsersAndMessages?.messages[getUpdatedConversationUsersAndMessages?.messages.length - 1];
-
-  const lastMessageContext = await prisma?.message.update({
-    where: {
-      id: lastMessage?.id
-    },
-    data: {
-      lastMessageOfTheContext: true
-    }
-  });
+  if (lastMessage != null) {
+    const lastMessageContext = await prisma?.message.update({
+      where: {
+        id: lastMessage?.id
+      },
+      data: {
+        lastMessageOfTheContext: true
+      }
+    });
+  }
 
   const chat = new ChatOpenAI({
     temperature: 1,
@@ -122,8 +123,8 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
   else {
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
-        //`Act like ${characteristics} ${name} and don't refer to yourself as an machine learning model.`
-        `I'd like to have a conversation as if I'm chatting with the person ${name} who is ${characteristics}`
+        `Act like ${characteristics} ${name} and don't refer to yourself as an machine learning model.`
+       // `I'd like to have a conversation as if I'm chatting with the person ${name} who is ${characteristics}`
       ),
       new MessagesPlaceholder("history"),
       HumanMessagePromptTemplate.fromTemplate("{input}"),

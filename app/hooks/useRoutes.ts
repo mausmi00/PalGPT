@@ -4,6 +4,7 @@ import { HiChat } from 'react-icons/hi';
 import { MdOutlineEmojiPeople } from 'react-icons/md';
 import { RiChatSmile3Fill } from 'react-icons/ri';
 import { FiFrown } from 'react-icons/fi';
+import { BsRobot } from "react-icons/bs";
 import {
     HiArrowLeftOnRectangle,
     HiUsers
@@ -24,17 +25,23 @@ const useRoutes = () => {
             active: pathname === '/conversations' || !!conversationId
         },
         {
-            label: 'Users',
+            label: 'users',
             href: '/users',
             icon: MdOutlineEmojiPeople,
             active: pathname === '/users'
+        },
+        {
+            label: 'agents',
+            href: '/agents',
+            icon: BsRobot,
+            active: pathname === '/agents'
         },
         {
             label: 'Logout',
             href: '#',
             onClick: () => signOut(),
             icon: FiFrown
-        }
+        },
 
     ], [pathname, conversationId]);
 
