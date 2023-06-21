@@ -45,7 +45,8 @@ export async function POST(request: Request) {
                     connect: {
                         id: currentUser.id
                     }
-                }
+                },
+                lastMessageOfTheContext: false
             }
         });
 
@@ -113,11 +114,11 @@ export async function POST(request: Request) {
             })
         });
         
-        if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
-            // console.log("chain gets initialized");
-            await setAiMemoryChain(aiUserName, aiCharacteristics);
-        }
-        console.log("chain: ", (global as any).chain.prompt.promptMessages[0]);
+        // if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
+        //     // console.log("chain gets initialized");
+        //     await setAiMemoryChain(aiUserName, aiCharacteristics);
+        // }
+        // console.log("chain: ", (global as any).chain.prompt.promptMessages[0]);
 
         //  console.log("shouldTheResponderBeAnAi: ", shouldTheResponderBeAnAi);
         if (isAiConvo && shouldTheResponderBeAnAi && aiUserId !=  null) {

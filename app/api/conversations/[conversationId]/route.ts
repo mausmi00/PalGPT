@@ -119,7 +119,7 @@ export async function GET(request: Request, { params }: { params: IParams }) {
             const isAiConvo = await isAiUser(potentialAiUser[0]?.id);
             if (isAiConvo && potentialAiUser[0].name && potentialAiUser[0].characteristics) {
                 //  console.log("should work")
-                await setAiMemoryChain(potentialAiUser[0].name, potentialAiUser[0].characteristics);
+                await setAiMemoryChain(potentialAiUser[0].name, potentialAiUser[0].characteristics, conversationId);
             }
         }
         return NextResponse.json(currentConvo);

@@ -7,10 +7,39 @@ import {
   MessagesPlaceholder,
 } from "langchain/prompts";
 import { BufferMemory } from "langchain/memory";
+import { PrismaClient} from '@prisma/client'
 
 (global as any).chain;
 
-const setAiMemoryChain = async (name: string, characteristics: string) => {
+const setAiMemoryChain = async (name: string, characteristics: string, conversationId: string) => {
+  const prisma = new PrismaClient()
+  const getUpdatedConversationUsersAndMessages = await prisma.conversation.findUnique({
+    where: {
+      id: conversationId
+    },
+    include: {
+      users: true,
+      messages: {
+        include: {
+          seen: true
+        }
+      }
+    }
+  });
+
+  // await pusherServer.trigger(conversationId, 'messages:new', newMessage);
+
+  const lastMessage = getUpdatedConversationUsersAndMessages?.messages[getUpdatedConversationUsersAndMessages?.messages.length - 1];
+
+  const lastMessageContext = await prisma?.message.update({
+    where: {
+      id: lastMessage?.id
+    },
+    data: {
+      lastMessageOfTheContext: true
+    }
+  });
+
   const chat = new ChatOpenAI({
     temperature: 1,
     modelName: "gpt-3.5-turbo",
