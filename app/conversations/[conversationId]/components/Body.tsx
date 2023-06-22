@@ -17,7 +17,6 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const { conversationId } = useConversation();
 
-  console.log("conversation id: ", conversationId)
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
   }, [conversationId]);
@@ -71,15 +70,6 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
             key={message.id}
             data={message}
           />
-          { message.lastMessageOfTheContext == true ? (
-            <>
-              <fieldset className="border-t border-slate-300">
-                <legend className="mx-auto px-4 text-white text-sm italic">
-                  context cleared
-                </legend>
-              </fieldset>
-            </>
-          ) : null}
         </>
       ))}
 
