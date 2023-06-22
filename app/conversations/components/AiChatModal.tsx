@@ -38,19 +38,27 @@ const AiChatModal: React.FC<AiChatModalProps> = ({ isOpen, onClose }) => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-// console.log("conversaton id: ", conversationId)
+    // console.log("conversaton id: ", conversationId)
+    //  console.log("data: ", data);
     axios
       .post("/api/agents", {
         ...data,
       })
-      .then(() => {
-        router.push(`/conversations`);
-        onClose();
+      .then((data) => {
+        //  console.log("data2: ", data);
+        axios
+          .post("/api/conversations", {
+            userId: data.data.id,
+          })
+          .then((data) => {
+            //   console.log("data3: ", data);
+            onClose();
+            router.push(`/conversations/${data.data.id}`);
+          });
       })
       .catch(() => toast.error("Something went wrong"))
       .finally(() => setIsLoading(false));
-    
-  }
+  };
 
   const handleUpload = (result: any) => {
     setValue("image", result?.info?.secure_url, {
