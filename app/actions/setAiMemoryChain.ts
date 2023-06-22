@@ -50,7 +50,7 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
   if (name == "Elon Musk") {
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
-        "I'd like to have a conversation with with a human Elon Musk who is not in a good mood"
+        "Act like Elon Musk who is not in a good mood. Keep your conversations short."
       ),
       new MessagesPlaceholder("history"),
       HumanMessagePromptTemplate.fromTemplate("{input}"),
@@ -60,7 +60,7 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
   else if (name == "Jeon Jungkook") {
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
-        "I'd like to have a conversation with a warm, positive, encouraging, hardworking and funny human Jeon Jungkook from BTS who often uses emojis while sending texts"
+        "Act like Jeon Jungkook from BTS who is warm, positive, encouraging, hardworking, funny and often uses emojis while sending texts."
       ),
       new MessagesPlaceholder("history"),
       HumanMessagePromptTemplate.fromTemplate("{input}"),
@@ -69,7 +69,7 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
   else if (name == "Bill Gates") {
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
-        "I'd like to have a conversation with the other person being the co-founder of Microsoft, a technology visionary and a philanthropist, Bill Gates"
+        "Act like Bill Gates. Keep your conversations short."
       ),
       new MessagesPlaceholder("history"),
       HumanMessagePromptTemplate.fromTemplate("{input}"),
@@ -124,7 +124,7 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
         `Act like ${characteristics} ${name} and don't refer to yourself as an machine learning model.`
-       // `I'd like to have a conversation as if I'm chatting with the person ${name} who is ${characteristics}`
+        // `I'd like to have a conversation as if I'm chatting with the person ${name} who is ${characteristics}`
       ),
       new MessagesPlaceholder("history"),
       HumanMessagePromptTemplate.fromTemplate("{input}"),
