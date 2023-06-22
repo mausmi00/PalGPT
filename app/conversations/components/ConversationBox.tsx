@@ -2,6 +2,7 @@
 
 import Avatar from "@/app/components/Avatar";
 import AvatarGroup from "@/app/components/AvatarGroup";
+import LoadingModal from "@/app/components/LoadingModal";
 import useOtherUsers from "@/app/hooks/useOtherUsers";
 import { FullConversationType } from "@/app/types";
 import axios from "axios";
@@ -9,7 +10,8 @@ import clsx from "clsx";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
+import toast from "react-hot-toast";
 
 interface ConversationBoxProps {
   data: FullConversationType;
@@ -23,12 +25,22 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
   const otherUsers = useOtherUsers(data);
   const session = useSession();
   const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleClick = useCallback(() => {
-    axios.get(`/api/conversations/${data.id}`).then(() => {
-      router.push(`/conversations/${data.id}`);
-    });
-    console.log("called");
+    setIsLoading(true);
+
+    axios
+      .get(`/api/conversations/${data.id}`)
+      .then(() => {
+        router.push(`/conversations/${data.id}`);
+      })
+      .catch(() => toast.error("Something went wrong!"))
+      .finally(() => setIsLoading(false));
+    // console.log("called");
   }, [data, router]);
+  
   const lastMessage = useMemo(() => {
     const messages = data.messages || [];
 
@@ -69,6 +81,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
 
   return (
     <>
+      {isLoading && <LoadingModal />}
       <div
         onClick={handleClick}
         className={clsx(
