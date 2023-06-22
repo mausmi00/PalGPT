@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 
 const useConversation = () => {
     const params = useParams();
-    let conversationId: String = "";
+    let conversationId: string = "";
 
     if (!params?.conversationId) {
         conversationId = '';
