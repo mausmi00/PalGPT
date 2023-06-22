@@ -101,14 +101,15 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
                 {conversation.name || otherUsers.name}
               </Button>
               {isOpen ? (
-                <p className="text-sm">{otherUsers?.characteristics}</p>
+                <p className="text-sm px-3">{otherUsers?.characteristics}</p>
               ) : null}
             </div>
             {/* <p className="text-sm">{otherUsers?.characteristics}</p> */}
             <div
               className="text-sm
           font-light
-          text-neutral-500"
+          text-neutral-500
+          px-3"
             >
               {statusText}
             </div>

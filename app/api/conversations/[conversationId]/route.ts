@@ -56,12 +56,12 @@ export async function DELETE(request: Request, { params }: { params: IParams }) 
                 const conversationsAfterDeletion = user.conversations.filter(conversation => conversationId != conversation.id);
                 const conversationIdsAfterDeletion: string[] = [];
                 conversationsAfterDeletion.forEach((conversation) => conversationIdsAfterDeletion.push(conversation.id))
-                console.log("convos now: ", conversationIdsAfterDeletion.length)
+               // console.log("convos now: ", conversationIdsAfterDeletion.length)
                 const seenMessagesAfterDeletion = user.seenMessages.filter(message => message.conversationId != conversationId)
                 const seenMessageIdsAfterDeletion: Message[] = [];
                 seenMessagesAfterDeletion.forEach((message) => seenMessageIdsAfterDeletion.push(message.id));
-                console.log("messages now: ", seenMessagesAfterDeletion.length)
-                console.log("user name: ", user.name)
+                // console.log("messages now: ", seenMessagesAfterDeletion.length)
+                // console.log("user name: ", user.name)
                 const deleteCorrespondingConvoIdsFromUsers = await prisma.user.update({
                     where: {
                         id: user.id

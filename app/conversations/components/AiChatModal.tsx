@@ -38,20 +38,16 @@ const AiChatModal: React.FC<AiChatModalProps> = ({ isOpen, onClose }) => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    // console.log("conversaton id: ", conversationId)
-    //  console.log("data: ", data);
     axios
       .post("/api/agents", {
         ...data,
       })
       .then((data) => {
-        //  console.log("data2: ", data);
         axios
           .post("/api/conversations", {
             userId: data.data.id,
           })
           .then((data) => {
-            //   console.log("data3: ", data);
             onClose();
             router.push(`/conversations/${data.data.id}`);
           });

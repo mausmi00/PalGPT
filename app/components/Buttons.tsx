@@ -54,7 +54,7 @@ const Button: React.FC<ButtonProps> = ({
         !secondary &&
           !danger &&
           "bg-[#66FCF1] hover:bg-[#C5C6C7] focus-visible:outline-key-600",
-          description && "bg-gradient-to-r from-[#1F2833] to-[#1F2833] text-white text-lg px-0",
+          description && "bg-gradient-to-r from-[#1F2833] to-[#1F2833] text-white text-md text-left px-0",
           gradient && " bg-gradient-to-r from-[#66FCF1] to-white "          
       )}
     >
