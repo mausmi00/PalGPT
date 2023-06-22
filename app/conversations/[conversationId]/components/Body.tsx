@@ -17,6 +17,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const { conversationId } = useConversation();
 
+  console.log("conversation id: ", conversationId)
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
   }, [conversationId]);
@@ -41,6 +42,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
 
     // if a user is viewing a message then mark that as seen in real time
     const updateMessageHandler = (newMessage: FullMessageType) => {
+      axios.post(`/api/conversations/${conversationId}/seen`);
       setMessages((current) =>
         current.map((currentMessage) => {
           if (currentMessage.id === newMessage.id) {
