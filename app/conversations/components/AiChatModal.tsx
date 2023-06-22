@@ -42,7 +42,6 @@ const AiChatModal: React.FC<AiChatModalProps> = ({ isOpen, onClose }) => {
     axios
       .post("/api/agents", {
         ...data,
-        
       })
       .then(() => {
         router.push(`/conversations`);
