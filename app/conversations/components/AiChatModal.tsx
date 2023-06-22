@@ -42,14 +42,10 @@ const AiChatModal: React.FC<AiChatModalProps> = ({ isOpen, onClose }) => {
     axios
       .post("/api/agents", {
         ...data,
+        
       })
       .then(() => {
-        axios.post("/api/messages", {
-          ...data,
-          cconversationId: conversationId,
-      })})
-      .then(() => {
-        router.push(`conversations/${conversationId}`);
+        router.push(`/conversations`);
         onClose();
       })
       .catch(() => toast.error("Something went wrong"))
