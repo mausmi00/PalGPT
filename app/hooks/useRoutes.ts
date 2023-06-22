@@ -17,7 +17,7 @@ const useRoutes = () => {
     const pathname = usePathname();
     const { conversationId } = useConversation();
 
-    const routes = useMemo(() => [
+    const routes = [
         {
             label: 'chats',
             href: '/conversations',
@@ -43,7 +43,7 @@ const useRoutes = () => {
             icon: FiFrown
         },
 
-    ], [pathname, conversationId]);
+    ]
 
     return routes;
 }
