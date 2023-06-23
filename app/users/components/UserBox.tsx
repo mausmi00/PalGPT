@@ -5,6 +5,7 @@ import axios from "axios";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
+import toast from "react-hot-toast";
 
 interface UserBoxProps {
   user: User;
@@ -22,8 +23,10 @@ const UserBox: React.FC<UserBoxProps> = ({ user }) => {
         userId: user.id,
       })
       .then((data) => {
+        axios.get(`/api/conversations/${data.data.id}`);
         router.push(`/conversations/${data.data.id}`);
       })
+      .catch(() => toast.error("Something went wrong!"))
       .finally(() => setIsLoading(false));
   }, [user, router]);
 
