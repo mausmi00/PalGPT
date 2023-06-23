@@ -155,6 +155,10 @@ export async function POST(request: Request) {
                     }
                 });
                 await pusherServer.trigger(conversationId, 'messages:new', newAiMessage);
+                await pusherServer.trigger(currentUser.email, "conversation:update", {
+                    id: conversationId,
+                    messages: [newAiMessage]
+                });
 
                 return NextResponse.json(newAiMessage);
 

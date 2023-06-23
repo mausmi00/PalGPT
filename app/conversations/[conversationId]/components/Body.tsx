@@ -1,46 +1,34 @@
 'use client';
 
 import axios from "axios";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { pusherClient } from "@/app/libs/pusher";
 import useConversation from "@/app/hooks/useConversation";
 import MessageBox from "./MessageBox";
 import { FullMessageType } from "@/app/types";
 import { find } from "lodash";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 interface BodyProps {
   initialMessages: FullMessageType[];
 }
 
 const Body: React.FC<BodyProps> = ({ initialMessages}) => {
-  const session = useSession();
- // const bottomRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState(initialMessages);
-  const router = useRouter();
+  
   const { conversationId } = useConversation();
 
-  // useEffect(() => {
-  //   axios.post(`/api/conversations/${conversationId}/seen`);
-  // }, [conversationId]);
-
-  const pusherKey = useMemo(() => {
-    return session.data?.user?.email;
-  }, [session.data?.user?.email]);
+  useEffect(() => {
+    axios.post(`/api/conversations/${conversationId}/seen`);
+  }, [conversationId]);
 
   useEffect(() => {
-    // if the session has not loaded yet
-    if (!pusherKey) {
-      return;
-    }
-
-    pusherClient.subscribe(conversationId);
-   // bottomRef?.current?.scrollIntoView();
+    pusherClient.subscribe(conversationId)
+    bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: FullMessageType) => {
-     // axios.post(`/api/conversations/${conversationId}/seen`);
+      axios.post(`/api/conversations/${conversationId}/seen`);
 
       setMessages((current) => {
         if (find(current, { id: message.id })) {
@@ -50,7 +38,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages}) => {
         return [...current, message]
       });
       
-    //  bottomRef?.current?.scrollIntoView();
+      bottomRef?.current?.scrollIntoView();
     };
 
     const updateMessageHandler = (newMessage: FullMessageType) => {
@@ -61,7 +49,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages}) => {
   
         return currentMessage;
       }))
-    };   
+    };
   
 
     pusherClient.bind('messages:new', messageHandler)
@@ -72,7 +60,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages}) => {
       pusherClient.unbind('messages:new', messageHandler)
       pusherClient.unbind('message:update', updateMessageHandler)
     }
-  }, [conversationId, pusherKey]);
+  }, [conversationId]);
 
   return ( 
     <div className="flex-1 overflow-y-auto">
@@ -83,7 +71,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages}) => {
           data={message}
         />
       ))}
-    {/* <div className="pt-24" ref={bottomRef} /> */}
+      <div className="pt-24" ref={bottomRef} />
     </div>
   );
 }
