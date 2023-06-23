@@ -14,7 +14,7 @@ interface UserBoxProps {
 const UserBox: React.FC<UserBoxProps> = ({ user }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  let convId: String = "";
+
   const handleOnClick = useCallback(() => {
     setIsLoading(true);
 
@@ -23,10 +23,8 @@ const UserBox: React.FC<UserBoxProps> = ({ user }) => {
         userId: user.id,
       })
       .then((data) => {
-        convId = data.data.id
-        axios.get(`/api/conversations/${data.data.id}`)
-      }).then(() => {
-        router.push(`/conversations/${convId}`);
+        axios.get(`/api/conversations/${data.data.id}`);
+        router.push(`/conversations/${data.data.id}`);
       })
       .catch(() => toast.error("Something went wrong!"))
       .finally(() => setIsLoading(false));
