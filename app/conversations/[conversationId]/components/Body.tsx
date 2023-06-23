@@ -37,9 +37,10 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
 
         return [...current, message]
       });
-      
+      console.log("after set1: ", messages)
       bottomRef?.current?.scrollIntoView();
     };
+    
 
     const updateMessageHandler = (newMessage: FullMessageType) => {
       setMessages((current) => current.map((currentMessage) => {
@@ -49,7 +50,9 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
   
         return currentMessage;
       }))
+      console.log("after set2: ", messages)
     };
+    
   
 
     pusherClient.bind('messages:new', messageHandler)
