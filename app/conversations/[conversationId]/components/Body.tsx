@@ -30,6 +30,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (newMessage: FullMessageType) => {
+      console.log("here1")
       axios.post(`/api/conversations/${conversationId}/seen`);
       // if the current messages already has the new message (the id is the same) then we don't add it to the
       //collection of messages
@@ -45,6 +46,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
 
     // if a user is viewing a message then mark that as seen in real time
     const updateMessageHandler = (newMessage: FullMessageType) => {
+      console.log("here2")
       axios.post(`/api/conversations/${conversationId}/seen`);
       setMessages((current) =>
         current.map((currentMessage) => {
