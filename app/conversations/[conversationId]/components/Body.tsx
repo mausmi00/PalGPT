@@ -15,16 +15,18 @@ interface BodyProps {
 }
 
 const Body: React.FC<BodyProps> = ({ initialMessages }) => {
-  const router = useRouter();
 
-  router.refresh();
   const bottomRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState(initialMessages);
+
+  const router = useRouter();
 
   const { conversationId } = useConversation();
 
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
+
+  router.refresh();
   }, [conversationId]);
 
   useEffect(() => {
