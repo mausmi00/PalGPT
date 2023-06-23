@@ -30,32 +30,36 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (newMessage: FullMessageType) => {
-      console.log("here1")
       axios.post(`/api/conversations/${conversationId}/seen`);
       // if the current messages already has the new message (the id is the same) then we don't add it to the
       //collection of messages
       setMessages((currentMessage) => {
         if (find(currentMessage, { id: newMessage.id })) {
+          console.log("current message1: ", currentMessage)
           return currentMessage;
         }
+        console.log("current & new message: ", [...currentMessage, newMessage])
         return [...currentMessage, newMessage];
       });
+      console.log("ini mess2: ", initialMessages)
 
       bottomRef?.current?.scrollIntoView();
     };
 
     // if a user is viewing a message then mark that as seen in real time
     const updateMessageHandler = (newMessage: FullMessageType) => {
-      console.log("here2")
       axios.post(`/api/conversations/${conversationId}/seen`);
       setMessages((current) =>
         current.map((currentMessage) => {
+          console.log("currentmessage: ", currentMessage.id)
+          console.log("new message: ", newMessage.id)
           if (currentMessage.id === newMessage.id) {
             return newMessage;
           }
           return currentMessage;
         })
       );
+      console.log("ini mess3: ", initialMessages)
     };
 
     pusherClient.bind("messages:new", messageHandler);
