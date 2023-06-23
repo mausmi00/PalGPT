@@ -1,4 +1,3 @@
-
 import getConversationById from "@/app/actions/getConversationById";
 import getMessages from "@/app/actions/getMessages";
 import EmptyState from "@/app/components/EmptyState";
@@ -14,7 +13,6 @@ interface IParams {
 }
 
 const conversationId = async ({ params }: { params: IParams }) => {
-
   const conversation = await getConversationById(params.conversationId);
   const messages = await getMessages(params.conversationId);
   const isAiConvo = await getIsAiConversation(params.conversationId);
@@ -28,28 +26,15 @@ const conversationId = async ({ params }: { params: IParams }) => {
     );
   }
 
-  if(isAiConvo) { 
-    return (
-      <div className="lg:pl-80 h-full">
-        <div className="h-full flex flex-col">
-          <Header conversation={conversation} />
-          <Body initialMessages={messages} /> 
-          <AiForm/>
-          
-        </div>
-        </div>
-    );
-  } else {
-    return (
-      <div className="lg:pl-80 h-full">
-        <div className="h-full flex flex-col">
-          <Header conversation={conversation} />
-          <Body initialMessages={messages} /> 
-          <Form />
-        </div>
+  return (
+    <div className="lg:pl-80 h-full">
+      <div className="h-full flex flex-col">
+        <Header conversation={conversation} />
+        <Body initialMessages={messages} />
+        <AiForm />
       </div>
-    );
-  }
+    </div>
+  );
 };
 
 export default conversationId;
