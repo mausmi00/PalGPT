@@ -106,13 +106,14 @@ export async function GET(request: Request, { params }: { params: IParams }) {
                 id: conversationId
             },
             include: {
-                users: true
+                users: true,
+                messages: true
             }
         })
 
         const potentialAiUser = currentConvo?.users.filter((user) => user.id != currentUser.id)
       //  console.log("pote ai user:", potentialAiUser)
-
+     // await pusherServer.trigger(currentUser?.id, "conversation:get", currentConvo?.messages);
         // const singleConversation = existingConversations[0];
 
         if (potentialAiUser != null) {
@@ -125,7 +126,7 @@ export async function GET(request: Request, { params }: { params: IParams }) {
         }
         return NextResponse.json(currentConvo);
     } catch (error: any) {
-        console.log(error, 'ERROR_CONVERSATION_DELETE');
+        console.log(error, 'ERROR_CONVERSATION_GET');
         return new NextResponse('Internal Error', { status: 500 });
     }
 

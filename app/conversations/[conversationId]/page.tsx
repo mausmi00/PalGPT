@@ -7,12 +7,14 @@ import Body from "./components/Body";
 import Form from "./components/Form";
 import getIsAiConversation from "@/app/actions/getIsAiConversation";
 import AiForm from "./components/AiForm";
+import { useRouter } from "next/navigation";
 
 interface IParams {
   conversationId: string;
 }
 
 const conversationId = async ({ params }: { params: IParams }) => {
+
   const conversation = await getConversationById(params.conversationId);
   const messages = await getMessages(params.conversationId);
   const isAiConvo = await getIsAiConversation(params.conversationId);

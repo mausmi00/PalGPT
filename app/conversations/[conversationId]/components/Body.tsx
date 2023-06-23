@@ -7,18 +7,22 @@ import MessageBox from "./MessageBox";
 import axios from "axios";
 import { pusherClient } from "@/app/libs/pusher";
 import { find } from "lodash";
+import { useRouter } from "next/navigation";
 
 interface BodyProps {
   initialMessages: FullMessageType[];
 }
 
 const Body: React.FC<BodyProps> = ({ initialMessages }) => {
+  console.log("initial messages: ", initialMessages);
+  const router = useRouter();
   const [messages, setMessages] = useState(initialMessages);
   const bottomRef = useRef<HTMLDivElement>(null);
   const { conversationId } = useConversation();
 
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
+    router.push(`/conversations/${conversationId}`);
   }, [conversationId]);
 
   useEffect(() => {
