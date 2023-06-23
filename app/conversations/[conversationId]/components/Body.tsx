@@ -8,6 +8,7 @@ import axios from "axios";
 import { pusherClient } from "@/app/libs/pusher";
 import { find } from "lodash";
 import { useRouter } from "next/navigation";
+import { Message } from "@prisma/client";
 
 interface BodyProps {
   initialMessages: FullMessageType[];
@@ -33,15 +34,25 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
       axios.post(`/api/conversations/${conversationId}/seen`);
       // if the current messages already has the new message (the id is the same) then we don't add it to the
       //collection of messages
-      setMessages((currentMessage) => {
-        if (find(currentMessage, { id: newMessage.id })) {
-          console.log("current message1: ", currentMessage)
-          return currentMessage;
+      // setMessages((currentMessage) => {
+      //   if (find(currentMessage, { id: newMessage.id })) {
+      //     console.log("current message1: ", currentMessage)
+      //     return currentMessage;
+      //   }
+      //   console.log("current & new message: ", [...currentMessage, newMessage])
+      //   return [...currentMessage, newMessage];
+      // });
+
+      
+        if (find(messages, { id: newMessage.id })) {
+          setMessages(messages);
+           console.log("initial message1: ", messages) 
         }
-        console.log("current & new message: ", [...currentMessage, newMessage])
-        return [...currentMessage, newMessage];
-      });
-      console.log("ini mess2: ", initialMessages)
+        else {
+          const combineMessage = [...messages, newMessage];
+          setMessages(combineMessage)
+          console.log("initial message2: ", messages)
+        }
 
       bottomRef?.current?.scrollIntoView();
     };
@@ -49,17 +60,29 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     // if a user is viewing a message then mark that as seen in real time
     const updateMessageHandler = (newMessage: FullMessageType) => {
       axios.post(`/api/conversations/${conversationId}/seen`);
-      setMessages((current) =>
-        current.map((currentMessage) => {
-          console.log("currentmessage: ", currentMessage.id)
-          console.log("new message: ", newMessage.id)
-          if (currentMessage.id === newMessage.id) {
-            return newMessage;
-          }
-          return currentMessage;
-        })
-      );
-      console.log("ini mess3: ", initialMessages)
+      // setMessages((current) =>
+      //   current.map((currentMessage) => {
+      //     console.log("currentmessage: ", currentMessage.id)
+      //     console.log("new message: ", newMessage.id)
+      //     if (currentMessage.id === newMessage.id) {
+      //       return newMessage;
+      //     }
+      //     return currentMessage;
+      //   })
+      // );
+
+      messages.map((message) => {
+        if(message.id === newMessage.id) {
+          const combineMessage = [...messages, newMessage];
+          setMessages(combineMessage)
+          console.log("initial message3: ", messages) 
+        }
+        else {
+          setMessages(messages);
+          console.log("initial message4: ", messages) 
+        }
+      });
+
     };
 
     pusherClient.bind("messages:new", messageHandler);
