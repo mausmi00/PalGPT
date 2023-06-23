@@ -42,7 +42,7 @@ export async function POST(
         // Find last message
         const lastMessage = conversation.messages[conversation.messages.length - 1];
         let secondLastMessage: (Message & { seen: User[]; }) | null = null;
-        if(conversation.messages.length >= 2) {
+        if (conversation.messages.length >= 2) {
             secondLastMessage = conversation.messages[conversation.messages.length - 2];
         }
         if (!lastMessage) {
@@ -68,37 +68,41 @@ export async function POST(
             }
         });
 
-        // returns an array of seen ids of messages for a user
-        const getSeenMessages = await prisma.user.findUnique({
-            where: {
-                id: currentUser.id
-            },
-            include: {
-                seenMessages: true
-            }
-        });
-
-        // removes the previous last message of the conversation from the seenMessages list of the user
-        // add the new last message to the seen message list of the user
-        if(secondLastMessage != null) {
-            const updatedSeenMessages = getSeenMessages?.seenMessageIds.filter((messageId) => messageId != secondLastMessage?.id)
-            const updatedUserSeenMessages = await prisma.user.update({
+        conversation.users.forEach(async (user) => {
+            // returns an array of seen ids of messages for a user
+            const getSeenMessages = await prisma.user.findUnique({
                 where: {
-                    id: currentUser.id
+                    id: user.id
                 },
                 include: {
-                    seenMessages: true,
-                },
-                data: {
-                    seenMessageIds: updatedSeenMessages
+                    seenMessages: true
                 }
             });
-        }
 
-        //updates the sidebar message (later)
-        await pusherServer.trigger(currentUser.email, "conversation:update", {
-            id: conversationId,
-            messages: [updatedMessage]
+            // removes the previous last message of the conversation from the seenMessages list of the user
+            // add the new last message to the seen message list of the user
+            if (secondLastMessage != null) {
+                const updatedSeenMessages = getSeenMessages?.seenMessageIds.filter((messageId) => messageId != secondLastMessage?.id)
+                const updatedUserSeenMessages = await prisma.user.update({
+                    where: {
+                        id: user.id
+                    },
+                    include: {
+                        seenMessages: true,
+                    },
+                    data: {
+                        seenMessageIds: updatedSeenMessages
+                    }
+                });
+            }
+
+            if (user != null && user.email != null) {
+                //updates the sidebar message (later)
+                await pusherServer.trigger(user.email, "conversation:update", {
+                    id: conversationId,
+                    messages: [updatedMessage]
+                });
+            }
         });
 
         // if the current user has seen the message
