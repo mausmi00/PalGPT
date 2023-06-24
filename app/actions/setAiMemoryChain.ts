@@ -13,6 +13,7 @@ import { PrismaClient } from '@prisma/client'
 
 const setAiMemoryChain = async (name: string, characteristics: string, conversationId: string) => {
   const prisma = new PrismaClient()
+  console.log("in set ai memory")
   const getUpdatedConversationUsersAndMessages = await prisma.conversation.findUnique({
     where: {
       id: conversationId
@@ -41,12 +42,16 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
     });
   }
 
+  console.log("last message: ", lastMessage)
+
   const chat = new ChatOpenAI({
     temperature: 1,
     modelName: "gpt-3.5-turbo",
     openAIApiKey: "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"
   });
+
   let chatPrompt;
+
   if (name == "Elon Musk") {
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
@@ -123,7 +128,7 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
   else {
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
-        `Act like ${characteristics} ${name} and don't refer to yourself as an machine learning model.`
+        `Act like ${characteristics} ${name}. Keep your conversations short`
         // `I'd like to have a conversation as if I'm chatting with the person ${name} who is ${characteristics}`
       ),
       new MessagesPlaceholder("history"),

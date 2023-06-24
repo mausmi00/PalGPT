@@ -116,11 +116,11 @@ export async function POST(request: Request) {
 
         if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
             // console.log("chain gets initialized");
-            console.log("call2")
-            await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
+            console.log("call2");
+            (global as any).chain = await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
             console.log("chain: ", (global as any).chain.prompt.promptMessages[0]);
         }
-       
+
 
         //  console.log("shouldTheResponderBeAnAi: ", shouldTheResponderBeAnAi);
         if (isAiConvo && shouldTheResponderBeAnAi && aiUserId != null) {
@@ -129,8 +129,12 @@ export async function POST(request: Request) {
             if (lastMessage?.body != null) {
                 if ((global as any).chain == null && aiUserName != null && aiCharacteristics != null) {
                     console.log("call3")
-                    await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
+                    console.log("aiUserName: ", aiUserName)
+                    console.log("aiCharacteristics: ", aiCharacteristics);
+                    console.log("conversationId: ", conversationId);
+                    (global as any).chain =  await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
                 }
+                console.log("api/messages chain: ", (global as any).chain);
                 const response = await getAiResponse((global as any).chain, lastMessage?.body);
                 const newAiMessage = await prisma.message.create({
                     include: {

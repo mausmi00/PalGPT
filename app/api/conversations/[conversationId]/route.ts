@@ -56,7 +56,7 @@ export async function DELETE(request: Request, { params }: { params: IParams }) 
                 const conversationsAfterDeletion = user.conversations.filter(conversation => conversationId != conversation.id);
                 const conversationIdsAfterDeletion: string[] = [];
                 conversationsAfterDeletion.forEach((conversation) => conversationIdsAfterDeletion.push(conversation.id))
-               // console.log("convos now: ", conversationIdsAfterDeletion.length)
+                // console.log("convos now: ", conversationIdsAfterDeletion.length)
                 const seenMessagesAfterDeletion = user.seenMessages.filter(message => message.conversationId != conversationId)
                 const seenMessageIdsAfterDeletion: Message[] = [];
                 seenMessagesAfterDeletion.forEach((message) => seenMessageIdsAfterDeletion.push(message.id));
@@ -112,18 +112,18 @@ export async function GET(request: Request, { params }: { params: IParams }) {
         })
 
         const potentialAiUser = currentConvo?.users.filter((user) => user.id != currentUser.id)
-       console.log("pote ai user:", potentialAiUser)
-     // await pusherServer.trigger(currentUser?.id, "conversation:get", currentConvo?.messages);
+        console.log("pote ai user:", potentialAiUser)
+        // await pusherServer.trigger(currentUser?.id, "conversation:get", currentConvo?.messages);
         // const singleConversation = existingConversations[0];
 
         if (potentialAiUser != null) {
-           console.log("potential ai user")
+            console.log("potential ai user")
             const isAiConvo = await isAiUser(potentialAiUser[0]?.id);
             console.log("isAiCOnvo: ", isAiConvo);
             if (isAiConvo && potentialAiUser[0].name && potentialAiUser[0].characteristics) {
-                 console.log("should work")
+                console.log("should work");
                 // console.log("call1")
-                await setAiMemoryChain(potentialAiUser[0].name, potentialAiUser[0].characteristics, conversationId);
+                (global as any).chain = await setAiMemoryChain(potentialAiUser[0].name, potentialAiUser[0].characteristics, conversationId);
             }
         }
         return NextResponse.json(currentConvo);
