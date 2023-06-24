@@ -118,8 +118,9 @@ export async function POST(request: Request) {
             // console.log("chain gets initialized");
             console.log("call2")
             await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
+            console.log("chain: ", (global as any).chain.prompt.promptMessages[0]);
         }
-        console.log("chain: ", (global as any).chain.prompt.promptMessages[0]);
+       
 
         //  console.log("shouldTheResponderBeAnAi: ", shouldTheResponderBeAnAi);
         if (isAiConvo && shouldTheResponderBeAnAi && aiUserId != null) {
