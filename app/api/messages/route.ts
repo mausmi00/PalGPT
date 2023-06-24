@@ -70,11 +70,7 @@ export async function POST(request: Request) {
             },
             include: {
                 users: true,
-                messages: {
-                    include: {
-                        seen: true
-                    }
-                }
+                messages: true
             }
         });
 
@@ -132,7 +128,7 @@ export async function POST(request: Request) {
                     console.log("aiUserName: ", aiUserName)
                     console.log("aiCharacteristics: ", aiCharacteristics);
                     console.log("conversationId: ", conversationId);
-                    (global as any).chain =  await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
+                    (global as any).chain = await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
                 }
                 console.log("api/messages chain: ", (global as any).chain);
                 const response = await getAiResponse((global as any).chain, lastMessage?.body);

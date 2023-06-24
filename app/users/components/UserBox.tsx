@@ -17,14 +17,16 @@ const UserBox: React.FC<UserBoxProps> = ({ user }) => {
 
   const handleOnClick = useCallback(() => {
     setIsLoading(true);
-
+    let id: string = "";
     axios
       .post("/api/conversations", {
         userId: user.id,
       })
       .then((data) => {
         axios.get(`/api/conversations/${data.data.id}`);
-        router.push(`/conversations/${data.data.id}`);
+      })
+      .then(() => {
+        router.push(`/conversations/${id}`);
       })
       .catch(() => toast.error("Something went wrong!"))
       .finally(() => setIsLoading(false));
