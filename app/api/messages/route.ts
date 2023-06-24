@@ -120,7 +120,7 @@ export async function POST(request: Request) {
 
         //  console.log("shouldTheResponderBeAnAi: ", shouldTheResponderBeAnAi);
         if (isAiConvo && shouldTheResponderBeAnAi && aiUserId != null) {
-
+            let response: string = '';
             shouldTheResponderBeAnAi = false;
             if (lastMessage?.body != null) {
                 if ((global as any).chain == null && aiUserName != null && aiCharacteristics != null) {
@@ -128,10 +128,18 @@ export async function POST(request: Request) {
                     console.log("aiUserName: ", aiUserName)
                     console.log("aiCharacteristics: ", aiCharacteristics);
                     console.log("conversationId: ", conversationId);
-                    (global as any).chain = await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
+                    (global as any).chain = await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId)
+                        .then(async () => {
+                            if (lastMessage?.body != null) {
+                                await getAiResponse((global as any).chain, lastMessage?.body);
+                            }
+
+                        })
                     console.log("api messages2: ", (global as any).chain.prompt.promptMessages[0])
                 }
-                const response = await getAiResponse((global as any).chain, lastMessage?.body);
+                else {
+                    response = await getAiResponse((global as any).chain, lastMessage?.body);
+                }
                 console.log("response: ", response);
                 const newAiMessage = await prisma.message.create({
                     include: {

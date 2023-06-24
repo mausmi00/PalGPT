@@ -8,9 +8,9 @@ const getAiResponse = async (chain: ConversationChain, input: string) => {
     input: input,
   });
 
-  console.log("input: ", input);
+  // console.log("input: ", input);
 
-  console.log(response);
+  // console.log(response);
 
   const arr = response.response;
   return arr;
