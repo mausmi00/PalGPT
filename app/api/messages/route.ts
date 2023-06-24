@@ -132,6 +132,7 @@ export async function POST(request: Request) {
                 }
                 console.log("api/messages chain: ", (global as any).chain);
                 const response = await getAiResponse((global as any).chain, lastMessage?.body);
+                console.log("response: ", response);
                 const newAiMessage = await prisma.message.create({
                     include: {
                         seen: true,
@@ -158,7 +159,7 @@ export async function POST(request: Request) {
                     }
                 });
                 await pusherServer.trigger(conversationId, 'messages:new', newAiMessage);
-                await pusherServer.trigger(currentUser.email, "conversation:update", {
+                await pusherServer.trigger(currentUser.email!, "conversation:update", {
                     id: conversationId,
                     messages: [newAiMessage]
                 });
