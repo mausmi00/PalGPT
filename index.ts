@@ -32,12 +32,20 @@ async function main() {
     //     }
     // })
 
-    const user = await prisma.user.update({
-        where: {
-            id: "649222ef4678e55bf8e39998"
-        },
+    // const user = await prisma.user.update({
+    //     where: {
+    //         id: "649222ef4678e55bf8e39998"
+    //     },
+    //     data: {
+    //         seenMessageIds: []
+    //     }
+    // })
+
+
+    const conv = await prisma.user.updateMany({
         data: {
-            seenMessageIds: []
+            conversationIds: [],
+            seenMessageIds: [],
         }
     })
 

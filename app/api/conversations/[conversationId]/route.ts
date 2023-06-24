@@ -112,15 +112,17 @@ export async function GET(request: Request, { params }: { params: IParams }) {
         })
 
         const potentialAiUser = currentConvo?.users.filter((user) => user.id != currentUser.id)
-      //  console.log("pote ai user:", potentialAiUser)
+       console.log("pote ai user:", potentialAiUser)
      // await pusherServer.trigger(currentUser?.id, "conversation:get", currentConvo?.messages);
         // const singleConversation = existingConversations[0];
 
         if (potentialAiUser != null) {
-          //  console.log("potential ai user")
+           console.log("potential ai user")
             const isAiConvo = await isAiUser(potentialAiUser[0]?.id);
+            console.log("isAiCOnvo: ", isAiConvo);
             if (isAiConvo && potentialAiUser[0].name && potentialAiUser[0].characteristics) {
-                //  console.log("should work")
+                 console.log("should work")
+                // console.log("call1")
                 await setAiMemoryChain(potentialAiUser[0].name, potentialAiUser[0].characteristics, conversationId);
             }
         }

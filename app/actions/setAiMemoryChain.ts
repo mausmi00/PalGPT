@@ -145,6 +145,7 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
     llm: chat,
   });
 
+
   // console.log("chain: ", (global as any).chain)
   console.log("prompt: ", chatPrompt.promptMessages[0])
   return (global as any).chain
