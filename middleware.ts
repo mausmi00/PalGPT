@@ -11,6 +11,6 @@ export const config = { /* the users page or any other page of the format /users
         "/users/:path*",
         "/friends/:path*",
         "/agents/:path*",
-        "/conversations/:path*"
+        // "/conversations/:path*"
     ]
 };
