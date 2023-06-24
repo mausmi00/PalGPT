@@ -24,10 +24,9 @@ const UserBox: React.FC<UserBoxProps> = ({ user }) => {
       })
       .then((data) => {
         axios.get(`/api/conversations/${data.data.id}`);
-      })
-      .then(() => {
-        router.push(`/conversations/${id}`);
-      })
+      }).then(() => {
+      router.push(`/conversations/${id}`);
+    })
       .catch(() => toast.error("Something went wrong!"))
       .finally(() => setIsLoading(false));
   }, [user, router]);

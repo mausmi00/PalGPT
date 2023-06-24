@@ -34,13 +34,15 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
     axios
       .get(`/api/conversations/${data.id}`)
       .then(() => {
-        router.push(`/conversations/${data.id}`);
+        setTimeout(() => {
+          router.push(`/conversations/${data.id}`);
+        }, 5000);
       })
       .catch(() => toast.error("Something went wrong!"))
       .finally(() => setIsLoading(false));
     // console.log("called");
   }, [data, router]);
-  
+
   const lastMessage = useMemo(() => {
     const messages = data.messages || [];
 
