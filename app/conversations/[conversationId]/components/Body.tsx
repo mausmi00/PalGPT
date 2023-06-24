@@ -15,7 +15,6 @@ interface BodyProps {
 }
 
 const Body: React.FC<BodyProps> = ({ initialMessages }) => {
-
   const bottomRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState(initialMessages);
 
@@ -26,7 +25,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
 
-  router.refresh();
+    router.refresh();
   }, [conversationId]);
 
   useEffect(() => {
@@ -72,11 +71,20 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   return (
     <div className="flex-1 overflow-y-auto">
       {messages.map((message, i) => (
-        <MessageBox
-          isLast={i === messages.length - 1}
-          key={message.id}
-          data={message}
-        />
+        <>
+          <MessageBox
+            isLast={i === messages.length - 1}
+            key={message.id}
+            data={message}
+          />
+          {message.lastMessageOfTheContext == true ? (
+            <fieldset className="border-t border-slate-300">
+              <legend className="mx-auto px-4 text-white text-sm italic">
+                context cleared
+              </legend>
+            </fieldset>
+          ) : null}
+        </>
       ))}
       <div className="pt-24" ref={bottomRef} />
     </div>
