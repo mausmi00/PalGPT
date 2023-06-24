@@ -30,7 +30,6 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
 
   const handleClick = useCallback(() => {
     setIsLoading(true);
-
     axios
       .get(`/api/conversations/${data.id}`)
       .then(() => {
