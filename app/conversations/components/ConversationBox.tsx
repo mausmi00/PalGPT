@@ -34,9 +34,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
     axios
       .get(`/api/conversations/${data.id}`)
       .then(() => {
-        setTimeout(() => {
           router.push(`/conversations/${data.id}`);
-        }, 5000);
       })
       .catch(() => toast.error("Something went wrong!"))
       .finally(() => setIsLoading(false));

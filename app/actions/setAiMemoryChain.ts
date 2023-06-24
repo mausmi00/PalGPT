@@ -30,19 +30,19 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
 
   // await pusherServer.trigger(conversationId, 'messages:new', newMessage);
 
-  const lastMessage = getUpdatedConversationUsersAndMessages?.messages[getUpdatedConversationUsersAndMessages?.messages.length - 1];
-  if (lastMessage != null) {
-    const lastMessageContext = await prisma?.message.update({
-      where: {
-        id: lastMessage?.id
-      },
-      data: {
-        lastMessageOfTheContext: true
-      }
-    });
-  }
+  // const lastMessage = getUpdatedConversationUsersAndMessages?.messages[getUpdatedConversationUsersAndMessages?.messages.length - 1];
+  // if (lastMessage != null) {
+  //   const lastMessageContext = await prisma?.message.update({
+  //     where: {
+  //       id: lastMessage?.id
+  //     },
+  //     data: {
+  //       lastMessageOfTheContext: true
+  //     }
+  //   });
+  // }
 
-  console.log("last message: ", lastMessage)
+  // console.log("last message: ", lastMessage)
 
   const chat = new ChatOpenAI({
     temperature: 1,
