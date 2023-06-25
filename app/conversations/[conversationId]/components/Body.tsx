@@ -73,7 +73,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     <div className="flex-1 overflow-y-auto">
       {messages.map((message, i) => (
         <>
-          {message != null ? (
+          {(message != null && message.body != "") ? (
             <div>
               <MessageBox
                 isLast={i === messages.length - 1}
