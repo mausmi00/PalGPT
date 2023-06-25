@@ -15,15 +15,19 @@ interface BodyProps {
 }
 
 const Body: React.FC<BodyProps> = ({ initialMessages }) => {
+  const router = useRouter();
   const bottomRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState(initialMessages);
 
   const { conversationId } = useConversation();
 
   useEffect(() => {
-
     axios.post(`/api/conversations/${conversationId}/seen`);
   }, [conversationId]);
+
+  useEffect(() => {
+    router.refresh();
+  }, [conversationId])
 
   useEffect(() => {
     pusherClient.subscribe(conversationId);
@@ -69,11 +73,22 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     <div className="flex-1 overflow-y-auto">
       {messages.map((message, i) => (
         <>
+          {message != null ? (
+            <div>
               <MessageBox
                 isLast={i === messages.length - 1}
                 key={message.id}
                 data={message}
               />
+              {message.lastMessageOfTheContext == true ? (
+                <fieldset className="border-t border-slate-300">
+                  <legend className="mx-auto px-4 text-white text-sm italic">
+                    context cleared
+                  </legend>
+                </fieldset>
+              ) : null}
+            </div>
+          ) : null}
         </>
       ))}
       <div className="pt-24" ref={bottomRef} />
