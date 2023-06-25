@@ -16,7 +16,6 @@ const conversationId = async ({ params }: { params: IParams }) => {
   
   const conversation = await getConversationById(params.conversationId);
   const messages = await getMessages(params.conversationId);
-  const isAiConvo = await getIsAiConversation(params.conversationId);
   if (!conversation) {
     return (
       <div className="lg:pl-80 h-full">

@@ -18,12 +18,10 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState(initialMessages);
 
-  const router = useRouter();
-
   const { conversationId } = useConversation();
 
   useEffect(() => {
-    // router.refresh();
+
     axios.post(`/api/conversations/${conversationId}/seen`);
   }, [conversationId]);
 

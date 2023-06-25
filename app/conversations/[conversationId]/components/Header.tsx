@@ -10,6 +10,7 @@ import ProfileDrawer from "./ProfileDrawer";
 import AvatarGroup from "@/app/components/AvatarGroup";
 import useActiveList from "@/app/hooks/useActiveList";
 import Button from "@/app/components/Buttons";
+import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   conversation: Conversation & {
@@ -18,6 +19,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ conversation }) => {
+  const router = useRouter();
+  router.refresh();
   const otherUsers = useOtherUsers(conversation);
   const [isOpen, setIsOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
