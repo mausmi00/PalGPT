@@ -131,7 +131,7 @@ export async function POST(request: Request) {
                     (global as any).chain = await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId)
                         .then(async () => {
                             if (lastMessage?.body != null) {
-                                await getAiResponse((global as any).chain, lastMessage?.body);
+                                response = await getAiResponse((global as any).chain, lastMessage?.body);
                             }
 
                         })
