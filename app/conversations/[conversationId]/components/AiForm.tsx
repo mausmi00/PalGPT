@@ -21,12 +21,10 @@ const AiForm = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setValue("message", "", { shouldValidate: true });
-    setTimeout(() => {
-      axios.post("/api/messages", {
-        ...data,
-        conversationId: conversationId,
-      });
-    }, 2000);
+    axios.post("/api/messages", {
+      ...data,
+      conversationId: conversationId,
+    });
   };
 
   return (

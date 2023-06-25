@@ -32,19 +32,17 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: FullMessageType) => {
-      setTimeout(() => {
-        axios.post(`/api/conversations/${conversationId}/seen`);
+      axios.post(`/api/conversations/${conversationId}/seen`);
 
-        setMessages((current) => {
-          if (find(current, { id: message.id })) {
-            return current;
-          }
+      setMessages((current) => {
+        if (find(current, { id: message.id })) {
+          return current;
+        }
 
-          return [...current, message];
-        });
+        return [...current, message];
+      });
 
-        bottomRef?.current?.scrollIntoView();
-      }, 2000);
+      bottomRef?.current?.scrollIntoView();
     };
 
     const updateMessageHandler = (newMessage: FullMessageType) => {
@@ -73,39 +71,18 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     <div className="flex-1 overflow-y-auto">
       {messages.map((message, i) => (
         <>
-          {message != null && message.body != "" ? (
-            <div>
-              <MessageBox
-                isLast={i === messages.length - 1}
-                key={message.id}
-                data={message}
-              />
-              {message.lastMessageOfTheContext == true ? (
-                <fieldset className="border-t border-slate-300">
-                  <legend className="mx-auto px-4 text-white text-sm italic">
-                    context cleared
-                  </legend>
-                </fieldset>
-              ) : null}
-            </div>
-          ) : (
-            setTimeout(() => {
-              <div>
-                <MessageBox
-                  isLast={i === messages.length - 1}
-                  key={message.id}
-                  data={message}
-                />
-                {message.lastMessageOfTheContext == true ? (
-                  <fieldset className="border-t border-slate-300">
-                    <legend className="mx-auto px-4 text-white text-sm italic">
-                      context cleared
-                    </legend>
-                  </fieldset>
-                ) : null}
-              </div>;
-            }, 2000)
-          )}
+          <MessageBox
+            isLast={i === messages.length - 1}
+            key={message.id}
+            data={message}
+          />
+          {message.lastMessageOfTheContext == true ? (
+            <fieldset className="border-t border-slate-300">
+              <legend className="mx-auto px-4 text-white text-sm italic">
+                context cleared
+              </legend>
+            </fieldset>
+          ) : null}
         </>
       ))}
       <div className="pt-24" ref={bottomRef} />
