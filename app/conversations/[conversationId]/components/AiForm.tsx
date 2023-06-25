@@ -26,7 +26,7 @@ const AiForm = () => {
         ...data,
         conversationId: conversationId,
       });
-    });
+    }, 2000);
   };
 
   return (
