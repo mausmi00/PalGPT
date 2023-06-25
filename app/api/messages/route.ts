@@ -113,8 +113,8 @@ export async function POST(request: Request) {
         if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
             // console.log("chain gets initialized");
             console.log("call2");
-            (global as any).chain = await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
-          //  console.log("api/messages ", (global as any).chain.prompt.promptMessages[0]);
+            (global as any).chains = await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
+           console.log("api/messages ", (global as any).chain.prompt.promptMessages[0]);
         }
 
 
