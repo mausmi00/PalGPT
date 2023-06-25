@@ -30,15 +30,17 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
 
   const handleClick = useCallback(() => {
     setIsLoading(true);
-    setTimeout(() => {
-      axios
+
+    axios
       .get(`/api/conversations/${data.id}`)
       .then(() => {
+        setTimeout(() => {
           router.push(`/conversations/${data.id}`);
+        }, 2000);
       })
       .catch(() => toast.error("Something went wrong!"))
       .finally(() => setIsLoading(false));
-    });
+
     // console.log("called");
   }, [data, router]);
 
