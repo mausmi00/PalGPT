@@ -140,7 +140,7 @@ export async function POST(request: Request) {
                 else {
                     response = await getAiResponse((global as any).chain, lastMessage?.body);
                 }
-                console.log("chain before response: ", (global as any).chain.prompt.promptMessages[0])
+                console.log("chain before response: ", (global as any).chains.prompt.promptMessages[0])
                 console.log("response: ", response);
                 const newAiMessage = await prisma.message.create({
                     include: {
