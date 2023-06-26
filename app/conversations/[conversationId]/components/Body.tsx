@@ -23,7 +23,6 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
 
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
-    router.refresh();
   }, [conversationId]);
 
   // useEffect(() => {
@@ -31,6 +30,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   // }, [conversationId])
 
   useEffect(() => {
+    router.refresh();
     pusherClient.subscribe(conversationId);
     bottomRef?.current?.scrollIntoView();
 
