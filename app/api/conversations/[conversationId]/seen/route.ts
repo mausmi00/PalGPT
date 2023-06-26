@@ -105,18 +105,15 @@ export async function POST(
                 });
             }
         });
+        
+        const isAiConvo = await getIsAiConversation(conversationId)
+        if (!isAiConvo) {
+            await pusherServer.trigger(conversationId!, 'message:update', updatedMessage);
+        }
 
         // if the current user has seen the message
         if (lastMessage.seenIds.indexOf(currentUser.id) !== -1) {
             return NextResponse.json(conversation);
-        }
-
-        const isAiConvo = await getIsAiConversation(conversationId)
-        if (isAiConvo) {
-            console.log("is Ai Convo: ");
-            return NextResponse.json(updatedMessage);
-        } else {
-            // await pusherServer.trigger(conversationId!, 'message:update', updatedMessage);
         }
 
         return NextResponse.json(updatedMessage);
