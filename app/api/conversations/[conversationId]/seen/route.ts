@@ -111,10 +111,12 @@ export async function POST(
             return NextResponse.json(conversation);
         }
 
-        if (await getIsAiConversation(conversationId)) {
+        const isAiConvo = await getIsAiConversation(conversationId)
+        if (isAiConvo) {
+            console.log("is Ai Convo: ");
             return NextResponse.json(updatedMessage);
         } else {
-            await pusherServer.trigger(conversationId!, 'message:update', updatedMessage);
+            // await pusherServer.trigger(conversationId!, 'message:update', updatedMessage);
         }
 
         return NextResponse.json(updatedMessage);
