@@ -23,6 +23,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
 
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
+    router.push(`/conversations/${conversationId}`)
   }, [conversationId]);
 
   // useEffect(() => {
@@ -45,7 +46,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
       });
 
       bottomRef?.current?.scrollIntoView();
-      router.refresh();
+      //router.refresh();
     };
 
     const updateMessageHandler = (newMessage: FullMessageType) => {
