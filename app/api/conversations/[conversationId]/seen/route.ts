@@ -96,13 +96,13 @@ export async function POST(
                 });
             }
 
-            // if (user != null && user.email != null) {
-            //     //updates the sidebar message (later)
-            //     await pusherServer.trigger(user.email, "conversation:update", {
-            //         id: conversationId,
-            //         messages: [updatedMessage]
-            //     });
-            // }
+            if (user != null && user.email != null) {
+                //updates the sidebar message (later)
+                await pusherServer.trigger(user.email, "conversation:update", {
+                    id: conversationId,
+                    messages: [updatedMessage]
+                });
+            }
         });
 
         // if the current user has seen the message
