@@ -42,13 +42,21 @@ async function main() {
     // })
 
 
-    const conv = await prisma.user.updateMany({
+    // const conv = await prisma.user.updateMany({
+    //     data: {
+    //         conversationIds: [],
+    //         seenMessageIds: [],
+    //     }
+    // })
+
+    const user = await prisma.user.update({
+        where: {
+            id: "649222ef4678e55bf8e39998"
+        },
         data: {
-            conversationIds: [],
-            seenMessageIds: [],
+            image: "/images/groot.jpg"
         }
     })
-
 }
 main()
     .then(async () => {
