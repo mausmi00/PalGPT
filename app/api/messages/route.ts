@@ -110,12 +110,12 @@ export async function POST(request: Request) {
             })
         });
 
-        if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
-            // console.log("chain gets initialized");
-            console.log("call2");
-            await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
-            console.log("api/messages ", global.CHAIN.prompt.promptMessages[0]);
-        }
+        // if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
+        //     // console.log("chain gets initialized");
+        //     console.log("call2");
+        //     await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
+        //     console.log("api/messages ", global.CHAIN.prompt.promptMessages[0]);
+        // }
 
 
         //  console.log("shouldTheResponderBeAnAi: ", shouldTheResponderBeAnAi);

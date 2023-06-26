@@ -77,7 +77,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     <div className="flex-1 overflow-y-auto">
       {messages.map((message, i) => (
         <>
-          {message != null ? (
+          
             <div>
               <MessageBox
                 isLast={i === messages.length - 1}
@@ -92,7 +92,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
                 </fieldset>
               ) : null}
             </div>
-          ) : null}
+       
         </>
       ))}
       <div className="pt-24" ref={bottomRef} />
