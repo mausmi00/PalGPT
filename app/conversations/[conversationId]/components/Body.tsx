@@ -23,11 +23,12 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
 
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
+    router.refresh();
   }, [conversationId]);
 
-  useEffect(() => {
-    router.refresh();
-  }, [conversationId])
+  // useEffect(() => {
+  //   router.refresh();
+  // }, [conversationId])
 
   useEffect(() => {
     pusherClient.subscribe(conversationId);
