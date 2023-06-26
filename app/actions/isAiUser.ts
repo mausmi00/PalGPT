@@ -3,7 +3,7 @@ import prisma from "@/app/libs/prismadb";
 
 
 const isAiUser = async (userId: string) => {
-    console.log("user id is: ", userId)
+  //  console.log("user id is: ", userId)
     try {
         const user = await prisma.user.findUnique({
             where: {

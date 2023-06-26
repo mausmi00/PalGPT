@@ -114,7 +114,7 @@ export async function POST(request: Request) {
             // console.log("chain gets initialized");
             console.log("call2");
             await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
-            console.log("api/messages ", global.CHAIN.prompt);
+            console.log("api/messages ", global.CHAIN.prompt.promptMessages[0]);
         }
 
 
@@ -140,7 +140,7 @@ export async function POST(request: Request) {
                 else {
                     response = await getAiResponse(global.CHAIN, lastMessage?.body);
                 }
-                console.log("chain before response: ", global.CHAIN.prompt);
+                console.log("chain before response: ", global.CHAIN.prompt.promptMessages[0]);
                 console.log("response: ", response);
                 const newAiMessage = await prisma.message.create({
                     include: {
