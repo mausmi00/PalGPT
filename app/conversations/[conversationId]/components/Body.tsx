@@ -30,7 +30,6 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   // }, [conversationId])
 
   useEffect(() => {
-    router.refresh();
     pusherClient.subscribe(conversationId);
     bottomRef?.current?.scrollIntoView();
 
@@ -46,6 +45,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
       });
 
       bottomRef?.current?.scrollIntoView();
+      router.refresh();
     };
 
     const updateMessageHandler = (newMessage: FullMessageType) => {
