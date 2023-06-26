@@ -113,8 +113,8 @@ export async function POST(request: Request) {
         if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
             // console.log("chain gets initialized");
             console.log("call2");
-            (global as any).chains = await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
-           console.log("api/messages ", (global as any).chain.prompt.promptMessages[0]);
+            await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
+            console.log("api/messages ", global.CHAIN.prompt);
         }
 
 
@@ -123,24 +123,24 @@ export async function POST(request: Request) {
             let response: string = '';
             shouldTheResponderBeAnAi = false;
             if (lastMessage?.body != null) {
-                if ((global as any).chain == null && aiUserName != null && aiCharacteristics != null) {
+                if (global.CHAIN == null && aiUserName != null && aiCharacteristics != null) {
                     console.log("call3")
                     console.log("aiUserName: ", aiUserName)
                     console.log("aiCharacteristics: ", aiCharacteristics);
                     console.log("conversationId: ", conversationId);
-                    (global as any).chain = await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId)
+                    await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId)
                         .then(async () => {
                             if (lastMessage?.body != null) {
-                                response = await getAiResponse((global as any).chain, lastMessage?.body);
+                                response = await getAiResponse(global.CHAIN, lastMessage?.body);
                             }
 
                         })
-                   // console.log("api messages2: ", (global as any).chain.prompt.promptMessages[0])
+                    // console.log("api messages2: ", (global as any).chain.prompt.promptMessages[0])
                 }
                 else {
-                    response = await getAiResponse((global as any).chain, lastMessage?.body);
+                    response = await getAiResponse(global.CHAIN, lastMessage?.body);
                 }
-                console.log("chain before response: ", (global as any).chains.prompt.promptMessages[0])
+                console.log("chain before response: ", global.CHAIN.prompt);
                 console.log("response: ", response);
                 const newAiMessage = await prisma.message.create({
                     include: {

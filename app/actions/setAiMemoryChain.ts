@@ -9,7 +9,9 @@ import {
 import { BufferMemory } from "langchain/memory";
 import { PrismaClient } from '@prisma/client'
 
-(global as any).chain;
+declare global {
+  var CHAIN: ConversationChain;
+}
 
 const setAiMemoryChain = async (name: string, characteristics: string, conversationId: string) => {
   const prisma = new PrismaClient()
@@ -144,7 +146,7 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
   // ]
   // );
 
-  (global as any).chain = new ConversationChain({
+  global.CHAIN = new ConversationChain({
     memory: new BufferMemory({ returnMessages: true, memoryKey: "history" }),
     prompt: chatPrompt,
     llm: chat,
@@ -153,7 +155,7 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
 
   // console.log("chain: ", (global as any).chain)
   console.log("prompt: ", chatPrompt.promptMessages[0])
-  return (global as any).chain
+  return CHAIN;
 
 }
 
