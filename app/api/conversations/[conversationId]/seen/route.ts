@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { pusherServer } from "@/app/libs/pusher";
 import { Message, User } from "@prisma/client";
+import getIsAiConversation from "@/app/actions/getIsAiConversation";
 
 interface IParams {
     conversationId: string
@@ -110,7 +111,11 @@ export async function POST(
             return NextResponse.json(conversation);
         }
 
-        await pusherServer.trigger(conversationId!, 'message:updateSeen', updatedMessage);
+        if (await getIsAiConversation(conversationId)) {
+            return NextResponse.json(updatedMessage);
+        } else {
+            await pusherServer.trigger(conversationId!, 'message:update', updatedMessage);
+        }
 
         return NextResponse.json(updatedMessage);
 
