@@ -110,7 +110,7 @@ export async function POST(
             return NextResponse.json(conversation);
         }
 
-      //  await pusherServer.trigger(conversationId!, 'message:update', updatedMessage);
+        await pusherServer.trigger(conversationId!, 'message:updateSeen', updatedMessage);
 
         return NextResponse.json(updatedMessage);
 
