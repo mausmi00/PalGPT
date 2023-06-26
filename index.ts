@@ -23,14 +23,14 @@ async function main() {
     //     }
     // })
 
-    // const updatedUser = await prisma.message.update({
-    //     where: {
-    //         id: "6484f97b510b60d037e7d194",
-    //     },
-    //     data: {
-    //         responderShouldBeAi: true
-    //     }
-    // })
+    const updatedUser = await prisma.user.update({
+        where: {
+            id: "6496f832f91b008949a2f483",
+        },
+        data: {
+            characteristics: "I'm someone who feels deeply and isn't afraid to let my emotions show through tears"
+        }
+    })
 
     // const user = await prisma.user.update({
     //     where: {
@@ -49,14 +49,14 @@ async function main() {
     //     }
     // })
 
-    const user = await prisma.user.update({
-        where: {
-            id: "649222ef4678e55bf8e39998"
-        },
-        data: {
-            image: "/images/groot.jpg"
-        }
-    })
+    // const user = await prisma.user.update({
+    //     where: {
+    //         id: "649221204678e55bf8e3998c"
+    //     },
+    //     data: {
+    //         image: "/images/groot.jpg"
+    //     }
+    // })
 }
 main()
     .then(async () => {

@@ -109,6 +109,15 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
       HumanMessagePromptTemplate.fromTemplate("{input}"),
     ]);
   }
+  else if (name === "cry baby") {
+    chatPrompt = ChatPromptTemplate.fromPromptMessages([
+      SystemMessagePromptTemplate.fromTemplate(
+        "Act like a cry baby. Keep your conversations short"
+      ),
+      new MessagesPlaceholder("history"),
+      HumanMessagePromptTemplate.fromTemplate("{input}"),
+    ]);
+  }
   else if (name === "Tobio Kageyama") {
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
