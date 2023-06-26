@@ -32,7 +32,7 @@ export async function POST(
                         seen: true
                     }
                 },
-                users: true
+                users: true,
             }
         });
 
@@ -106,8 +106,7 @@ export async function POST(
             }
         });
         
-        const isAiConvo = await getIsAiConversation(conversationId)
-        if (!isAiConvo) {
+        if (conversation.isAiConvo == false) {
             await pusherServer.trigger(conversationId!, 'message:update', updatedMessage);
         }
 
