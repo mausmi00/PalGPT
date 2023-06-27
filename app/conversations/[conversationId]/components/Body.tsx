@@ -24,9 +24,10 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   const { conversationId } = useConversation();
 
   useEffect(() => {
+    router.refresh();
     axios.post(`/api/conversations/${conversationId}/seen`);
     // router.push(`/conversations/${conversationId}`)
-    axios.get(`/api/conversations/${conversationId}`);
+    // axios.get(`/api/conversations/${conversationId}`);
    // router.refresh();
   }, [conversationId]);
 
