@@ -10,7 +10,7 @@ import { FullMessageType } from "@/app/types";
 import { find } from "lodash";
 import { useRouter } from "next/navigation";
 import getIsAiConversation from "@/app/actions/getIsAiConversation";
-import setAiMemoryChain from "@/app/actions/setAiMemoryChain";
+import useOtherUsers from "@/app/hooks/useOtherUsers";
 
 interface BodyProps {
   initialMessages: FullMessageType[];
@@ -23,12 +23,11 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
 
   const { conversationId } = useConversation();
 
+  // is true if the messages are part of conversation with an agent
+  const isAiConvo = messages[0]?.isAiConvoMessage;
   useEffect(() => {
-    router.refresh();
-    axios.post(`/api/conversations/${conversationId}/seen`);
-    // router.push(`/conversations/${conversationId}`)
-    // axios.get(`/api/conversations/${conversationId}`);
-   // router.refresh();
+    isAiConvo ? axios.post(`/api/conversations/${conversationId}/seen`) :
+     router.push(`/conversations/${conversationId}`);
   }, [conversationId]);
 
   // useEffect(() => {
@@ -40,7 +39,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: FullMessageType) => {
-      axios.post(`/api/conversations/${conversationId}/seen`);
+     isAiConvo ? axios.post(`/api/conversations/${conversationId}/seen`) : null;
 
       setMessages((current) => {
         if (find(current, { id: message.id })) {

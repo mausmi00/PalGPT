@@ -3,6 +3,7 @@ import { FullConversationType } from "../types";
 import { useMemo } from "react";
 import { User } from "@prisma/client";
 
+// returns other users of a conversation
 const useOtherUsers = (conversation: FullConversationType | { users: User[] }) => {
     const session = useSession();
 

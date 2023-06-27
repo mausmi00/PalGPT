@@ -88,7 +88,8 @@ export async function POST(request: Request) {
                     id: lastMessage?.id
                 },
                 data: {
-                    responderShouldBeAi: true
+                    responderShouldBeAi: true,
+                    isAiConvoMessage: true
                 }
 
             });
@@ -164,7 +165,8 @@ export async function POST(request: Request) {
                             connect: {
                                 id: aiUserId
                             }
-                        }
+                        },
+                        isAiConvoMessage: true
                     }
                 });
                 await pusherServer.trigger(conversationId, 'messages:new', newAiMessage);

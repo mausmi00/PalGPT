@@ -83,6 +83,7 @@ model Message {
   senderId            String   @db.ObjectId
   sender              User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
   responderShouldBeAi Boolean? @default(false)
+  isAiConvoMessage Boolean? @default(false)
 
   lastMessageOfTheContext Boolean? @default(false)
 }
