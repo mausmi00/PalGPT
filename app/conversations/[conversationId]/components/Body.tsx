@@ -26,8 +26,8 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   // is true if the messages are part of conversation with an agent
   const isAiConvo = messages[0]?.isAiConvoMessage;
   useEffect(() => {
-    isAiConvo ? axios.post(`/api/conversations/${conversationId}/seen`) :
-     router.refresh()
+    isAiConvo ? router.refresh() : axios.post(`/api/conversations/${conversationId}/seen`)
+     
   }, [conversationId]);
 
   // useEffect(() => {
@@ -39,7 +39,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: FullMessageType) => {
-     isAiConvo ? axios.post(`/api/conversations/${conversationId}/seen`) : null;
+     isAiConvo ? null : axios.post(`/api/conversations/${conversationId}/seen`);
 
       setMessages((current) => {
         if (find(current, { id: message.id })) {
