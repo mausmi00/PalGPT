@@ -24,7 +24,8 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
 
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
-    router.push(`/conversations/${conversationId}`)
+    // router.push(`/conversations/${conversationId}`)
+    router.refresh();
   }, [conversationId]);
 
   // useEffect(() => {
