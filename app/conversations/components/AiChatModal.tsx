@@ -84,6 +84,7 @@ const AiChatModal: React.FC<AiChatModalProps> = ({ isOpen, onClose }) => {
                 register={register}
                 label="name"
                 id="name"
+                placeholder="Daniel Ricciardo"
                 disabled={isLoading}
                 required
                 errors={errors}
@@ -91,9 +92,9 @@ const AiChatModal: React.FC<AiChatModalProps> = ({ isOpen, onClose }) => {
               <div>
                 <Input
                   register={register}
-                  label="characteristics"
+                  label="prompt"
                   id="characteristics"
-                  placeholder="funny, smart, mean"
+                  placeholder="You are Daniel Ricciardo, the F1 driver"
                   disabled={isLoading}
                   required
                   errors={errors}

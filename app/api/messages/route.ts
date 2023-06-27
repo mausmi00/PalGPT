@@ -5,7 +5,6 @@ import { pusherServer } from "@/app/libs/pusher";
 import getIsAiConversation from "@/app/actions/getIsAiConversation";
 import getAiResponse from "@/app/actions/getAiResponse";
 import setAiMemoryChain from "@/app/actions/setAiMemoryChain";
-import { User } from "@prisma/client";
 
 export async function POST(request: Request) {
     try {
@@ -111,12 +110,13 @@ export async function POST(request: Request) {
             })
         });
 
-        // if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
-        //     // console.log("chain gets initialized");
-        //     console.log("call2");
-        //     await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
-        //     console.log("api/messages ", global.CHAIN.prompt.promptMessages[0]);
-        // }
+        // on agent creation, we need to set its prompt
+        if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
+            // console.log("chain gets initialized");
+            console.log("call2");
+            await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
+            console.log("api/messages ", global.CHAIN.prompt.promptMessages[0]);
+        }
 
 
         //  console.log("shouldTheResponderBeAnAi: ", shouldTheResponderBeAnAi);
@@ -127,7 +127,7 @@ export async function POST(request: Request) {
                 if (global.CHAIN == null && aiUserName != null && aiCharacteristics != null) {
                     console.log("call3")
                     console.log("aiUserName: ", aiUserName)
-                    console.log("aiCharacteristics: ", aiCharacteristics);
+                    console.log("prompt: ", aiCharacteristics);
                     console.log("conversationId: ", conversationId);
                     await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId)
                         .then(async () => {

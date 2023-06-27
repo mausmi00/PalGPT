@@ -122,9 +122,9 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
             setDrawerOpen(true);
           }}
           className="
-      text-sky-500
-      hover:text-sky-600
-      cursor-pointer
+          text-[#66FCF1]
+          cursor-pointer
+          hover:text-[#45A29E]
       transition"
         />
       </div>
