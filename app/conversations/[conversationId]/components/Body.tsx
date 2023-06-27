@@ -27,7 +27,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   const isAiConvo = messages[0]?.isAiConvoMessage;
   useEffect(() => {
     isAiConvo ? axios.post(`/api/conversations/${conversationId}/seen`) :
-     router.push(`/conversations/${conversationId}`);
+     router.refresh()
   }, [conversationId]);
 
   // useEffect(() => {
