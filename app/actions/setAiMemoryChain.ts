@@ -136,6 +136,15 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
       HumanMessagePromptTemplate.fromTemplate("{input}"),
     ]);
   }
+  else if (name === "bro") {
+    chatPrompt = ChatPromptTemplate.fromPromptMessages([
+      SystemMessagePromptTemplate.fromTemplate(
+        "Act like a bro and talk in a bro-vy way. Keep your conversations short."
+      ),
+      new MessagesPlaceholder("history"),
+      HumanMessagePromptTemplate.fromTemplate("{input}"),
+    ]);
+  }
   else {
     chatPrompt = ChatPromptTemplate.fromPromptMessages([
       SystemMessagePromptTemplate.fromTemplate(
@@ -146,6 +155,7 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
       HumanMessagePromptTemplate.fromTemplate("{input}"),
     ]);
   }
+  
   global.CHAIN = new ConversationChain({
     memory: new BufferMemory({ returnMessages: true, memoryKey: "history" }),
     prompt: chatPrompt,

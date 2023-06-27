@@ -10,6 +10,7 @@ import { FullMessageType } from "@/app/types";
 import { find } from "lodash";
 import { useRouter } from "next/navigation";
 import getIsAiConversation from "@/app/actions/getIsAiConversation";
+import setAiMemoryChain from "@/app/actions/setAiMemoryChain";
 
 interface BodyProps {
   initialMessages: FullMessageType[];
@@ -25,7 +26,8 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
     // router.push(`/conversations/${conversationId}`)
-    router.refresh();
+    axios.get(`/api/conversations/${conversationId}`);
+   // router.refresh();
   }, [conversationId]);
 
   // useEffect(() => {
@@ -71,29 +73,26 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
       pusherClient.unbind("messages:new", messageHandler);
       pusherClient.unbind("message:update", updateMessageHandler);
     };
-    
   }, [conversationId]);
 
   return (
     <div className="flex-1 overflow-y-auto">
       {messages.map((message, i) => (
         <>
-          
-            <div>
-              <MessageBox
-                isLast={i === messages.length - 1}
-                key={message.id}
-                data={message}
-              />
-              {message.lastMessageOfTheContext == true ? (
-                <fieldset className="border-t border-slate-300">
-                  <legend className="mx-auto px-4 text-white text-sm italic">
-                    context cleared
-                  </legend>
-                </fieldset>
-              ) : null}
-            </div>
-       
+          <div>
+            <MessageBox
+              isLast={i === messages.length - 1}
+              key={message.id}
+              data={message}
+            />
+            {message.lastMessageOfTheContext == true ? (
+              <fieldset className="border-t border-slate-300">
+                <legend className="mx-auto px-4 text-white text-sm italic">
+                  context cleared
+                </legend>
+              </fieldset>
+            ) : null}
+          </div>
         </>
       ))}
       <div className="pt-24" ref={bottomRef} />

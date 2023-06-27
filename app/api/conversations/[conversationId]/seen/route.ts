@@ -106,7 +106,7 @@ export async function POST(
             }
         });
         
-        if (conversation.isAiConvo == false) {
+        if (conversation.isAiConvo == false) {  
             await pusherServer.trigger(conversationId!, 'message:update', updatedMessage);
         }
 
