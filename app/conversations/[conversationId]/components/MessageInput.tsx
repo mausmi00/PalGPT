@@ -10,6 +10,7 @@ interface MessageInputProps {
   required?: boolean;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
+  disabled?: boolean
 }
 const MessageInput: React.FC<MessageInputProps> = ({
   placeholder,
@@ -18,6 +19,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   required,
   register,
   errors,
+  disabled
 }) => {
   return (
     <div
@@ -30,6 +32,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         autoComplete={id}
         {...register(id, { required })}
         placeholder={placeholder}
+        disabled={disabled}
         className="
         text-[#1F2833]
         font-light

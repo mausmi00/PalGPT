@@ -5,7 +5,7 @@ import axios from "axios";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import MessageInput from "./MessageInput";
 import { HiPaperAirplane, HiEllipsisHorizontal } from "react-icons/hi2";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 declare global {
@@ -20,8 +20,8 @@ const AiForm = () => {
   const { conversationId } = useConversation();
 
   const router = useRouter();
-  
-  // const [isLoading, setIsLoading] = useState(show);
+
+  const [isLoading, setIsLoading] = useState(!global.shouldDisplay);
   const {
     register,
     handleSubmit,
@@ -38,10 +38,13 @@ const AiForm = () => {
     // setIsLoading(global.messageIsBeingGenerated);
     // setIsLoading(true);
     global.shouldDisplay = false;
+    setIsLoading(global.shouldDisplay);
     setValue("message", "", { shouldValidate: true });
     axios.post("/api/messages", {
       ...data,
       conversationId: conversationId,
+    }).then(() => {
+      router.refresh();
     });
   };
 
@@ -55,6 +58,7 @@ const AiForm = () => {
         register={register}
         errors={errors}
         required
+        disabled={isLoading}
         placeholder="Write a message"
       />
       <button
@@ -71,13 +75,15 @@ const AiForm = () => {
       </button>
     </form>
   ) : (
-    <form className="flex items-center gap-2 lg:gap-4 w-full">
+    //<form className="flex items-center gap-2 lg:gap-4 w-full">
+    <div className="flex items-center gap-2 lg:gap-4 w-full">
       <MessageInput
         id="message"
         register={register}
         errors={errors}
         required
-        placeholder="Loading..."
+        disabled={isLoading}
+        placeholder="Agent is typing..."
       />
 
       <HiEllipsisHorizontal
@@ -86,12 +92,14 @@ const AiForm = () => {
         text-[#66FCF1]
         "
       />
-    </form>
+    </div>
+    // </form>
   );
 
   useEffect(() => {
     console.log("in use effect");
-    router.refresh();
+    setIsLoading(!global.shouldDisplay);
+    //global.shouldDisplay(global.shouldDisplay);
     condition = global.shouldDisplay ? (
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -102,6 +110,7 @@ const AiForm = () => {
           register={register}
           errors={errors}
           required
+          disabled={isLoading}
           placeholder="Write a message"
         />
         <button
@@ -125,6 +134,7 @@ const AiForm = () => {
           errors={errors}
           required
           placeholder="Loading..."
+          disabled={isLoading}
         />
 
         <HiEllipsisHorizontal
@@ -134,7 +144,7 @@ const AiForm = () => {
         />
       </form>
     );
-  }, [global.shouldDisplay]);
+  }, [isLoading, global.shouldDisplay]);
 
   //   useEffect(() => {
   //     console.log("triggered undo: ", global.isAi);

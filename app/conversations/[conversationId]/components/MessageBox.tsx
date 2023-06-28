@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Avatar from "@/app/components/Avatar";
 import { format } from "date-fns";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ImageModal from "./ImageModal";
 
 interface MessageBoxProps {
@@ -33,6 +33,11 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
     isOwn ? "bg-[#66FCF1] text-[#1F2833]" : "bg-white text-[#1F2833]",
     data.image ? "rounded-md p-0" : "rounded-xl py-2 px-2"
   );
+
+  // useEffect(() => {
+  //   global.shouldDisplay = (isLast && !data?.responderShouldBeAi) || data.lastMessageOfTheContext;
+  //   console.log("should disp val: ", global.shouldDisplay)  
+  // }, [isLast])
 
   return (
     <div className={container}>

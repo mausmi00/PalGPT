@@ -19,13 +19,11 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState(initialMessages);
 
-  const lastMessage = messages[messages.length - 1];
-
   // defualt: last message is a regular user
  // const [lastMessageIsAi, setLastMessageIsAi] = useState(!lastMessage.responderShouldBeAi)
 
  // would be true if we want to enable users to send more messages
-  global.shouldDisplay = !lastMessage?.responderShouldBeAi;
+  // global.shouldDisplay = !lastMessage?.responderShouldBeAi;
 
   const { conversationId } = useConversation();
 
@@ -39,11 +37,6 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   // useEffect(() => {
   //   router.refresh();
   // }, [conversationId])
-  useEffect(() => {
-    const lastMessage = messages[messages.length - 1];
-    global.shouldDisplay = !lastMessage?.responderShouldBeAi || lastMessage.lastMessageOfTheContext;
-    console.log("should disp val: ", global.shouldDisplay)  
-  }, [messages])
 
   useEffect(() => {
     pusherClient.subscribe(conversationId);
@@ -90,6 +83,11 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   //   // setLastMessageIsAi(!message.responderShouldBeAi);
   //  // global.shouldDisplay  = !message.responderShouldBeAi;
   // }, [messages])
+  let lastMessage = messages[messages.length - 1];
+  useEffect(() => {
+    global.shouldDisplay = !lastMessage?.responderShouldBeAi || lastMessage.lastMessageOfTheContext;
+    console.log("should disp val: ", global.shouldDisplay)  
+  }, [lastMessage])
 
   return (
     <div className="flex-1 overflow-y-auto">
