@@ -6,7 +6,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import MessageInput from "./MessageInput";
 import { HiPaperAirplane, HiEllipsisHorizontal } from "react-icons/hi2";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 declare global {
   var shouldDisplay: any | null;
