@@ -1,7 +1,6 @@
 import { ConversationChain } from "langchain/chains";
 
 const getAiResponse = async (chain: ConversationChain, input: string) => {
-
   const response = await chain.call({
     input: input,
   });

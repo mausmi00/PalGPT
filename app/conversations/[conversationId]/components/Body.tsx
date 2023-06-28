@@ -9,8 +9,6 @@ import MessageBox from "./MessageBox";
 import { FullMessageType } from "@/app/types";
 import { find } from "lodash";
 import { useRouter } from "next/navigation";
-import getIsAiConversation from "@/app/actions/getIsAiConversation";
-import useOtherUsers from "@/app/hooks/useOtherUsers";
 
 interface BodyProps {
   initialMessages: FullMessageType[];
@@ -20,6 +18,14 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   const router = useRouter();
   const bottomRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState(initialMessages);
+
+  const lastMessage = messages[messages.length - 1];
+
+  // defualt: last message is a regular user
+ // const [lastMessageIsAi, setLastMessageIsAi] = useState(!lastMessage.responderShouldBeAi)
+
+ // would be true if we want to enable users to send more messages
+  global.shouldDisplay = !lastMessage?.responderShouldBeAi;
 
   const { conversationId } = useConversation();
 
@@ -33,6 +39,12 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   // useEffect(() => {
   //   router.refresh();
   // }, [conversationId])
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    global.shouldDisplay = !lastMessage?.responderShouldBeAi;
+    console.log("should disp val: ", global.shouldDisplay)
+  
+  }, [messages])
 
   useEffect(() => {
     pusherClient.subscribe(conversationId);
@@ -40,7 +52,6 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
 
     const messageHandler = (message: FullMessageType) => {
      isAiConvo ? null : axios.post(`/api/conversations/${conversationId}/seen`);
-
       setMessages((current) => {
         if (find(current, { id: message.id })) {
           return current;
@@ -74,6 +85,12 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
       pusherClient.unbind("message:update", updateMessageHandler);
     };
   }, [conversationId]);
+
+  // useEffect(() => {
+  //   console.log("update should display: ", global.shouldDisplay)
+  //   // setLastMessageIsAi(!message.responderShouldBeAi);
+  //  // global.shouldDisplay  = !message.responderShouldBeAi;
+  // }, [messages])
 
   return (
     <div className="flex-1 overflow-y-auto">

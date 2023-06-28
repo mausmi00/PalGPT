@@ -24,7 +24,7 @@ const AuthForm = () => {
      // console.log("Authenticated");
      router.push('/agents');
     }
-  }), [session?.status, router];
+  },  [session?.status, router]);
 
   const toggleVariant = useCallback(() => {
     if (variant == "LOGIN") {
