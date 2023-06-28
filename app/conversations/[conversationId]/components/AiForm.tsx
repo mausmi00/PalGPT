@@ -6,6 +6,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import MessageInput from "./MessageInput";
 import { HiPaperAirplane, HiEllipsisHorizontal } from "react-icons/hi2";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 declare global {
   var shouldDisplay: any | null;
@@ -17,6 +18,9 @@ declare global {
 // const AiForm: React.FC<AiFormProps> = ({ show }) => {
 const AiForm = () => {
   const { conversationId } = useConversation();
+
+  const router = useRouter();
+  
   // const [isLoading, setIsLoading] = useState(show);
   const {
     register,
@@ -87,6 +91,7 @@ const AiForm = () => {
 
   useEffect(() => {
     console.log("in use effect");
+    router.refresh();
     condition = global.shouldDisplay ? (
       <form
         onSubmit={handleSubmit(onSubmit)}

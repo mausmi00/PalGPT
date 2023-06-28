@@ -42,21 +42,24 @@ async function main() {
 //     // })
 
 
-    // const conv = await prisma.user.updateMany({
-    //     data: {
-    //         conversationIds: [],
-    //         seenMessageIds: [],
-    //     }
-    // })
-
-    const user = await prisma.user.update({
-        where: {
-            id: "64898369ea3dd1367711b4ff"
-        },
+    const conv1 = await prisma.user.updateMany({
         data: {
-            image: "/images/bro.png"
+            conversationIds: [],
+            seenMessageIds: [],
         }
     })
+
+    const mess = await prisma.message.deleteMany({})
+    const conv2 = await prisma.conversation.deleteMany({})
+
+    // const user = await prisma.user.update({
+    //     where: {
+    //         id: "64898369ea3dd1367711b4ff"
+    //     },
+    //     data: {
+    //         image: "/images/bro.png"
+    //     }
+    // })
 }
 main()
     .then(async () => {

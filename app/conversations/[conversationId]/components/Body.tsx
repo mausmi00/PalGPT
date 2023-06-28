@@ -41,9 +41,8 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   // }, [conversationId])
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
-    global.shouldDisplay = !lastMessage?.responderShouldBeAi;
-    console.log("should disp val: ", global.shouldDisplay)
-  
+    global.shouldDisplay = !lastMessage?.responderShouldBeAi || lastMessage.lastMessageOfTheContext;
+    console.log("should disp val: ", global.shouldDisplay)  
   }, [messages])
 
   useEffect(() => {
