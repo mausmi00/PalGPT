@@ -88,7 +88,7 @@ export async function DELETE(request: Request, { params }: { params: IParams }) 
         return NextResponse.json(deleteConversation);
 
     } catch (error: any) {
-        console.log(error, 'ERROR_CONVERSATION_DELETE');
+        // console.log(error, 'ERROR_CONVERSATION_DELETE');
         return new NextResponse('Internal Error', { status: 500 });
     }
 
@@ -119,12 +119,12 @@ export async function GET(request: Request, { params }: { params: IParams }) {
         if (potentialAiUser != null) {
             // console.log("potential ai user")
             const isAiConvo = await isAiUser(potentialAiUser[0]?.id);
-            console.log("isAiCOnvo: ", isAiConvo);
+           // console.log("isAiCOnvo: ", isAiConvo);
             if (isAiConvo && potentialAiUser[0].name && potentialAiUser[0].characteristics) {
-                console.log("should work");
+             //   console.log("should work");
                 // console.log("call1")
                 await setAiMemoryChain(potentialAiUser[0].name, potentialAiUser[0].characteristics, conversationId);
-                console.log("api/conv-id chain: ", global.CHAIN.prompt.promptMessages[0])
+             //   console.log("api/conv-id chain: ", global.CHAIN.prompt.promptMessages[0])
             }
         }
         return NextResponse.json(currentConvo);

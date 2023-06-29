@@ -113,9 +113,9 @@ export async function POST(request: Request) {
         // on agent creation, we need to set its prompt
         if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
             // console.log("chain gets initialized");
-            console.log("call2");
+           // console.log("call2");
             await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
-            console.log("api/messages ", global.CHAIN.prompt.promptMessages[0]);
+          //  console.log("api/messages ", global.CHAIN.prompt.promptMessages[0]);
         }
 
 
@@ -125,10 +125,10 @@ export async function POST(request: Request) {
             shouldTheResponderBeAnAi = false;
             if (lastMessage?.body != null) {
                 if (global.CHAIN == null && aiUserName != null && aiCharacteristics != null) {
-                    console.log("call3")
-                    console.log("aiUserName: ", aiUserName)
-                    console.log("prompt: ", aiCharacteristics);
-                    console.log("conversationId: ", conversationId);
+                    // console.log("call3")
+                    // console.log("aiUserName: ", aiUserName)
+                    // console.log("prompt: ", aiCharacteristics);
+                    // console.log("conversationId: ", conversationId);
                     await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId)
                         .then(async () => {
                             if (lastMessage?.body != null) {
@@ -141,8 +141,8 @@ export async function POST(request: Request) {
                 else {
                     response = await getAiResponse(global.CHAIN, lastMessage?.body);
                 }
-                console.log("chain before response: ", global.CHAIN.prompt.promptMessages[0]);
-                console.log("response: ", response);
+                // console.log("chain before response: ", global.CHAIN.prompt.promptMessages[0]);
+                // console.log("response: ", response);
                 const newAiMessage = await prisma.message.create({
                     include: {
                         seen: true,

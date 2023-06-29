@@ -86,7 +86,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   let lastMessage = messages[messages.length - 1];
   useEffect(() => {
     global.shouldDisplay = !lastMessage?.responderShouldBeAi || lastMessage.lastMessageOfTheContext;
-    console.log("should disp val: ", global.shouldDisplay)  
+    // console.log("should disp val: ", global.shouldDisplay)  
   }, [lastMessage])
 
   return (

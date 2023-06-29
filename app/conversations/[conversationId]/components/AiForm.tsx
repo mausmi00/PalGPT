@@ -127,7 +127,7 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
   );
 
   useEffect(() => {
-    console.log("in use effect");
+    // console.log("in use effect");
     setIsLoading(!global.shouldDisplay);
     //global.shouldDisplay(global.shouldDisplay);
     condition = global.shouldDisplay ? (
