@@ -26,10 +26,16 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
   const { conversationId } = useConversation();
 
   const router = useRouter();
+
   const otherUsers = useOtherUsers(conversation);
+  const agent = otherUsers?.name;
+
+  // useEffect(() => {
+  //   const otherUsers = useOtherUsers(conversation);
+  //   const agent = otherUsers?.name;
+  // })
   // console.log("conversation: ", conversation);
   // console.log("otherUser: ", otherUsers);
-  const agent = otherUsers.name;
   // console.log("agent: ", agent);
 
   const [isLoading, setIsLoading] = useState(!global.shouldDisplay);
