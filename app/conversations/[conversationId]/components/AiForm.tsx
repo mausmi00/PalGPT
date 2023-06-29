@@ -7,19 +7,30 @@ import MessageInput from "./MessageInput";
 import { HiPaperAirplane, HiEllipsisHorizontal } from "react-icons/hi2";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import useOtherUsers from "@/app/hooks/useOtherUsers";
+import useConversationAgent from "@/app/hooks/useConversationAgent";
+import { Conversation, User } from "@prisma/client";
 
 declare global {
   var shouldDisplay: any | null;
 }
-// interface AiFormProps {
-//   show?: boolean;
-// }
 
-// const AiForm: React.FC<AiFormProps> = ({ show }) => {
-const AiForm = () => {
+interface AiFormProps {
+  conversation: Conversation & {
+    users: User[];
+  };
+}
+
+const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
+  // const AiForm = () => {
   const { conversationId } = useConversation();
 
   const router = useRouter();
+  const otherUsers = useOtherUsers(conversation);
+  // console.log("conversation: ", conversation);
+  // console.log("otherUser: ", otherUsers);
+  const agent = otherUsers.name;
+  // console.log("agent: ", agent);
 
   const [isLoading, setIsLoading] = useState(!global.shouldDisplay);
   const {
@@ -33,6 +44,17 @@ const AiForm = () => {
     },
   });
 
+  // // let agent: string | null = "Agent";
+  // const getConversation = axios
+  //   .get(`/api/conversations/${conversationId}`)
+  //   .then((conversation) => {
+  //     agent = useConversationAgent(conversation.data)[0].name;
+  //     console.log("agent is: ", agent)
+  //   });
+
+  const newPlaceholder = `${agent} is typing...`;
+  // console.log("placeholder: ", newPlaceholder);
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     // global.messageIsBeingGenerated = true;
     // setIsLoading(global.messageIsBeingGenerated);
@@ -40,12 +62,14 @@ const AiForm = () => {
     global.shouldDisplay = false;
     setIsLoading(global.shouldDisplay);
     setValue("message", "", { shouldValidate: true });
-    axios.post("/api/messages", {
-      ...data,
-      conversationId: conversationId,
-    }).then(() => {
-      router.refresh();
-    });
+    axios
+      .post("/api/messages", {
+        ...data,
+        conversationId: conversationId,
+      })
+      .then(() => {
+        router.refresh();
+      });
   };
 
   let condition = global.shouldDisplay ? (
@@ -83,7 +107,7 @@ const AiForm = () => {
         errors={errors}
         required
         disabled={isLoading}
-        placeholder="Agent is typing..."
+        placeholder={newPlaceholder}
       />
 
       <HiEllipsisHorizontal
@@ -133,7 +157,7 @@ const AiForm = () => {
           register={register}
           errors={errors}
           required
-          placeholder="Loading..."
+          placeholder={newPlaceholder}
           disabled={isLoading}
         />
 

@@ -3,11 +3,7 @@ import getMessages from "@/app/actions/getMessages";
 import EmptyState from "@/app/components/EmptyState";
 import Header from "./components/Header";
 import Body from "./components/Body";
-import Form from "./components/Form";
-import getIsAiConversation from "@/app/actions/getIsAiConversation";
 import AiForm from "./components/AiForm";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 interface IParams {
   conversationId: string;
@@ -31,7 +27,7 @@ const conversationId = async ({ params }: { params: IParams }) => {
       <div className="h-full flex flex-col">
         <Header conversation={conversation} />
         <Body initialMessages={messages} />
-        <AiForm />
+        <AiForm conversation={conversation}/>
       </div>
     </div>
   );
