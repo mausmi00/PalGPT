@@ -155,12 +155,13 @@ const setAiMemoryChain = async (name: string, characteristics: string, conversat
       HumanMessagePromptTemplate.fromTemplate("{input}"),
     ]);
   }
-  
-  global.CHAIN = new ConversationChain({
-    memory: new BufferMemory({ returnMessages: true, memoryKey: "history" }),
-    prompt: chatPrompt,
-    llm: chat,
-  });
+
+  // global.CHAIN = new ConversationChain({
+  //   memory: new BufferMemory({ returnMessages: true, memoryKey: "history" }),
+  //   prompt: chatPrompt,
+  //   llm: chat,
+  // });
+  global.CHAIN = null;
   console.log("calledddd");
   console.log("prompt: ", global.CHAIN.prompt.promptMessages[0])
   return CHAIN;

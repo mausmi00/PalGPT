@@ -78,7 +78,7 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
       });
   };
 
-  let condition = global.shouldDisplay ? (
+  const defaultMessage = (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex items-center gap-2 lg:gap-4 w-full"
@@ -94,18 +94,19 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
       <button
         type="submit"
         className="
-    rounded-full
-    p-2
-    bg-[#66FCF1]
-    cursor-pointer
-    hover:bg-[#45A29E]
-    transition"
+rounded-full
+p-2
+bg-[#66FCF1]
+cursor-pointer
+hover:bg-[#45A29E]
+transition"
       >
         <HiPaperAirplane size={18} className="text-[#1F2833]" />
       </button>
     </form>
-  ) : (
-    //<form className="flex items-center gap-2 lg:gap-4 w-full">
+  );
+
+  const messageWhileTyping = (
     <div className="flex items-center gap-2 lg:gap-4 w-full">
       <MessageInput
         id="message"
@@ -119,61 +120,26 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
       <HiEllipsisHorizontal
         size={18}
         className="
-        text-[#66FCF1]
-        "
+    text-[#66FCF1]
+    "
       />
     </div>
-    // </form>
   );
+
+  let condition = global.shouldDisplay
+    ? defaultMessage
+    : //<form className="flex items-center gap-2 lg:gap-4 w-full">
+      messageWhileTyping;
+  // </form>
 
   useEffect(() => {
     // console.log("in use effect");
     setIsLoading(!global.shouldDisplay);
     //global.shouldDisplay(global.shouldDisplay);
-    condition = global.shouldDisplay ? (
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex items-center gap-2 lg:gap-4 w-full"
-      >
-        <MessageInput
-          id="message"
-          register={register}
-          errors={errors}
-          required
-          disabled={isLoading}
-          placeholder="Write a message"
-        />
-        <button
-          type="submit"
-          className="
-      rounded-full
-      p-2
-      bg-[#66FCF1]
-      cursor-pointer
-      hover:bg-[#45A29E]
-      transition"
-        >
-          <HiPaperAirplane size={18} className="text-[#1F2833]" />
-        </button>
-      </form>
-    ) : (
-      <form className="flex items-center gap-2 lg:gap-4 w-full">
-        <MessageInput
-          id="message"
-          register={register}
-          errors={errors}
-          required
-          placeholder={newPlaceholder}
-          disabled={isLoading}
-        />
-
-        <HiEllipsisHorizontal
-          size={18}
-          className="
-          text-[#1F2833]"
-        />
-      </form>
-    );
+    condition = global.shouldDisplay ? defaultMessage : messageWhileTyping;
+    setTimeout(() => {
+      condition = defaultMessage;
+    }, 5000);
   }, [isLoading, global.shouldDisplay]);
 
   //   useEffect(() => {
