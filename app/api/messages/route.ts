@@ -136,7 +136,7 @@ export async function POST(request: Request) {
                             }
 
                         })
-                    console.log("api messages2: ", (global as any).chain.prompt.promptMessages[0])
+                  //  console.log("api messages2: ", (global as any).chain.prompt.promptMessages[0])
                 }
                 else {
                     response = await getAiResponse(global.CHAIN, lastMessage?.body);
