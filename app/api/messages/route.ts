@@ -120,10 +120,16 @@ export async function POST(request: Request) {
 
 
         console.log("shouldTheResponderBeAnAi: ", shouldTheResponderBeAnAi);
+        console.log("isAiConvo: ", isAiConvo);
+        console.log("aiUserId: ", aiUserId);
         if (isAiConvo && shouldTheResponderBeAnAi && aiUserId != null) {
+            console.log("insideeeee")
             let response: string = '';
             shouldTheResponderBeAnAi = false;
+            console.log("lastMessage body: ", lastMessage?.body)
             if (lastMessage?.body != null) {
+                console.log("ai useName: ", aiUserName)
+                console.log("achar: ", aiCharacteristics);
                 if (global.CHAIN == null && aiUserName != null && aiCharacteristics != null) {
                     console.log("call3")
                     console.log("aiUserName: ", aiUserName)
@@ -169,6 +175,7 @@ export async function POST(request: Request) {
                         isAiConvoMessage: true
                     }
                 });
+                console.log("new message: ", newAiMessage)
                 await pusherServer.trigger(conversationId, 'messages:new', newAiMessage);
                 await pusherServer.trigger(currentUser.email!, "conversation:update", {
                     id: conversationId,
