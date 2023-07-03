@@ -49,10 +49,16 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
     // to update the last message sent in conversation side bar
     const updateHandler = (newConversation: FullConversationType) => {
+      let matchingConvo = null;
       setItems((current) =>
         current.map((currentConversation) => {
-          if (currentConversation.id === newConversation.id) {
-            // console.log("messagesss: ", newConversation.messages)
+          if (currentConversation.id === newConversation?.id) {
+            matchingConvo = currentConversation;
+            matchingConvo = {
+              ...matchingConvo,
+              messages: matchingConvo.messages,
+            };
+
             return {
               ...currentConversation,
               messages: newConversation.messages,
@@ -61,6 +67,12 @@ const ConversationList: React.FC<ConversationListProps> = ({
           return currentConversation;
         })
       );
+      // to remove the conversation from the current position in conversation list and place it in the beginning
+      if (matchingConvo != null) {
+        const newItems = items.filter((conv) => conv.id !== newConversation.id);
+        newItems.unshift(matchingConvo);
+        setItems(newItems);
+      }
     };
 
     const newHandler = (newConversation: FullConversationType) => {
@@ -88,12 +100,12 @@ const ConversationList: React.FC<ConversationListProps> = ({
     pusherClient.bind("conversation:update", updateHandler);
     pusherClient.bind("conversation:remove", removeHandler);
 
-    return () => {
-      pusherClient.unsubscribe(pusherKey);
-      pusherClient.unbind("conversation:new", newHandler);
-      pusherClient.unbind("conversation:update", updateHandler);
-      pusherClient.unbind("conversation:remove", removeHandler);
-    };
+    // return () => {
+    //   pusherClient.unsubscribe(pusherKey);
+    //   pusherClient.unbind("conversation:new", newHandler);
+    //   pusherClient.unbind("conversation:update", updateHandler);
+    //   pusherClient.unbind("conversation:remove", removeHandler);
+    // };
   }, [pusherKey, conversationId, router]);
 
   return (
@@ -141,7 +153,10 @@ const ConversationList: React.FC<ConversationListProps> = ({
           transition
           "
             >
-              <MdOutlineGroupAdd className="group-hover:hidden text-black" size={20} />
+              <MdOutlineGroupAdd
+                className="group-hover:hidden text-black"
+                size={20}
+              />
               <div className="hidden text-[#1F2833] group-hover:inline text-xs font-bold">
                 Create group chat
               </div>
@@ -160,7 +175,6 @@ const ConversationList: React.FC<ConversationListProps> = ({
           text-white
           "
             >
-              
               <GrRobot className="group-hover:hidden" size={20} />
               <div className=" hidden text-[#1F2833] group-hover:inline text-xs font-bold">
                 Create agent
@@ -169,13 +183,17 @@ const ConversationList: React.FC<ConversationListProps> = ({
             {/* </div> */}
           </div>
           <hr className="w-auto h-1 my-4 border-0 rounded md:my-4 bg-[#66FCF1]" />
-          {items.map((item) => (
-            <ConversationBox
-              key={item.id}
-              data={item}
-              selected={conversationId === item.id}
-            />
-          ))}
+          {items.map((item) =>
+            item != null ? (
+              <ConversationBox
+                key={item.id}
+                data={item}
+                selected={conversationId === item.id}
+              />
+            ) : (
+              <div></div>
+            )
+          )}
         </div>
       </aside>
     </>
