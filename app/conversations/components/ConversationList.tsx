@@ -184,15 +184,11 @@ const ConversationList: React.FC<ConversationListProps> = ({
           </div>
           <hr className="w-auto h-1 my-4 border-0 rounded md:my-4 bg-[#66FCF1]" />
           {items.map((item) =>
-            item != null ? (
               <ConversationBox
                 key={item.id}
                 data={item}
                 selected={conversationId === item.id}
               />
-            ) : (
-              <div></div>
-            )
           )}
         </div>
       </aside>
