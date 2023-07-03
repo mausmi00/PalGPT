@@ -32,7 +32,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   useEffect(() => {
     isAiConvo ? router.refresh() : axios.post(`/api/conversations/${conversationId}/seen`)
      
-  }, [conversationId]);
+  }, [conversationId, isAiConvo, router]);
 
   // useEffect(() => {
   //   router.refresh();

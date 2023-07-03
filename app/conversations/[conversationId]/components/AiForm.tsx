@@ -60,7 +60,6 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
 
   const newPlaceholder = `${agent} is typing...`;
   // console.log("placeholder: ", newPlaceholder);
-
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     // global.messageIsBeingGenerated = true;
     // setIsLoading(global.messageIsBeingGenerated);
@@ -68,6 +67,32 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
     global.shouldDisplay = false;
     setIsLoading(global.shouldDisplay);
     setValue("message", "", { shouldValidate: true });
+    setTimeout(() => {
+      global.shouldDisplay = true;
+      setIsLoading(global.shouldDisplay);
+      console.log("executed!");
+      condition = defaultMessage;
+    //  router.refresh();
+      return (
+        <>
+          <div
+            className="
+      py-4
+      px-4
+      bg-[#1F2833]
+      border-t
+      flex
+      items-center
+      gap-2
+      lg:gap-4
+      w-full
+      "
+          >
+            {condition}
+          </div>
+        </>
+      );
+    }, 8000);
     axios
       .post("/api/messages", {
         ...data,
@@ -76,6 +101,13 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
       .then(() => {
         router.refresh();
       });
+    // .finally(() => {
+    // //  setTimeout(() => {
+    //     global.shouldDisplay = true;
+    //     setIsLoading(global.shouldDisplay);
+    //     console.log("executed!");
+    //  // }, 1000);
+    // });
   };
 
   const defaultMessage = (
@@ -136,10 +168,19 @@ transition"
     // console.log("in use effect");
     setIsLoading(!global.shouldDisplay);
     //global.shouldDisplay(global.shouldDisplay);
+    // setTimeout(() => {
+    //   global.shouldDisplay = true;
+    //   setIsLoading(global.shouldDisplay);
+    //   console.log("executed!");
+    //   condition = defaultMessage;
+    // }, 10000);
+
     condition = global.shouldDisplay ? defaultMessage : messageWhileTyping;
-    setTimeout(() => {
-      condition = defaultMessage;
-    }, 5000);
+    console.log("condition is changed!");
+
+    // setTimeout(() => {
+    //   condition = defaultMessage;
+    // }, 5000);
   }, [isLoading, global.shouldDisplay]);
 
   //   useEffect(() => {
