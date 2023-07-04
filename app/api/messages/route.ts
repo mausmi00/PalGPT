@@ -148,6 +148,7 @@ export async function POST(request: Request) {
                     console.log("before getAiResponse");
                     console.log("global.CHAIN: ", global.CHAIN)
                     response = await getAiResponse(global.CHAIN, lastMessage?.body);
+                    console.log("response: ", response)
 
                 }
                 console.log("chain before response: ", global.CHAIN.prompt.promptMessages[0]);
