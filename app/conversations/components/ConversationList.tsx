@@ -86,10 +86,20 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
     // to remove the conversation from the list once deleted
     const removeHandler = (conversation: FullConversationType) => {
-      setItems((current) => {
-        return [...current.filter((convo) => convo.id !== conversation.id)];
-      });
+     // let newItems;
+      // setItems((current) => {
+      //   newItems = current.filter((convo) => convo.id !== conversation.id);
+      //   return newItems;
+      // });
 
+      // if (newItems != null) {
+      //   setItems(newItems);
+      // }
+      const newItems = items.filter((conv) => conv.id !== conversation.id);
+      setItems(newItems);
+      // console.log("newItems: ", newItems);
+      // console.log("items: ", items);
+      
       // to redirect the user to conversations page once the current conversation is deleted
       if (conversation.id === conversationId) {
         router.push("/conversations");
@@ -100,12 +110,12 @@ const ConversationList: React.FC<ConversationListProps> = ({
     pusherClient.bind("conversation:update", updateHandler);
     pusherClient.bind("conversation:remove", removeHandler);
 
-    // return () => {
-    //   pusherClient.unsubscribe(pusherKey);
-    //   pusherClient.unbind("conversation:new", newHandler);
-    //   pusherClient.unbind("conversation:update", updateHandler);
-    //   pusherClient.unbind("conversation:remove", removeHandler);
-    // };
+    return () => {
+      pusherClient.unsubscribe(pusherKey);
+      pusherClient.unbind("conversation:new", newHandler);
+      pusherClient.unbind("conversation:update", updateHandler);
+      pusherClient.unbind("conversation:remove", removeHandler);
+    };
   }, [pusherKey, conversationId, router, items]);
 
   return (
@@ -183,13 +193,13 @@ const ConversationList: React.FC<ConversationListProps> = ({
             {/* </div> */}
           </div>
           <hr className="w-auto h-1 my-4 border-0 rounded md:my-4 bg-[#66FCF1]" />
-          {items.map((item) =>
-              <ConversationBox
-                key={item.id}
-                data={item}
-                selected={conversationId === item.id}
-              />
-          )}
+          {items.map((item) => (
+            <ConversationBox
+              key={item.id}
+              data={item}
+              selected={conversationId === item.id}
+            />
+          ))}
         </div>
       </aside>
     </>

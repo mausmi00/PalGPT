@@ -71,7 +71,7 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
       global.shouldDisplay = true;
       setIsLoading(global.shouldDisplay);
       console.log("executed!");
-      condition = defaultMessage;
+      let condition = defaultMessage;
     //  router.refresh();
       return (
         <>
@@ -93,6 +93,7 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
         </>
       );
     }, 8000);
+    
     axios
       .post("/api/messages", {
         ...data,
@@ -159,9 +160,9 @@ transition"
   );
 
   let condition = global.shouldDisplay
-    ? defaultMessage
+    ? (defaultMessage)
     : //<form className="flex items-center gap-2 lg:gap-4 w-full">
-      messageWhileTyping;
+      messageWhileTyping
   // </form>
 
   useEffect(() => {
@@ -178,9 +179,9 @@ transition"
     condition = global.shouldDisplay ? defaultMessage : messageWhileTyping;
     console.log("condition is changed!");
 
-    // setTimeout(() => {
-    //   condition = defaultMessage;
-    // }, 5000);
+    setTimeout(() => {
+      condition = defaultMessage;
+    }, 8000);
   }, [isLoading, global.shouldDisplay]);
 
   //   useEffect(() => {
