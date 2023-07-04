@@ -124,7 +124,7 @@ export async function GET(request: Request, { params }: { params: IParams }) {
                 //   console.log("should work");
                 // console.log("call1")
                 await setAiMemoryChain(potentialAiUser[0].name, potentialAiUser[0].characteristics, conversationId);
-                console.log("api/conv-id chain: ", global.CHAIN.prompt.promptMessages[0])
+               // console.log("api/conv-id chain: ", global.CHAIN.prompt.promptMessages[0])
             }
         }
         return NextResponse.json(currentConvo);

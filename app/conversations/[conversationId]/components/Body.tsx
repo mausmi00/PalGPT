@@ -9,6 +9,7 @@ import MessageBox from "./MessageBox";
 import { FullMessageType } from "@/app/types";
 import { find } from "lodash";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface BodyProps {
   initialMessages: FullMessageType[];
@@ -43,7 +44,8 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: FullMessageType) => {
-     axios.post(`/api/conversations/${conversationId}/seen`);
+     axios.post(`/api/conversations/${conversationId}/seen`)
+     .catch(() => toast.error("Something went wrong!"));
       setMessages((current) => {
         if (find(current, { id: message.id })) {
           return current;

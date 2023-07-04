@@ -7,6 +7,7 @@ import { HiPhoto } from "react-icons/hi2";
 import MessageInput from "./MessageInput";
 import { HiPaperAirplane } from "react-icons/hi2";
 import { CldUploadButton } from "next-cloudinary";
+import toast from "react-hot-toast";
 
 const Form = () => {
   const { conversationId } = useConversation();
@@ -26,14 +27,14 @@ const Form = () => {
     axios.post("/api/messages", {
       ...data,
       conversationId: conversationId,
-    });
+    }).catch(() => toast.error("Something went wrong!"));
   };
 
   const handleUpload = (result: any) => {
     axios.post("/api/messages", {
       image: result?.info?.secure_url,
       conversationId,
-    });
+    }).catch(() => toast.error("Something went wrong!"));
   };
 
   return (

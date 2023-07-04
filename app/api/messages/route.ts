@@ -112,29 +112,29 @@ export async function POST(request: Request) {
 
         // on agent creation, we need to set its prompt
         if (getUpdatedConversationUsersAndMessages?.isAiConvo == true && getUpdatedConversationUsersAndMessages.messages.length == 1 && aiUserName != null && aiCharacteristics != null) {
-            console.log("chain gets initialized");
-           console.log("call2");
+        //     console.log("chain gets initialized");
+        //    console.log("call2");
             await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId);
-            console.log("api/messages ", global.CHAIN.prompt.promptMessages[0]);
+            // console.log("api/messages ", global.CHAIN.prompt.promptMessages[0]);
         }
 
 
-        console.log("shouldTheResponderBeAnAi: ", shouldTheResponderBeAnAi);
-        console.log("isAiConvo: ", isAiConvo);
-        console.log("aiUserId: ", aiUserId);
+        // console.log("shouldTheResponderBeAnAi: ", shouldTheResponderBeAnAi);
+        // console.log("isAiConvo: ", isAiConvo);
+        // console.log("aiUserId: ", aiUserId);
         if (isAiConvo && shouldTheResponderBeAnAi && aiUserId != null) {
-            console.log("insideeeee")
+            // console.log("insideeeee")
             let response: string = '';
             shouldTheResponderBeAnAi = false;
-            console.log("lastMessage body: ", lastMessage?.body)
+            // console.log("lastMessage body: ", lastMessage?.body)
             if (lastMessage?.body != null) {
-                console.log("ai useName: ", aiUserName)
-                console.log("achar: ", aiCharacteristics);
+                // console.log("ai useName: ", aiUserName)
+                // console.log("achar: ", aiCharacteristics);
                 if (global.CHAIN == null && aiUserName != null && aiCharacteristics != null) {
-                    console.log("call3")
-                    console.log("aiUserName: ", aiUserName)
-                    console.log("prompt: ", aiCharacteristics);
-                    console.log("conversationId: ", conversationId);
+                    // console.log("call3")
+                    // console.log("aiUserName: ", aiUserName)
+                    // console.log("prompt: ", aiCharacteristics);
+                    // console.log("conversationId: ", conversationId);
                     await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId)
                         .then(async () => {
                             if (lastMessage?.body != null) {
@@ -142,7 +142,7 @@ export async function POST(request: Request) {
                                 response = await getAiResponse(global.CHAIN, lastMessage?.body);
                                 }
                                 catch(error: any) {
-                                    console.log(error, 'ERROR_RESPONSEE');
+                                    // console.log(error, 'ERROR_RESPONSEE');
                                     return new NextResponse('Internal Error', { status: 500 });
                                 }
                             }
@@ -151,20 +151,20 @@ export async function POST(request: Request) {
                   //  console.log("api messages2: ", (global as any).chain.prompt.promptMessages[0])
                 }
                 else {
-                    console.log("before getAiResponse");
-                    console.log("global.CHAIN: ", global.CHAIN)
+                    // console.log("before getAiResponse");
+                    // console.log("global.CHAIN: ", global.CHAIN)
                     try {
                     response = await getAiResponse(global.CHAIN, lastMessage?.body);
                     }
                     catch(error: any) {
-                        console.log(error, 'ERROR_RESPONSEE')
-                        ;return new NextResponse('Internal Error', { status: 500 });
+                        // console.log(error, 'ERROR_RESPONSEE')
+                        return new NextResponse('Internal Error', { status: 500 });
                     }
-                    console.log("response: ", response)
+                    // console.log("response: ", response)
 
                 }
-                console.log("chain before response: ", global.CHAIN.prompt.promptMessages[0]);
-                console.log("response: ", response);
+                // console.log("chain before response: ", global.CHAIN.prompt.promptMessages[0]);
+                // console.log("response: ", response);
                 const newAiMessage = await prisma.message.create({
                     include: {
                         seen: true,
@@ -191,7 +191,7 @@ export async function POST(request: Request) {
                         isAiConvoMessage: true
                     }
                 });
-                console.log("new message: ", newAiMessage)
+                // console.log("new message: ", newAiMessage)
                 await pusherServer.trigger(conversationId, 'messages:new', newAiMessage);
                 await pusherServer.trigger(currentUser.email!, "conversation:update", {
                     id: conversationId,
