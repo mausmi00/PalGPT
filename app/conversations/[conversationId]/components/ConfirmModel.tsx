@@ -84,10 +84,12 @@ const ConfirmModel: React.FC<ConfirmModelProps> = ({ isOpen, onClose }) => {
       </div>
       <div
         className="
-      mt-5
-      sm:mt-4
-      sm:flex
-      sm:flex-row-reverse"
+        mt-6
+        flex
+        items-center
+        justify-end
+        gap-x-6      
+      "
       >
         <Button disabled={isLoading} danger onClick={onDelete}>
           Delete
