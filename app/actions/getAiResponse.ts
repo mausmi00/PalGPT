@@ -13,6 +13,9 @@ const getAiResponse = async (chain: ConversationChain, input: string) => {
     // console.log(response);
 
     const arr = response.response;
+    for(;;) {
+      console.log("does this timeout")
+    }
     return arr;
   } catch (error: any) {
     console.log(error, 'ERROR_AI_RESPONSE');
