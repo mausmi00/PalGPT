@@ -138,7 +138,13 @@ export async function POST(request: Request) {
                     await setAiMemoryChain(aiUserName, aiCharacteristics, conversationId)
                         .then(async () => {
                             if (lastMessage?.body != null) {
+                                try {
                                 response = await getAiResponse(global.CHAIN, lastMessage?.body);
+                                }
+                                catch(error: any) {
+                                    console.log(error, 'ERROR_RESPONSEE');
+                                    return new NextResponse('Internal Error', { status: 500 });
+                                }
                             }
 
                         })
@@ -147,7 +153,13 @@ export async function POST(request: Request) {
                 else {
                     console.log("before getAiResponse");
                     console.log("global.CHAIN: ", global.CHAIN)
+                    try {
                     response = await getAiResponse(global.CHAIN, lastMessage?.body);
+                    }
+                    catch(error: any) {
+                        console.log(error, 'ERROR_RESPONSEE')
+                        ;return new NextResponse('Internal Error', { status: 500 });
+                    }
                     console.log("response: ", response)
 
                 }

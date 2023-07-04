@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import useOtherUsers from "@/app/hooks/useOtherUsers";
 import useConversationAgent from "@/app/hooks/useConversationAgent";
 import { Conversation, User } from "@prisma/client";
+import toast from "react-hot-toast";
 
 declare global {
   var shouldDisplay: any | null;
@@ -101,6 +102,28 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
       })
       .then(() => {
         router.refresh();
+      })
+      .catch(() => {
+        toast.error("please refresh the page");
+        return (
+          <>
+            <div
+              className="
+        py-4
+        px-4
+        bg-[#1F2833]
+        border-t
+        flex
+        items-center
+        gap-2
+        lg:gap-4
+        w-full
+        "
+            >
+              {condition}
+            </div>
+          </>
+        );
       });
     // .finally(() => {
     // //  setTimeout(() => {
