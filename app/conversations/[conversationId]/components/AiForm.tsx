@@ -93,7 +93,7 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
           </div>
         </>
       );
-    }, 5000);
+    }, 1000);
 
     axios
       .post("/api/messages", {
@@ -104,7 +104,8 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
         router.refresh();
       })
       .catch(() => {
-        toast.error("please refresh the page");
+        toast.error("Something went wrong. Please refresh the page");
+        router.refresh();
         return (
           <>
             <div
@@ -218,7 +219,7 @@ transition"
           </div>
         </>
       );
-    }, 5000);
+    }, 1000);
     console.log("condition is changed!");
 
     // setTimeout(() => {
