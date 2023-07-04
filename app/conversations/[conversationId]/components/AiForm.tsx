@@ -72,7 +72,7 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
       setIsLoading(global.shouldDisplay);
       console.log("executed!");
       let condition = defaultMessage;
-    //  router.refresh();
+      //  router.refresh();
       return (
         <>
           <div
@@ -92,8 +92,8 @@ const AiForm: React.FC<AiFormProps> = ({ conversation }) => {
           </div>
         </>
       );
-    }, 8000);
-    
+    }, 5000);
+
     axios
       .post("/api/messages", {
         ...data,
@@ -160,28 +160,47 @@ transition"
   );
 
   let condition = global.shouldDisplay
-    ? (defaultMessage)
+    ? defaultMessage
     : //<form className="flex items-center gap-2 lg:gap-4 w-full">
-      messageWhileTyping
+      messageWhileTyping;
   // </form>
 
   useEffect(() => {
     // console.log("in use effect");
     setIsLoading(!global.shouldDisplay);
-    //global.shouldDisplay(global.shouldDisplay);
-    // setTimeout(() => {
-    //   global.shouldDisplay = true;
-    //   setIsLoading(global.shouldDisplay);
-    //   console.log("executed!");
-    //   condition = defaultMessage;
-    // }, 10000);
-
     condition = global.shouldDisplay ? defaultMessage : messageWhileTyping;
+    //global.shouldDisplay(global.shouldDisplay);
+    setTimeout(() => {
+      global.shouldDisplay = true;
+      setIsLoading(global.shouldDisplay);
+      console.log("executedd!");
+      let condition = defaultMessage;
+      //  router.refresh();
+      return (
+        <>
+          <div
+            className="
+      py-4
+      px-4
+      bg-[#1F2833]
+      border-t
+      flex
+      items-center
+      gap-2
+      lg:gap-4
+      w-full
+      "
+          >
+            {condition}
+          </div>
+        </>
+      );
+    }, 5000);
     console.log("condition is changed!");
 
-    setTimeout(() => {
-      condition = defaultMessage;
-    }, 8000);
+    // setTimeout(() => {
+    //   router.refresh();
+    // }, 5000);
   }, [isLoading, global.shouldDisplay]);
 
   //   useEffect(() => {
