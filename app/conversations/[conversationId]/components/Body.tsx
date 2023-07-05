@@ -21,9 +21,9 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   const [messages, setMessages] = useState(initialMessages);
 
   // defualt: last message is a regular user
- // const [lastMessageIsAi, setLastMessageIsAi] = useState(!lastMessage.responderShouldBeAi)
+  // const [lastMessageIsAi, setLastMessageIsAi] = useState(!lastMessage.responderShouldBeAi)
 
- // would be true if we want to enable users to send more messages
+  // would be true if we want to enable users to send more messages
   // global.shouldDisplay = !lastMessage?.responderShouldBeAi;
 
   const { conversationId } = useConversation();
@@ -31,8 +31,9 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   // is true if the messages are part of conversation with an agent
   const isAiConvo = messages[0]?.isAiConvoMessage;
   useEffect(() => {
-    isAiConvo ? router.refresh() : axios.post(`/api/conversations/${conversationId}/seen`)
-     
+    isAiConvo
+      ? router.refresh()
+      : axios.post(`/api/conversations/${conversationId}/seen`);
   }, [conversationId, isAiConvo, router]);
 
   // useEffect(() => {
@@ -44,8 +45,8 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: FullMessageType) => {
-     axios.post(`/api/conversations/${conversationId}/seen`)
-     .catch(() => toast.error("Something went wrong!"));
+      axios.post(`/api/conversations/${conversationId}/seen`);
+      //.catch(() => toast.error("Something went wrong!"));
       setMessages((current) => {
         if (find(current, { id: message.id })) {
           return current;
@@ -87,9 +88,10 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   // }, [messages])
   let lastMessage = messages[messages.length - 1];
   useEffect(() => {
-    global.shouldDisplay = !lastMessage?.responderShouldBeAi || lastMessage.lastMessageOfTheContext;
-    // console.log("should disp val: ", global.shouldDisplay)  
-  }, [lastMessage])
+    global.shouldDisplay =
+      !lastMessage?.responderShouldBeAi || lastMessage.lastMessageOfTheContext;
+    // console.log("should disp val: ", global.shouldDisplay)
+  }, [lastMessage]);
 
   return (
     <div className="flex-1 overflow-y-auto">

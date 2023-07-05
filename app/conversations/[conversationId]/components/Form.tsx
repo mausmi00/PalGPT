@@ -27,14 +27,14 @@ const Form = () => {
     axios.post("/api/messages", {
       ...data,
       conversationId: conversationId,
-    }).catch(() => toast.error("Something went wrong!"));
+    });
   };
 
   const handleUpload = (result: any) => {
     axios.post("/api/messages", {
       image: result?.info?.secure_url,
       conversationId,
-    }).catch(() => toast.error("Something went wrong!"));
+    });
   };
 
   return (
