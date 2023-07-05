@@ -6,18 +6,22 @@ import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import { pusherClient } from "@/app/libs/pusher";
 import { find } from "lodash";
+import GroupChatModal from "@/app/conversations/components/GroupChatModal";
+import AiChatModal from "@/app/conversations/components/AiChatModal";
+import clsx from "clsx";
+import { GrRobot } from "react-icons/gr";
+import useConversation from "@/app/hooks/useConversation";
 
 interface UserListProps {
   initialItems: User[];
   ai_users: User[];
 }
 
-const UserList: React.FC<UserListProps> = ({
-  initialItems,
-  ai_users,
-}) => {
+const UserList: React.FC<UserListProps> = ({ initialItems, ai_users }) => {
   const session = useSession();
   const [items, setItems] = useState(initialItems);
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+  const { conversationId, isOpen } = useConversation();
 
   const pusherKey = useMemo(() => {
     return session.data?.user?.email;
@@ -48,8 +52,14 @@ const UserList: React.FC<UserListProps> = ({
     };
   }, [pusherKey]);
   return (
-    <aside
-      className="fixed
+    <>
+      <AiChatModal
+        isOpen={isAiModalOpen}
+        onClose={() => setIsAiModalOpen(false)}
+      />
+      <aside
+        className={clsx(
+          `fixed
         inset-y-0
         pb-20
         lb:pb-0
@@ -61,23 +71,50 @@ const UserList: React.FC<UserListProps> = ({
         border-gray-200
         block
         w-full
-        left-0"
-    >
-      <div className="px-5">
-        <div
-          className="
+        left-0`,
+          isOpen ? "hidden" : "block w-full left-0"
+        )}
+      >
+        <div className="px-5">
+          <div
+            className="
                 text-2xl
                 font-bold
                 py-4"
-        >
-          Agents
-          <hr className="w-48 h-1 my-4 bg-[#66FCF1] border-0 rounded md:my-4" />
+          >
+            <div className="flex justify-between mb-4 pt-4">
+              Agents
+              <div
+                onClick={() => setIsAiModalOpen(true)}
+                className="
+              group
+          rounded-full
+          pl-2
+          pr-2
+          bg-[#66FCF1]
+          cursor-pointer
+          hover:opactiy-75 
+          transition
+          text-white
+          text-center
+          "
+              >
+                <div className="text-justify">
+                  <GrRobot className="group-hover:hidden mt-2" size={20} />
+                  <div className="hidden text-[#1F2833] group-hover:inline text-xs font-bold">
+                    Create an agent
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr className="w-auto h-1 my-4 border-0 rounded md:my-4 bg-[#66FCF1]" />
+          </div>
+          {ai_users.map((user) => (
+            <UserBox key={user.id} user={user} />
+          ))}
         </div>
-        {ai_users.map((user) => (
-          <UserBox key={user.id} user={user} />
-        ))}
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 };
 

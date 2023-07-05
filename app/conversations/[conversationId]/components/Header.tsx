@@ -4,13 +4,12 @@ import Avatar from "@/app/components/Avatar";
 import useOtherUsers from "@/app/hooks/useOtherUsers";
 import { Conversation, User } from "@prisma/client";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { HiChevronLeft, HiEllipsisHorizontal } from "react-icons/hi2";
 import ProfileDrawer from "./ProfileDrawer";
 import AvatarGroup from "@/app/components/AvatarGroup";
 import useActiveList from "@/app/hooks/useActiveList";
 import Button from "@/app/components/Buttons";
-import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   conversation: Conversation & {

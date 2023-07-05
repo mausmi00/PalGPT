@@ -86,7 +86,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
     // to remove the conversation from the list once deleted
     const removeHandler = (conversation: FullConversationType) => {
-     // let newItems;
+      // let newItems;
       // setItems((current) => {
       //   newItems = current.filter((convo) => convo.id !== conversation.id);
       //   return newItems;
@@ -99,7 +99,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
       setItems(newItems);
       // console.log("newItems: ", newItems);
       // console.log("items: ", items);
-      
+
       // to redirect the user to conversations page once the current conversation is deleted
       if (conversation.id === conversationId) {
         router.push("/conversations");
@@ -120,10 +120,10 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   return (
     <>
-      <AiChatModal
+      {/* <AiChatModal
         isOpen={isAiModalOpen}
         onClose={() => setIsAiModalOpen(false)}
-      />
+      /> */}
       <GroupChatModal
         isOpen={isGroupModalOpen}
         onClose={() => setIsGroupModalOpen(false)}
@@ -154,7 +154,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
             <div
               onClick={() => setIsGroupModalOpen(true)}
               className="
-              group
+              
           rounded-full
           p-2
           bg-[#66FCF1]
@@ -163,15 +163,12 @@ const ConversationList: React.FC<ConversationListProps> = ({
           transition
           "
             >
-              <MdOutlineGroupAdd
-                className="group-hover:hidden text-black"
-                size={20}
-              />
-              <div className="hidden text-[#1F2833] group-hover:inline text-xs font-bold">
+              <MdOutlineGroupAdd className="text-black" size={20} />
+              {/* <div className="hidden text-[#1F2833] group-hover:inline text-xs font-bold">
                 Create group chat
-              </div>
+              </div> */}
             </div>
-            <div
+            {/* <div
               onClick={() => setIsAiModalOpen(true)}
               className="
               group
@@ -185,11 +182,11 @@ const ConversationList: React.FC<ConversationListProps> = ({
           text-white
           "
             >
-              <GrRobot className="group-hover:hidden" size={20} />
-              <div className=" hidden text-[#1F2833] group-hover:inline text-xs font-bold">
+              <GrRobot className="group-hover:hidden mt-2" size={20} />
+              <div className="hidden text-[#1F2833] group-hover:inline text-xs font-bold">
                 Create agent
               </div>
-            </div>
+            </div> */}
             {/* </div> */}
           </div>
           <hr className="w-auto h-1 my-4 border-0 rounded md:my-4 bg-[#66FCF1]" />
