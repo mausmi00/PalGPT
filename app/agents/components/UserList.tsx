@@ -89,8 +89,7 @@ const UserList: React.FC<UserListProps> = ({ initialItems, ai_users }) => {
                 className="
               group
           rounded-full
-          pl-2
-          pr-2
+          p-2
           bg-[#66FCF1]
           cursor-pointer
           hover:opactiy-75 
@@ -99,11 +98,9 @@ const UserList: React.FC<UserListProps> = ({ initialItems, ai_users }) => {
           text-center
           "
               >
-                <div className="text-justify">
-                  <GrRobot className="group-hover:hidden mt-2" size={20} />
-                  <div className="hidden text-[#1F2833] group-hover:inline text-xs font-bold">
-                    Create an agent
-                  </div>
+                {/* <GrRobot className="mt-2" size={20} /> */}
+                <div className=" text-[#1F2833] text-xs font-bold">
+                  Create an agent
                 </div>
               </div>
             </div>
