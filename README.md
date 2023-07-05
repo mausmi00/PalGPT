@@ -6,4 +6,4 @@ PalGPT is built using an impressive stack of technologies. **Next.js**, **React*
 
 Connect with friends and family using PalGPT's seamless messaging features while immersing yourself in a world where AI-driven conversations come to life. PalGPT combines the power of Next.js, React, Tailwind, Prisma, MongoDB, NextAuth, Pusher, GPT-3, and Langchain to deliver a remarkable messaging experience where AI meets innovation.
 
-Experience the future of messaging with PalGPT by visiting my website at [https://palgpt.vercel.app/](url)
+Experience the future of messaging with PalGPT by visiting my website at [https://palgpt.vercel.app/](https://palgpt.vercel.app/)
