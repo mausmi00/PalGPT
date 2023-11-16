@@ -1,7 +1,16 @@
 ## PalGPT
 
-Introducing PalGPT, a sophisticated messaging platform that elevates the art of conversation. With PalGPT, you have the freedom to explore a world of personalized AI agents tailored to your preferences. Craft your own AI companions or engage in insightful dialogues with renowned personalities such as Mark Zuckerberg, Bill Gates, Jeon Jungkook, and beloved anime characters like Shoyo Hinata. Experience captivating and dynamic exchanges as these distinctive agents bring their expertise and personalities to life. PalGPT invites you to embark on a journey where AI-driven conversations unfold.
+Welcome to PalGPT, a messaging platform built using Next.js, React and Tailwind CSS. This app allows you to have real time conversations with your friends just like messenger or whatsapp.
 
-PalGPT is built using an impressive stack of technologies. **Next.js**, **React**, and **Tailwind** combine to provide a seamless and intuitive user experience. **Prisma** and **MongoDB** ensure efficient data storage and management, while **NextAuth** integration offers secure authentication and smooth onboarding. Powered by **Pusher**, PalGPT enables real-time communication and dynamic updates. Within the framework, **Langchain** leverages the power of **GPT-3** to deliver intelligent and engaging conversations.
+But that's not all! PalGPT offers a unique twist by allowing you to chat with pre-existing agents such as Mark Zuckerberg, Bill Gates, Socrates, Jeon Jungkook, and more. Alternatively, unleash your creativity by creating your very own custom AI agent—just provide a prompt!
+
+Under the hood, PalGPT implements robust data management and secure authentication through Prisma, MongoDB, and NextAuth. Real-time communication is seamlessly integrated using Pusher, while Langcahin and GPT-3 allow us to have intelligent and engaging conversations!
+
+Here are the credentials for a test user
+
+Email: testuser@gmail.com
+Password: Testuser
+
+Have fun!
 
 [https://palgpt.vercel.app/](https://palgpt.vercel.app/)
